@@ -60,7 +60,7 @@ Deliverables:
 
 Abnahme:
 
-- Neuer User kann sich registrieren und landet danach entweder direkt im Spiel oder im Login.
+- Neuer User kann sich registrieren und landet danach direkt eingeloggt im Spiel.
 - Eingeloggter User bleibt nach Reload im Spiel.
 - Logout fuehrt zur Auth-Seite zurueck.
 
@@ -198,23 +198,15 @@ Zusatzanforderungen:
 - Balance-Redesign.
 - Komplexe Kampfbericht-Visualisierung.
 
-## Offene Entscheidungen
+## Bestaetigte Entscheidungen
 
-Diese Entscheidungen sollte Chris vor oder frueh in Phase 3 bestaetigen:
+Diese Entscheidungen sind fuer Phase 3 gesetzt:
 
-1. UI-Richtung: modern, ruhig und funktional mit Aquata-Unterwasser-Identitaet statt nostalgischer Legacy-Skin?
-2. Register-Verhalten: Nach Registrierung automatisch einloggen oder danach explizit zum Login schicken?
-3. Dev-Tick im Web: In Non-Production als sichtbarer Button im Game erlauben, damit Entwicklung und E2E schnell bleiben?
-4. Navigation: Eigene Seiten fuer Bau/Forschung/Flotten/Berichte oder ein dichteres Dashboard mit Tabs?
-5. Berichtsdaten: Reicht fuer Phase 3 eine minimale Text-/Tabellenansicht der Kampfberichte?
-
-Empfehlung:
-
-- UI modern und funktional bauen, mit zurueckhaltender Aquata-Identitaet.
-- Nach Registrierung automatisch einloggen, wenn die API das ohne grossen Umbau erlaubt; sonst direkt Login nachziehen.
-- Dev-Tick-Button in Non-Production anzeigen und in Production hart verstecken.
-- Fuer Mobile Tabs/Segmente innerhalb einer geschuetzten Game-Shell nutzen; auf Desktop darf die Shell mehrere Bereiche nebeneinander zeigen.
-- Kampfberichte in Phase 3 minimal textlich/tabellarisch darstellen.
+1. UI-Richtung: modern, ruhig und funktional mit Aquata-Unterwasser-Identitaet statt nostalgischer Legacy-Skin.
+2. Register-Verhalten: Nach Registrierung ist der User direkt eingeloggt.
+3. Dev-Tick im Web: In Non-Production als sichtbarer Button im Game erlauben, damit Entwicklung und E2E schnell bleiben.
+4. Navigation: Eigene Seiten fuer Bau, Forschung, Flotten und Berichte; das Dashboard zeigt wie frueher die wichtigsten Informationen als Uebersicht.
+5. Berichtsdaten: Fuer Phase 3 reicht eine minimale Text-/Tabellenansicht der Kampfberichte.
 
 ## Verifikation fuer Phase 3
 

@@ -93,3 +93,9 @@ Begruendung: Fast jede relevante Spielaktion braucht ohnehin Datenbankzugriff; s
 Entscheidung: API-Integrationstests migrieren eine echte PostgreSQL-Testdatenbank ueber die Drizzle-Migration und laufen nur, wenn `TEST_DATABASE_URL` gesetzt ist.
 
 Begruendung: Damit bleibt `pnpm test` ohne lokale Testdatenbank lauffaehig, waehrend CI und lokale Verifikation mit PostgreSQL dieselben transaktionalen API-Flows pruefen koennen.
+
+## 2026-06-08: Phase-3-Web-MVP-Richtung
+
+Entscheidung: Phase 3 baut eine moderne, ruhige und funktionale Web-UI mit Aquata-Unterwasser-Identitaet. Nach Registrierung ist der User direkt eingeloggt. Der Dev-Tick ist in Non-Production als sichtbarer Button erlaubt. Die Game-Shell nutzt eigene Detailseiten fuer Bau, Forschung, Flotten und Berichte; das Dashboard zeigt wie frueher die wichtigsten Informationen als Uebersicht. Kampfberichte duerfen in Phase 3 minimal als Text oder Tabelle dargestellt werden.
+
+Begruendung: Diese Richtung bringt den MVP schnell in einen spielbaren Zustand, ohne Zeit in nostalgische Skin-Arbeit oder komplexe Report-Visualisierung zu investieren. Eigene Detailseiten halten die Workflows klar, waehrend das Dashboard die alte Aquata-Staerke einer schnellen Lageuebersicht aufnimmt.
