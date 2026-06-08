@@ -3,7 +3,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { createDbClient } from "./client.js";
 import { players, researchStates, rounds, stationShips, stations, users } from "./schema.js";
 
-const databaseUrl = process.env.DATABASE_URL ?? "postgres://aquata:aquata@localhost:5432/aquata";
+const databaseUrl = process.env.DATABASE_URL ?? "postgres://aquata:aquata@localhost:55432/aquata";
 
 const dummyShips = { fighter: 0, frigate: 0, harvester: 0, interceptor: 1 };
 const playerShips = { fighter: 1, frigate: 0, harvester: 1, interceptor: 2 };

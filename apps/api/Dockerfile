@@ -12,5 +12,5 @@ RUN pnpm install --filter @aquata/api... --frozen-lockfile=false
 COPY tsconfig.base.json ./
 COPY apps/api apps/api
 
-EXPOSE 3000
+EXPOSE 3300
 CMD ["pnpm", "--filter", "@aquata/api", "dev"]

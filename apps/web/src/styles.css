@@ -1,5 +1,5 @@
 :root {
-  color: #13201c;
+  color: #10211f;
   font-family:
     Inter,
     ui-sans-serif,
@@ -8,64 +8,374 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  background: #eef5f2;
+  background: #edf4f1;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  margin: 0;
   min-width: 320px;
+  margin: 0;
 }
 
-.app-shell {
-  min-height: 100vh;
-  padding: 24px;
+button,
+input,
+select {
+  font: inherit;
 }
 
-.dashboard {
-  width: min(100%, 880px);
-  margin: 0 auto;
-  padding: 32px 0;
-}
-
-.eyebrow {
-  margin: 0 0 8px;
-  color: #426b5c;
-  font-size: 0.85rem;
+button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 16px;
+  color: #f8fffd;
+  background: #0d685f;
   font-weight: 700;
-  text-transform: uppercase;
+  cursor: pointer;
+}
+
+button.secondary {
+  color: #123532;
+  background: #cde5df;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #a9c2ba;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #10211f;
+  background: #fbfffd;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  color: #385b55;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
 }
 
 h1 {
-  margin: 0 0 24px;
-  font-size: clamp(2rem, 8vw, 4.5rem);
-  line-height: 1;
+  margin-bottom: 0;
+  font-size: 1.6rem;
+  line-height: 1.15;
 }
 
-.status-grid {
+h2 {
+  margin-bottom: 0;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+h3 {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.auth-screen {
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(38, 128, 118, 0.18), transparent 28%),
+    linear-gradient(160deg, #e7f2ee 0%, #f7fbf9 52%, #dfeeea 100%);
+}
+
+.auth-panel {
+  width: min(100%, 440px);
+  margin: 0 auto;
+  border: 1px solid #b7d0c8;
+  border-radius: 8px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 50px rgba(18, 55, 50, 0.12);
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: #2d7067;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 22px 0;
+  padding: 4px;
+  border-radius: 8px;
+  background: #e2f0ec;
+}
+
+.segmented button {
+  min-height: 38px;
+  color: #30554f;
+  background: transparent;
+}
+
+.segmented button.active {
+  color: #f8fffd;
+  background: #0d685f;
+}
+
+.form-grid,
+.page-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.game-shell {
+  min-height: 100vh;
+  padding: 14px;
+}
+
+.topbar {
+  display: grid;
+  gap: 12px;
+  width: min(100%, 1120px);
+  margin: 0 auto 12px;
+  padding: 14px;
+  border: 1px solid #b7d0c8;
+  border-radius: 8px;
+  background: #fbfffd;
+}
+
+.topbar-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.nav-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  width: min(100%, 1120px);
+  margin: 0 auto 14px;
+}
+
+.nav-tabs a {
+  min-width: 0;
+  border: 1px solid #bad0c8;
+  border-radius: 8px;
+  padding: 10px 6px;
+  color: #2b514b;
+  background: #fbfffd;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav-tabs a.active {
+  border-color: #0d685f;
+  color: #f8fffd;
+  background: #0d685f;
+}
+
+.content {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+}
+
+.page-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   gap: 12px;
 }
 
-article {
-  min-height: 104px;
-  padding: 18px;
-  border: 1px solid #b8ccc4;
+.pill {
+  margin: 0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #15453f;
+  background: #cde5df;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.metric-grid,
+.card-grid,
+.two-column,
+.ship-input-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.metric-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric,
+.panel,
+.action-card,
+.report {
+  border: 1px solid #b7d0c8;
   border-radius: 8px;
-  background: #ffffff;
+  background: #fbfffd;
 }
 
-article span {
+.metric {
+  min-width: 0;
+  padding: 14px;
+}
+
+.metric span,
+.row span,
+.report-grid span {
+  color: #526d67;
+  font-size: 0.86rem;
+}
+
+.metric strong {
   display: block;
-  margin-bottom: 10px;
-  color: #5b716a;
-  font-size: 0.9rem;
+  margin-top: 6px;
+  font-size: 1.35rem;
 }
 
-article strong {
-  font-size: 1.5rem;
+.panel {
+  padding: 14px;
+}
+
+.action-card {
+  display: grid;
+  gap: 12px;
+  align-content: space-between;
+  padding: 14px;
+}
+
+.action-card p {
+  margin-bottom: 6px;
+  color: #526d67;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+  min-width: 0;
+  border-top: 1px solid #e1ece8;
+  padding-top: 8px;
+}
+
+.row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.row small {
+  grid-column: 1 / -1;
+  min-width: 0;
+  color: #65807a;
+}
+
+.muted {
+  margin: 0;
+  color: #65807a;
+}
+
+.error {
+  margin: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #7a1f1f;
+  background: #ffe8e3;
+  font-weight: 700;
+}
+
+.report {
+  padding: 12px;
+}
+
+.report-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+@media (min-width: 720px) {
+  .game-shell {
+    padding: 24px;
+  }
+
+  .topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 18px;
+  }
+
+  .topbar-actions {
+    grid-template-columns: auto auto;
+  }
+
+  .nav-tabs {
+    display: flex;
+  }
+
+  .nav-tabs a {
+    min-width: 118px;
+    padding: 11px 14px;
+    font-size: 0.9rem;
+  }
+
+  .card-grid,
+  .two-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ship-input-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .report-grid {
+    grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 980px) {
+  .card-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

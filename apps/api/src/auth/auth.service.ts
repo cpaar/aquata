@@ -46,6 +46,18 @@ export class AuthService {
     }
   }
 
+  async registerAndLogin(input: {
+    username: string;
+    email: string;
+    password: string;
+  }): Promise<{ sessionId: string; user: AuthenticatedUser }> {
+    const user = await this.register(input);
+    return {
+      sessionId: await this.createSession(user.id),
+      user,
+    };
+  }
+
   async login(
     login: string,
     password: string,
@@ -61,15 +73,8 @@ export class AuthService {
       throw new UnauthorizedException("Invalid credentials");
     }
 
-    const sessionId = randomBytes(32).toString("base64url");
-    await this.client.db.insert(sessions).values({
-      expiresAt: this.sessionExpiry(),
-      id: sessionId,
-      userId: user.id,
-    });
-
     return {
-      sessionId,
+      sessionId: await this.createSession(user.id),
       user: { email: user.email, id: user.id, role: user.role, username: user.username },
     };
   }
@@ -104,6 +109,16 @@ export class AuthService {
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + this.config.sessionTtlDays);
     return expiresAt;
+  }
+
+  private async createSession(userId: string): Promise<string> {
+    const sessionId = randomBytes(32).toString("base64url");
+    await this.client.db.insert(sessions).values({
+      expiresAt: this.sessionExpiry(),
+      id: sessionId,
+      userId,
+    });
+    return sessionId;
   }
 }
 

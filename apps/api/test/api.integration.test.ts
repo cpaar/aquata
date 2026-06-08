@@ -20,7 +20,6 @@ import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { AppModule } from "../src/app.module.js";
-import { combatReports } from "@aquata/db";
 
 const testDatabaseUrl = process.env.TEST_DATABASE_URL;
 const describeIfPostgres = testDatabaseUrl ? describe : describe.skip;
@@ -57,10 +56,13 @@ describeIfPostgres("Aquata API integration", () => {
   });
 
   it("registers, logs in, returns me, and logs out", async () => {
-    await request(app.getHttpServer())
+    const register = await request(app.getHttpServer())
       .post("/auth/register")
       .send({ email: "one@example.com", password: "password123", username: "one" })
       .expect(201);
+    const registerCookie = sessionCookie(register);
+
+    await request(app.getHttpServer()).get("/auth/me").set("Cookie", registerCookie).expect(200);
 
     const login = await request(app.getHttpServer())
       .post("/auth/login")
@@ -131,6 +133,13 @@ describeIfPostgres("Aquata API integration", () => {
       .set("Cookie", cookie)
       .expect(200);
     const targetStationId = snapshot.body.targets[0].id;
+    expect(snapshot.body.activeFleets).toHaveLength(0);
+    expect(snapshot.body.recentCombatReports).toHaveLength(0);
+    expect(snapshot.body.catalog.buildables.interceptor.cost).toEqual({
+      aluminium: 45,
+      energy: 25,
+      steel: 25,
+    });
 
     await request(app.getHttpServer())
       .post("/fleets")
@@ -138,17 +147,23 @@ describeIfPostgres("Aquata API integration", () => {
       .send({ ships: { interceptor: 1 }, targetStationId })
       .expect(201);
 
+    const moving = await request(app.getHttpServer())
+      .get("/game/me")
+      .set("Cookie", cookie)
+      .expect(200);
+    expect(moving.body.activeFleets).toHaveLength(1);
+    expect(moving.body.station.ships.interceptor).toBe(1);
+
     for (const tickNumber of [1, 2, 3, 4]) {
       await request(app.getHttpServer()).post("/dev/tick").send({ tickNumber }).expect(201);
     }
 
-    const db = createDbClient(testDatabaseUrl!);
-    try {
-      const reports = await db.db.select().from(combatReports);
-      expect(reports).toHaveLength(1);
-    } finally {
-      await db.pool.end();
-    }
+    const reports = await request(app.getHttpServer())
+      .get("/game/me")
+      .set("Cookie", cookie)
+      .expect(200);
+    expect(reports.body.recentCombatReports).toHaveLength(1);
+    expect(reports.body.recentCombatReports[0].report.outcome).toBe("defender_wins");
   });
 
   it("does not apply the same tick twice", async () => {
@@ -169,17 +184,11 @@ describeIfPostgres("Aquata API integration", () => {
   });
 
   async function registerAndLogin(username: string): Promise<string> {
-    await request(app.getHttpServer())
+    const register = await request(app.getHttpServer())
       .post("/auth/register")
       .send({ email: `${username}@example.com`, password: "password123", username })
       .expect(201);
-
-    const login = await request(app.getHttpServer())
-      .post("/auth/login")
-      .send({ login: username, password: "password123" })
-      .expect(201);
-
-    return sessionCookie(login);
+    return sessionCookie(register);
   }
 });
 

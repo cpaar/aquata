@@ -16,8 +16,13 @@ export class AuthController {
   ) {}
 
   @Post("register")
-  async register(@Body() dto: RegisterDto): Promise<{ user: AuthenticatedUser }> {
-    return { user: await this.auth.register(dto) };
+  async register(
+    @Body() dto: RegisterDto,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<{ user: AuthenticatedUser }> {
+    const { sessionId, user } = await this.auth.registerAndLogin(dto);
+    this.setSessionCookie(response, sessionId);
+    return { user };
   }
 
   @Post("login")
@@ -26,11 +31,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ): Promise<{ user: AuthenticatedUser }> {
     const { sessionId, user } = await this.auth.login(dto.login, dto.password);
-    response.cookie(this.config.sessionCookieName, sessionId, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: this.config.isProduction,
-    });
+    this.setSessionCookie(response, sessionId);
     return { user };
   }
 
@@ -49,5 +50,13 @@ export class AuthController {
   @UseGuards(AuthGuard)
   me(@CurrentUser() user: AuthenticatedUser): { user: AuthenticatedUser } {
     return { user };
+  }
+
+  private setSessionCookie(response: Response, sessionId: string): void {
+    response.cookie(this.config.sessionCookieName, sessionId, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: this.config.isProduction,
+    });
   }
 }

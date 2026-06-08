@@ -1,5 +1,6 @@
 import {
   buildOrders,
+  combatReports,
   fleets,
   players,
   researchStates,
@@ -17,6 +18,9 @@ import { BadRequestException, Inject, Injectable, NotFoundException } from "@nes
 import {
   createFleetMovement,
   isFleetEmpty,
+  mvpBuildables,
+  mvpResearchDefinitions,
+  mvpShipDefinitions,
   normalizeLoadout,
   startBuildOrder,
   startResearch,
@@ -26,7 +30,7 @@ import {
   type ResearchState,
   type ShipTypeId,
 } from "@aquata/domain";
-import { and, asc, count, eq } from "drizzle-orm";
+import { and, asc, count, desc, eq, or } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 
 import { DB_CLIENT } from "../persistence/db.provider.js";
@@ -71,9 +75,36 @@ export class GameService {
         .from(stations)
         .innerJoin(players, eq(players.id, stations.playerId))
         .where(and(eq(stations.roundId, context.round.id), eq(players.isDummy, true)));
+      const activeFleets = await tx
+        .select()
+        .from(fleets)
+        .where(
+          and(eq(fleets.roundId, context.round.id), eq(fleets.ownerPlayerId, context.player.id)),
+        )
+        .orderBy(asc(fleets.createdAt));
+      const recentCombatReports = await tx
+        .select()
+        .from(combatReports)
+        .where(
+          and(
+            eq(combatReports.roundId, context.round.id),
+            or(
+              eq(combatReports.attackerPlayerId, context.player.id),
+              eq(combatReports.defenderPlayerId, context.player.id),
+            ),
+          ),
+        )
+        .orderBy(desc(combatReports.tickNumber), desc(combatReports.createdAt))
+        .limit(10);
 
       return {
+        catalog: {
+          buildables: mvpBuildables,
+          research: mvpResearchDefinitions,
+          ships: mvpShipDefinitions,
+        },
         player: context.player,
+        recentCombatReports,
         round: context.round,
         station: {
           ...context.station,
@@ -81,6 +112,7 @@ export class GameService {
           research: toResearchState(researchRow?.state),
           ships: shipsRow?.ships ?? startShips,
         },
+        activeFleets,
         targets: dummyTargets,
       };
     });

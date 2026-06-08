@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module.js";
 
-const DEFAULT_PORT = 3000;
+const DEFAULT_PORT = 3300;
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);

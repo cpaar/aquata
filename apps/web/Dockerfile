@@ -10,5 +10,5 @@ RUN pnpm install --filter @aquata/web... --frozen-lockfile=false
 COPY tsconfig.base.json ./
 COPY apps/web apps/web
 
-EXPOSE 5173
+EXPOSE 5174
 CMD ["pnpm", "--filter", "@aquata/web", "dev"]

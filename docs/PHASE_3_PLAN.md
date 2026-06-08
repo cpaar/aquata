@@ -19,16 +19,22 @@ Ziel von Phase 3 ist der erste echte Web-MVP: Ein neuer User kann sich registrie
 
 Am Ende von Phase 3 soll es moeglich sein:
 
-- Einen neuen Account ueber die Web-App zu registrieren.
-- Sich einzuloggen, auszuloggen und bei Reload eingeloggt zu bleiben.
-- Eine geschuetzte Game-Shell mit Navigation zu nutzen.
-- Ressourcen, Produktion, Position, Schiffe, Bauqueue, Forschung, aktive Flotten, Dummy-Ziele und letzte Kampfberichte zu sehen.
-- Einen Bauauftrag fuer einfache Schiffe/Sammler zu starten.
-- Eine Forschung zu starten.
-- Eine Angriffsflotte zum Dummy-Ziel zu senden.
-- In Non-Production einen Tick ueber die UI auszufuehren.
-- Nach ausreichend Ticks einen Kampfbericht im Web zu sehen.
-- Einen Playwright-Test zu haben, der den MVP-Flow von Register bis Kampfbericht abdeckt.
+- [x] Einen neuen Account ueber die Web-App zu registrieren.
+- [x] Sich einzuloggen, auszuloggen und bei Reload eingeloggt zu bleiben.
+- [x] Eine geschuetzte Game-Shell mit Navigation zu nutzen.
+- [x] Ressourcen, Produktion, Position, Schiffe, Bauqueue, Forschung, aktive Flotten, Dummy-Ziele und letzte Kampfberichte zu sehen.
+- [x] Einen Bauauftrag fuer einfache Schiffe/Sammler zu starten.
+- [x] Eine Forschung zu starten.
+- [x] Eine Angriffsflotte zum Dummy-Ziel zu senden.
+- [x] In Non-Production einen Tick ueber die UI auszufuehren.
+- [x] Nach ausreichend Ticks einen Kampfbericht im Web zu sehen.
+- [x] Einen Playwright-Test zu haben, der den MVP-Flow von Register bis Kampfbericht abdeckt.
+
+## Abschlussnotiz 2026-06-08
+
+Phase 3 ist umgesetzt. Die Web-App nutzt TanStack Router und TanStack Query mit einer geschuetzten Game-Shell, Auth-Session-Recovery, Register/Login/Logout, Dashboard, Bau, Forschung, Flotten, Berichte und sichtbarem Dev-Tick in Non-Production. `GET /game/me` liefert fuer den MVP zusaetzlich Catalog-Daten, aktive eigene Flotten und letzte eigene Kampfberichte, damit das Web keine Spielregeln nachbauen muss.
+
+Der Playwright-MVP-Flow setzt seine Testdatenbank deterministisch zurueck, seedet aktive Runde plus Dummy und klickt den Browser-Flow von Registrierung bis Kampfbericht und Logout. API-Integrationstests pruefen die erweiterte Snapshot-Response ebenfalls gegen PostgreSQL, wenn `TEST_DATABASE_URL` gesetzt ist.
 
 ## Vorgeschlagene Reihenfolge
 

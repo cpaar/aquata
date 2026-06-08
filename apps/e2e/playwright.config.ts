@@ -4,6 +4,10 @@ const apiPort = process.env.API_PORT ?? "3300";
 const webPort = process.env.WEB_PORT ?? "5174";
 const apiUrl = process.env.API_URL ?? `http://127.0.0.1:${apiPort}`;
 const webUrl = process.env.WEB_URL ?? `http://127.0.0.1:${webPort}`;
+const databaseUrl =
+  process.env.TEST_DATABASE_URL ??
+  process.env.DATABASE_URL ??
+  "postgres://aquata:aquata@localhost:55432/aquata";
 
 export default defineConfig({
   testDir: "./tests",
@@ -17,7 +21,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: `PORT=${apiPort} corepack pnpm --filter @aquata/api dev`,
+      command: `DATABASE_URL=${databaseUrl} PORT=${apiPort} corepack pnpm --filter @aquata/api dev`,
       url: `${apiUrl}/health`,
       reuseExistingServer: !process.env.CI,
       timeout: 60_000,
