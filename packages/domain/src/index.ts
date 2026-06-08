@@ -1,19 +1,19 @@
 export type ResourceStock = {
-  lightMetal: number;
-  heavyMetal: number;
+  aluminium: number;
+  steel: number;
   energy: number;
 };
 
 export const emptyResources = (): ResourceStock => ({
+  aluminium: 0,
   energy: 0,
-  heavyMetal: 0,
-  lightMetal: 0,
+  steel: 0,
 });
 
 export function addResources(current: ResourceStock, delta: ResourceStock): ResourceStock {
   return {
+    aluminium: current.aluminium + delta.aluminium,
     energy: current.energy + delta.energy,
-    heavyMetal: current.heavyMetal + delta.heavyMetal,
-    lightMetal: current.lightMetal + delta.lightMetal,
+    steel: current.steel + delta.steel,
   };
 }

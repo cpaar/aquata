@@ -46,6 +46,24 @@ Entscheidung: Kommandoschiff, Scans/Energie-Details, Allianzen, koordinierte Ang
 
 Begruendung: Diese Systeme sind wichtig, wuerden aber den ersten lauffaehigen Stand zu weit verzerren. Die Architektur soll sie vorbereiten, aber nicht vor dem Kernspiel erzwingen.
 
+## 2026-06-08: Phase-1-Ressourcen
+
+Entscheidung: Die MVP-Ressourcen heissen `aluminium`, `steel` und `energy`.
+
+Begruendung: Die alten technischen Namen Light/Heavy Metal waren unintuitiv, weil das Spiel nach aussen Aluminium und Stahl meint. Domain-Code soll die fachlichen Spielbegriffe verwenden.
+
+## 2026-06-08: Phase-1-Distanz und Reisezeit
+
+Entscheidung: Distanzen im 2D-Grid werden als geradlinige Luftlinie berechnet. Fuer Reisezeit-Bands wird die euklidische Distanz auf die naechste ganze Feld-Distanz aufgerundet.
+
+Begruendung: Das Spiel ist unter Wasser und Schiffe koennen geradlinig fahren. Ein Koordinatensystem bleibt wichtig, aber Manhattan-Distanz wuerde kuenstliche rechtwinklige Wege implizieren.
+
+## 2026-06-08: Phase-1-MVP-Regeln
+
+Entscheidung: Die Phase-1-Startannahmen werden bestaetigt: Reisezeit-Bands aus dem GDD-Beispiel, drei Kampfschiffe plus `harvester`, deterministischer Ein-Tick-MVP-Kampf und FIFO-Bauqueue mit Bauzeiten in Ticks.
+
+Begruendung: Diese Regeln halten den MVP klein und testbar. Balancing kann spaeter ueber versionierte Definitionen angepasst werden.
+
 ## Arbeitsmodus nach MVP
 
 Entscheidung: Erst MVP bauen, dann die naechste Detailplanung anhand eines spielbaren Stands schaerfen.

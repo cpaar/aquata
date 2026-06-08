@@ -17,9 +17,10 @@ Dieses Dokument ist fuer umsetzungsnahe Notizen gedacht, die das grosse GDD fuer
 
 ## Phase-1-Annahmen zur Bestaetigung
 
-- Ressourcen bleiben fuer den MVP `lightMetal`, `heavyMetal`, `energy`.
-- Reisezeit wird im MVP per Manhattan-Distanz und Stufen berechnet.
-- Startwerte fuer Reisezeit koennen dem GDD-Beispiel folgen: 1-10 Felder = 4 Ticks, 11-20 = 5, 21-30 = 6, 31+ = 7.
+- Ressourcen bleiben fuer den MVP `aluminium`, `steel`, `energy`.
+- Reisezeit wird im MVP per geradliniger Luftlinie im 2D-Grid und Stufen berechnet.
+- Fuer Reisezeit-Bands wird die euklidische Distanz auf die naechste ganze Feld-Distanz aufgerundet.
+- Startwerte fuer Reisezeit folgen dem GDD-Beispiel: 1-10 Felder = 4 Ticks, 11-20 = 5, 21-30 = 6, 31+ = 7.
 - MVP-Schiffe starten klein: drei Kampfschiffe plus `harvester`.
 - MVP-Kampf ist deterministisch und wird in einem Tick aufgeloest.
 - Bauqueue ist FIFO und nutzt Bauzeiten in Ticks.

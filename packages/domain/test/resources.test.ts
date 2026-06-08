@@ -6,14 +6,14 @@ describe("resources", () => {
   it("adds resource stocks deterministically", () => {
     expect(
       addResources(emptyResources(), {
+        aluminium: 1,
         energy: 3,
-        heavyMetal: 2,
-        lightMetal: 1,
+        steel: 2,
       }),
     ).toEqual({
+      aluminium: 1,
       energy: 3,
-      heavyMetal: 2,
-      lightMetal: 1,
+      steel: 2,
     });
   });
 });

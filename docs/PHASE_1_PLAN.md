@@ -39,7 +39,7 @@ Deliverables:
 
 MVP-Annahme:
 
-- Ressourcen bleiben vorerst nah am alten Spiel: `lightMetal`, `heavyMetal`, `energy`.
+- Ressourcen verwenden fachliche Spielbegriffe: `aluminium`, `steel`, `energy`.
 - Sammlerproduktion wird fuer das MVP einfach berechnet. Raeumliche Ressourcenvorkommen werden vorbereitet, aber noch nicht gameplay-kritisch gemacht.
 
 Abnahme:
@@ -52,7 +52,7 @@ Abnahme:
 Deliverables:
 
 - `Coordinate { x, y }`.
-- Distanzfunktion, bevorzugt Manhattan-Distanz fuer das MVP.
+- Distanzfunktion als geradlinige Luftlinie im 2D-Grid.
 - `TravelBand`-Definitionen.
 - `calculateTravelTicks(origin, destination, travelConfig)`.
 - Tests fuer gleiche Position, kurze/mittlere/lange Wege und Bandgrenzen.
@@ -61,6 +61,7 @@ MVP-Annahme:
 
 - 2D-Grid.
 - Reisezeit in Stufen, keine krummen Formeln.
+- Fuer Reisezeit-Bands wird die euklidische Distanz auf die naechste ganze Feld-Distanz aufgerundet.
 - Startwerte koennen sein: 1-10 Felder = 4 Ticks, 11-20 = 5 Ticks, 21-30 = 6 Ticks, 31+ = 7 Ticks. Diese Zahlen stammen aus dem GDD-Beispiel und sollen spaeter balanciert werden.
 
 Abnahme:
@@ -207,16 +208,14 @@ Abnahme:
 
 ## Offene Entscheidungen
 
-Diese Entscheidungen sollten vor oder sehr frueh in Phase 1 bestaetigt werden:
+Diese Entscheidungen sind fuer Phase 1 bestaetigt:
 
-1. Ressourcennamen: bleiben `lightMetal`, `heavyMetal`, `energy` fuer MVP?
-2. Distanzmodell: Manhattan-Distanz fuer das 2D-Grid?
-3. Reisezeit-Bands: GDD-Beispiel als Startwerte uebernehmen?
-4. MVP-Schiffe: mit 3 Kampfschiffen plus `harvester` starten?
-5. Kampf: komplett deterministisch ohne Zufall fuer MVP?
-6. Bauqueue: FIFO und Bauzeiten in Ticks?
-
-Empfehlung: Alle sechs Punkte wie oben vorgeschlagen bestaetigen. Das haelt Phase 1 klein und laesst Balancing spaeter ohne Architekturbruch zu.
+1. Ressourcennamen: `aluminium`, `steel`, `energy`.
+2. Distanzmodell: geradlinige Luftlinie, euklidische Distanz.
+3. Reisezeit-Bands: GDD-Beispiel als Startwerte.
+4. MVP-Schiffe: 3 Kampfschiffe plus `harvester`.
+5. Kampf: komplett deterministisch ohne Zufall fuer MVP.
+6. Bauqueue: FIFO und Bauzeiten in Ticks.
 
 ## Verifikation fuer Phase 1
 
