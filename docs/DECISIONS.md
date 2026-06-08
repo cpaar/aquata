@@ -105,3 +105,9 @@ Begruendung: Diese Richtung bringt den MVP schnell in einen spielbaren Zustand, 
 Entscheidung: Phase 4 fokussiert Kampf v2, Defense und Station-Scans. Flotten koennen beim Start eine Stationierungsdauer erhalten: Angreifer 1 bis 3 Ticks, Verteidiger 1 bis 6 Ticks. Eigene Flotten koennen unterwegs und stationiert fruehzeitig zurueckgerufen werden. Station-Scans liefern vorerst exakte Werte und kosten einen fixen Energy-Betrag. Mehrtick-Kampf wird in Phase 4 aufgenommen. Schiffsnamen, Kosten und Typen werden aus dem alten `ships`-Katalog uebernommen; Spezialeffekte wie EMP/Hack/First Strike werden als Traits beruecksichtigt, aber nicht als vollstaendige Altformel nachgebaut.
 
 Begruendung: Damit bekommt das Spiel direkt mehr Planung und Counterplay, ohne die schwer wartbare historische Kampfmatrix, Kommandoschiff-Boni und Spezialfaelle komplett zu portieren. Stationierungsdauer und Rueckruf geben Angriff und Verteidigung echte taktische Entscheidungen.
+
+## 2026-06-08: Ressourcenanzeige
+
+Entscheidung: Ressourcen werden in UI, Berichten und Kostenlisten immer in der Reihenfolge Aluminium, Stahl, Energie angezeigt. Kostenlisten zeigen nur Ressourcen, die wirklich anfallen; Ressourcen mit Kosten 0 werden nicht ausgeschrieben.
+
+Begruendung: Eine stabile Reihenfolge macht Preise und Bestandsanzeigen schneller vergleichbar. Ausgeblendete Nullkosten reduzieren visuelles Rauschen, besonders in Schiffskatalog und mobilen Ansichten.

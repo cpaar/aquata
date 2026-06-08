@@ -13,6 +13,8 @@ Ziel von Phase 4 ist, aus dem spielbaren MVP ein strategisch interessanteres Bro
 - E2E deckt mindestens Angriff, Verteidigung und Scan ab.
 - Scans nutzen `energy` als erste echte Systemressource.
 - Kampfberichte und Scanberichte sind spielbare Information, nicht nur Debug-Ausgabe.
+- Ressourcen werden in UI, Berichten und Kostenlisten immer in derselben Reihenfolge angezeigt: Aluminium, Stahl, Energie.
+- Kostenlisten zeigen nur Ressourcen mit Kosten groesser 0; Nullkosten werden nicht ausgeschrieben.
 
 ## Phase-4-Ergebnis
 
@@ -178,6 +180,7 @@ Deliverables:
 - Flottenformular enthaelt Stationierungsdauer: Angriff 1 bis 3 Ticks, Verteidigung 1 bis 6 Ticks.
 - Flottenliste bietet Rueckruf fuer eigene Flotten, wenn der Status es erlaubt.
 - Dashboard zeigt relevante neue Hinweise: Energie, letzte Scanberichte, aktive Defense-/Attack-Flotten.
+- Alle Ressourcen- und Kostenanzeigen nutzen die Reihenfolge Aluminium, Stahl, Energie und blenden Nullkosten aus.
 
 Abnahme:
 
@@ -227,6 +230,7 @@ Diese Entscheidungen sind fuer Phase 4 gesetzt:
 6. Scan-Kosten: Vorerst fixer Energy-Preis pro Scan.
 7. Mehrtick-Kampf: Wird in Phase 4 aufgenommen.
 8. Schiffskatalog: Schiffsnamen, Kosten und Typen werden aus `old` uebernommen; Spezialeffekte werden nicht zu tief nachgebaut.
+9. Ressourcenanzeige: Immer Aluminium, Stahl, Energie; Ressourcen mit Wert 0 werden in Kostenlisten nicht angezeigt.
 
 ## Verifikation fuer Phase 4
 
