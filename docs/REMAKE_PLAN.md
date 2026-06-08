@@ -270,6 +270,8 @@ Umgesetzt am 2026-06-08:
 
 ### Phase 1: Spieldefinitionen und Domain-Core
 
+Operativer Detailplan: `docs/PHASE_1_PLAN.md`.
+
 - [ ] Schiffstypen aus Altcode als versionierte Config uebernehmen und bereinigen.
 - [ ] Forschungstypen modellieren.
 - [ ] Ressourcenmodell definieren.
@@ -414,16 +416,15 @@ Kandidaten zum Behalten:
 
 ## 12. Erste konkrete Tasks
 
-1. MVP-Entscheidungen in `docs/DECISIONS.md` aktuell halten.
-2. Neues Monorepo mit `apps/api`, `apps/web`, `packages/domain`, `packages/db`, `apps/e2e` scaffolden.
-3. Docker Compose mit PostgreSQL und Healthchecks erstellen.
-4. Playwright smoke test: Web startet und API-Healthcheck ist erreichbar.
-5. Domain-Modelle fuer Ressourcen, Schiffstypen, Flotten und Tick-Snapshot anlegen.
-6. Schiffsdaten aus `ships` und `include_shipdata.php` in versionierte TypeScript-Config ueberfuehren.
-7. Minimalen Tick mit Ressourcenproduktion domain-testen.
-8. MVP-Datenmodell migrieren und Seeds schreiben.
-9. Registrierung/Login implementieren.
-10. Ersten E2E-Flow: Registrierung -> Dashboard -> Tick -> Ressourcen steigen.
+1. Phase-1-Entscheidungen aus `docs/PHASE_1_PLAN.md` bestaetigen und bei Bedarf in `docs/DECISIONS.md` eintragen.
+2. Ressourcenmodell und Produktionsregeln in `packages/domain` ausbauen.
+3. 2D-Karte und gestufte Reisezeit implementieren.
+4. MVP-Schiffstypen und Loadouts als versionierte Config anlegen.
+5. Forschung/Unlocks und Bauqueue als pure Domain-Regeln modellieren.
+6. Flottenbewegung und Ankunftslogik implementieren.
+7. Minimalen Kampf-Simulator mit CombatReport-Snapshot bauen.
+8. Tick-Snapshot-Funktion fuer einen kompletten Domain-Tick schreiben.
+9. Phase-1-Abschluss mit Lint, Typecheck, Domain-Tests, Build und optional E2E verifizieren.
 
 ## 13. Technische Referenzen
 
