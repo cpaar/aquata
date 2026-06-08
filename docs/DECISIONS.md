@@ -75,3 +75,15 @@ Begruendung: Phase 1 braucht reproduzierbare Kampfberichte ohne Zufall, Rundenlo
 Entscheidung: Erst MVP bauen, dann die naechste Detailplanung anhand eines spielbaren Stands schaerfen.
 
 Begruendung: Der aktuelle Plan reicht fuer Architektur und MVP-Schnitt. Zu viel Detailplanung vor dem ersten spielbaren Stand wuerde wahrscheinlich falsche Annahmen zementieren. Nach dem MVP sollen Kampf-Tiefe, Kommandoschiff, Scans/Energie, Allianzen und Sharing anhand realer Bedienung und Tests priorisiert werden.
+
+## 2026-06-08: Phase-2-Persistenz-Defaults
+
+Entscheidung: Fuer Phase 2 werden die vorgeschlagenen Defaults ausserhalb der Auth-Strategie bestaetigt: Registrierung mit Username, E-Mail und Passwort ohne E-Mail-Verifikation im MVP; Passwort-Hashing mit Argon2id; Migrationen mit Drizzle-Kit; relationale Kernbeziehungen plus `jsonb` fuer kleine Domain-Snapshots; Dev-Tick nur ausserhalb von Production oder mit `TICK_ADMIN_TOKEN`; deterministische Station-Startpositionen; API-Integrationstests gegen echte PostgreSQL-Testdatenbank.
+
+Begruendung: Diese Defaults passen zur bestehenden TypeScript/PostgreSQL-Architektur, halten den MVP klein und lassen sich spaeter erweitern, ohne jetzt unnoetige Infrastruktur vorzuziehen.
+
+## 2026-06-08: Phase-2-Auth-Strategie offen
+
+Entscheidung: Die Auth-Strategie bleibt vor Phase 2 bewusst offen. Zur Wahl stehen eigene HTTP-only Cookie-Sessions mit opaque DB-Session, JWT-basierte Auth oder ein externer Auth-Provider.
+
+Begruendung: JWT ist fuer ein erstes Browsergame nicht automatisch einfacher, weil Logout, Sperren, Rollen-/Account-Aenderungen und Token-Rotation schnell Zusatzlogik brauchen. Ein Auth-Provider kann Sicherheits- und Account-Funktionen abnehmen, bringt aber Kosten, externe Abhaengigkeit, User-Sync und lokale Testkomplexitaet mit. Fuer den MVP ist eine kleine eigene Cookie-Session weiterhin die pragmatische Referenz, solange die Auth-Grenze so gebaut wird, dass spaeter ein Provider angeschlossen werden kann.

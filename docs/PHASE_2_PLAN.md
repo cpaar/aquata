@@ -207,20 +207,27 @@ Abnahme:
 - Balancing-Dashboards.
 - Kommandoschiff, Scans, Allianzen, Handel.
 
-## Offene Entscheidungen
+## Bestaetigte Entscheidungen
 
-Diese Entscheidungen sollten vor Phase 2 bestaetigt werden:
+Diese Entscheidungen sind fuer Phase 2 gesetzt:
 
-1. Auth: HTTP-only Session-Cookie mit opaque DB-Session statt JWT?
-2. Registrierung: Username + E-Mail + Passwort, aber ohne E-Mail-Verifikation im MVP?
-3. Passwort-Hashing: Argon2id verwenden?
-4. Migrations-Tooling: Drizzle-Kit fuer Migrationen nutzen?
-5. Persistenzform: Ressourcen/Ships/Research/CombatReports teilweise als `jsonb` speichern, relational fuer Kernbeziehungen?
-6. Dev-Tick-Endpunkt: nur in Non-Production oder mit `TICK_ADMIN_TOKEN` erlauben?
-7. Station-Startposition: fuer MVP automatisch deterministisch vergeben?
-8. Testdatenbank: Integrationstests gegen echte PostgreSQL-Testdatenbank statt SQLite/Mocks?
+1. Registrierung: Username + E-Mail + Passwort, aber ohne E-Mail-Verifikation im MVP.
+2. Passwort-Hashing: Argon2id.
+3. Migrations-Tooling: Drizzle-Kit fuer Migrationen.
+4. Persistenzform: Ressourcen/Ships/Research/CombatReports teilweise als `jsonb`, relationale Tabellen fuer Kernbeziehungen.
+5. Dev-Tick-Endpunkt: nur in Non-Production oder mit `TICK_ADMIN_TOKEN`.
+6. Station-Startposition: fuer MVP automatisch deterministisch vergeben.
+7. Testdatenbank: Integrationstests gegen echte PostgreSQL-Testdatenbank statt SQLite/Mocks.
 
-Empfehlung: Alle acht Punkte wie oben bestaetigen. Das passt zur bestehenden Architektur und haelt Phase 2 schnell, aber nicht beliebig.
+## Offene Auth-Entscheidung
+
+Die Auth-Strategie muss vor Umsetzung von Schritt 5 festgelegt werden:
+
+1. Eigene HTTP-only Session-Cookie mit opaque DB-Session.
+2. JWT-basierte Auth mit Access-/Refresh-Token-Flow.
+3. Externer Auth-Provider.
+
+Aktuelle Empfehlung: Fuer den MVP eigene HTTP-only Cookie-Sessions mit opaque DB-Session bauen und die Auth-Grenze so kapseln, dass spaeter ein Provider angeschlossen werden kann. Das passt besser zu einem First-Party-Browsergame, in dem fast jede relevante Aktion ohnehin Datenbankzugriff braucht. JWT oder ein Provider koennen sinnvoll werden, wenn externe Clients, SSO, MFA, Social Login oder Team-/Enterprise-Funktionen konkret wichtig werden.
 
 ## Verifikation fuer Phase 2
 
