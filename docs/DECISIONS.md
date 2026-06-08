@@ -82,8 +82,14 @@ Entscheidung: Fuer Phase 2 werden die vorgeschlagenen Defaults ausserhalb der Au
 
 Begruendung: Diese Defaults passen zur bestehenden TypeScript/PostgreSQL-Architektur, halten den MVP klein und lassen sich spaeter erweitern, ohne jetzt unnoetige Infrastruktur vorzuziehen.
 
-## 2026-06-08: Phase-2-Auth-Strategie offen
+## 2026-06-08: Phase-2-Auth-Strategie
 
-Entscheidung: Die Auth-Strategie bleibt vor Phase 2 bewusst offen. Zur Wahl stehen eigene HTTP-only Cookie-Sessions mit opaque DB-Session, JWT-basierte Auth oder ein externer Auth-Provider.
+Entscheidung: Phase 2 nutzt eine eigene HTTP-only Cookie-Session mit opaque Session-ID in der Datenbank. Es gibt keinen JWT-Flow und keinen externen Auth-Provider im MVP.
 
-Begruendung: JWT ist fuer ein erstes Browsergame nicht automatisch einfacher, weil Logout, Sperren, Rollen-/Account-Aenderungen und Token-Rotation schnell Zusatzlogik brauchen. Ein Auth-Provider kann Sicherheits- und Account-Funktionen abnehmen, bringt aber Kosten, externe Abhaengigkeit, User-Sync und lokale Testkomplexitaet mit. Fuer den MVP ist eine kleine eigene Cookie-Session weiterhin die pragmatische Referenz, solange die Auth-Grenze so gebaut wird, dass spaeter ein Provider angeschlossen werden kann.
+Begruendung: Fast jede relevante Spielaktion braucht ohnehin Datenbankzugriff; serverseitige Sessions machen Logout, Ablauf und Sperren im MVP direkt kontrollierbar. Die Auth-Grenze bleibt in `apps/api/src/auth` gekapselt, damit spaeter ein Provider angeschlossen werden kann.
+
+## 2026-06-08: Phase-2-Test-Bootstrap
+
+Entscheidung: API-Integrationstests migrieren eine echte PostgreSQL-Testdatenbank ueber die Drizzle-Migration und laufen nur, wenn `TEST_DATABASE_URL` gesetzt ist.
+
+Begruendung: Damit bleibt `pnpm test` ohne lokale Testdatenbank lauffaehig, waehrend CI und lokale Verifikation mit PostgreSQL dieselben transaktionalen API-Flows pruefen koennen.

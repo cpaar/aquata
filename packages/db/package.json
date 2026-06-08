@@ -8,6 +8,10 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "seed": "tsx src/seed.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests"
   },
@@ -17,6 +21,8 @@
   },
   "devDependencies": {
     "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.10",
+    "tsx": "^4.20.3",
     "vitest": "^3.2.3"
   }
 }

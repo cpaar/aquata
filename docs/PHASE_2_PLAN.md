@@ -219,15 +219,24 @@ Diese Entscheidungen sind fuer Phase 2 gesetzt:
 6. Station-Startposition: fuer MVP automatisch deterministisch vergeben.
 7. Testdatenbank: Integrationstests gegen echte PostgreSQL-Testdatenbank statt SQLite/Mocks.
 
-## Offene Auth-Entscheidung
+## Auth-Entscheidung
 
-Die Auth-Strategie muss vor Umsetzung von Schritt 5 festgelegt werden:
+Die Auth-Strategie ist fuer Phase 2 festgelegt:
 
-1. Eigene HTTP-only Session-Cookie mit opaque DB-Session.
-2. JWT-basierte Auth mit Access-/Refresh-Token-Flow.
-3. Externer Auth-Provider.
+- Eigene HTTP-only Session-Cookie mit opaque DB-Session.
+- Kein JWT und kein externer Auth-Provider im MVP.
+- Auth bleibt in `apps/api/src/auth` gekapselt, damit spaeter ein Provider angeschlossen werden kann.
 
-Aktuelle Empfehlung: Fuer den MVP eigene HTTP-only Cookie-Sessions mit opaque DB-Session bauen und die Auth-Grenze so kapseln, dass spaeter ein Provider angeschlossen werden kann. Das passt besser zu einem First-Party-Browsergame, in dem fast jede relevante Aktion ohnehin Datenbankzugriff braucht. JWT oder ein Provider koennen sinnvoll werden, wenn externe Clients, SSO, MFA, Social Login oder Team-/Enterprise-Funktionen konkret wichtig werden.
+## Implementierungsstand
+
+- [x] Drizzle-Kit, DB-Client, MVP-Schema und Migration.
+- [x] Seed/Testdaten fuer aktive Runde und Dummy-Gegner.
+- [x] API Config, DB Provider, Validation Pipe und DB-Healthcheck.
+- [x] Register/Login/Logout/me mit Argon2id und HTTP-only Session-Cookie.
+- [x] Player-/Station-Bootstrap fuer aktive Runde.
+- [x] Transaktionale Commands fuer Build, Research und Fleet.
+- [x] Persistierter Dev-Tick mit `tick_runs`-Idempotenz.
+- [x] API-Integrationstests gegen PostgreSQL via `TEST_DATABASE_URL`.
 
 ## Verifikation fuer Phase 2
 

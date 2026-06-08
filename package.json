@@ -13,7 +13,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "corepack pnpm -r typecheck",
-    "test": "corepack pnpm --filter @aquata/domain test",
+    "test": "corepack pnpm --filter @aquata/domain --filter @aquata/api test",
     "e2e": "corepack pnpm --filter @aquata/e2e test"
   },
   "devDependencies": {

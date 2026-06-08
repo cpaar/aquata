@@ -3,8 +3,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "rootDir": "src",
+    "rootDir": ".",
     "types": ["node", "reflect-metadata"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }
