@@ -26,16 +26,27 @@ Am Ende von Phase 1 soll `packages/domain` Folgendes liefern:
 - Tick-Snapshot-Modell fuer Ressourcen, Bau/Forschung, Flottenankunft und Kampftrigger-Vorbereitung.
 - Vitest-Abdeckung fuer alle oben genannten Regeln.
 
+Umgesetzt am 2026-06-08 in `packages/domain`:
+
+- Ressourcen und Produktion fuer `aluminium`, `steel`, `energy`.
+- 2D-Karte mit euklidischer Distanz und MVP-Reisezeit-Bands.
+- Versionierte MVP-Schiffe `fighter`, `interceptor`, `frigate`, `harvester`.
+- Minimaler Forschungsbaum mit Shipbuilding, Frigate Engineering und Industrial Logistics.
+- FIFO-Bauqueue mit Kostenabzug und Ticks bis Fertigstellung.
+- Flottenbewegung fuer `attack` und Rueckkehr-Vorbereitung.
+- Deterministischer Ein-Tick-Kampf mit Kampfbericht-Snapshot.
+- `runGameTick` als reiner Tick-Snapshot fuer Produktion, Bau, Forschung, Flottenankunft und Kampf.
+
 ## Vorgeschlagene Reihenfolge
 
 ### 1. Ressourcen und Produktion
 
 Deliverables:
 
-- `ResourceType`, `ResourceStock`, `ResourceDelta`.
-- Funktionen: `emptyResources`, `addResources`, `subtractResources`, `canAfford`, `multiplyResources`, `clampResources`.
-- Produktionsdefinition fuer Sammler/Station: `ProductionSource`, `calculateProduction`.
-- Tests fuer Addition, Kostenpruefung, negative Werte, Rundung und 30-Minuten-Tick-Produktion.
+- [x] `ResourceType`, `ResourceStock`, `ResourceDelta`.
+- [x] Funktionen: `emptyResources`, `addResources`, `subtractResources`, `canAfford`, `multiplyResources`, `clampResources`.
+- [x] Produktionsdefinition fuer Sammler/Station: `ProductionSource`, `calculateProduction`.
+- [x] Tests fuer Addition, Kostenpruefung, negative Werte, Rundung und 30-Minuten-Tick-Produktion.
 
 MVP-Annahme:
 
@@ -51,11 +62,11 @@ Abnahme:
 
 Deliverables:
 
-- `Coordinate { x, y }`.
-- Distanzfunktion als geradlinige Luftlinie im 2D-Grid.
-- `TravelBand`-Definitionen.
-- `calculateTravelTicks(origin, destination, travelConfig)`.
-- Tests fuer gleiche Position, kurze/mittlere/lange Wege und Bandgrenzen.
+- [x] `Coordinate { x, y }`.
+- [x] Distanzfunktion als geradlinige Luftlinie im 2D-Grid.
+- [x] `TravelBand`-Definitionen.
+- [x] `calculateTravelTicks(origin, destination, travelConfig)`.
+- [x] Tests fuer gleiche Position, kurze/mittlere/lange Wege und Bandgrenzen.
 
 MVP-Annahme:
 
@@ -73,10 +84,10 @@ Abnahme:
 
 Deliverables:
 
-- `ShipClass`, `ShipTypeDefinition`, `ShipLoadout`.
-- Eine versionierte MVP-Schiffsliste.
-- Hilfsfunktionen: `getShipType`, `calculateFleetPower`, `calculateFleetCost`, `isFleetEmpty`.
-- Tests fuer Kosten, Kampfkraft und leere Flotten.
+- [x] `ShipClass`, `ShipTypeDefinition`, `ShipLoadout`.
+- [x] Eine versionierte MVP-Schiffsliste.
+- [x] Hilfsfunktionen: `getShipType`, `calculateFleetPower`, `calculateFleetCost`, `isFleetEmpty`.
+- [x] Tests fuer Kosten, Kampfkraft und leere Flotten.
 
 MVP-Annahme:
 
@@ -97,10 +108,10 @@ Abnahme:
 
 Deliverables:
 
-- `ResearchDefinition`, `ResearchState`, `UnlockRequirement`.
-- Minimaler Forschungsbaum fuer MVP-Schiffe und Produktion.
-- Funktionen: `canStartResearch`, `completeResearch`, `isUnlocked`.
-- Tests fuer Voraussetzungen, Kosten und Freischaltung.
+- [x] `ResearchDefinition`, `ResearchState`, `UnlockRequirement`.
+- [x] Minimaler Forschungsbaum fuer MVP-Schiffe und Produktion.
+- [x] Funktionen: `canStartResearch`, `completeResearch`, `isUnlocked`.
+- [x] Tests fuer Voraussetzungen, Kosten und Freischaltung.
 
 MVP-Annahme:
 
@@ -116,9 +127,9 @@ Abnahme:
 
 Deliverables:
 
-- `BuildOrder`, `BuildableDefinition`, `BuildQueueState`.
-- Funktionen: `canStartBuild`, `startBuildOrder`, `advanceBuildQueue`.
-- Tests fuer Kosten, Bauzeit, Fertigstellung und mehrere Orders.
+- [x] `BuildOrder`, `BuildableDefinition`, `BuildQueueState`.
+- [x] Funktionen: `canStartBuild`, `startBuildOrder`, `advanceBuildQueue`.
+- [x] Tests fuer Kosten, Bauzeit, Fertigstellung und mehrere Orders.
 
 MVP-Annahme:
 
@@ -134,9 +145,9 @@ Abnahme:
 
 Deliverables:
 
-- `Fleet`, `FleetMission`, `FleetMovement`.
-- Funktionen: `createFleetMovement`, `advanceFleetMovement`, `hasArrived`.
-- Tests fuer Hinflug, Ankunft, Rueckkehr-Vorbereitung und ungueltige Ziele.
+- [x] `FleetMission`, `FleetMovement`.
+- [x] Funktionen: `createFleetMovement`, `advanceFleetMovement`, `hasArrived`.
+- [x] Tests fuer Hinflug, Ankunft, Rueckkehr-Vorbereitung und ungueltige Ziele.
 
 MVP-Annahme:
 
@@ -152,11 +163,11 @@ Abnahme:
 
 Deliverables:
 
-- `CombatSide`, `CombatInput`, `CombatResult`, `CombatReport`.
-- Deterministische Kampfberechnung ohne Zufall oder mit injizierbarem Seed.
-- Verluste pro Schiffstyp.
-- Ergebnis: Angreifer gewinnt, Verteidiger gewinnt oder beide verlieren.
-- Tests fuer klare Uebermacht, Gleichstand, leere Flotten, ungueltige Inputs und Berichtsdaten.
+- [x] `CombatSide`, `CombatInput`, `CombatReport`.
+- [x] Deterministische Kampfberechnung ohne Zufall.
+- [x] Verluste pro Schiffstyp.
+- [x] Ergebnis: Angreifer gewinnt, Verteidiger gewinnt, beide verlieren oder kein echter Kampf.
+- [x] Tests fuer klare Uebermacht, beidseitige Zerstoerung, leere Flotten, ungueltige Inputs und Berichtsdaten.
 
 MVP-Annahme:
 
@@ -175,14 +186,14 @@ Abnahme:
 
 Deliverables:
 
-- `GameTickInput`, `GameTickResult`.
-- Orchestrierende Domain-Funktion fuer MVP-Schritte:
+- [x] `GameTickInput`, `GameTickResult`.
+- [x] Orchestrierende Domain-Funktion fuer MVP-Schritte:
   - Ressourcen produzieren.
   - Bauqueue fortschreiben.
   - Forschung fortschreiben.
   - Flotten bewegen.
   - angekommenen Angriff als CombatInput vorbereiten oder direkt auswerten.
-- Tests fuer einen kleinen End-to-End-Domain-Snapshot.
+- [x] Tests fuer einen kleinen End-to-End-Domain-Snapshot.
 
 MVP-Annahme:
 

@@ -64,6 +64,12 @@ Entscheidung: Die Phase-1-Startannahmen werden bestaetigt: Reisezeit-Bands aus d
 
 Begruendung: Diese Regeln halten den MVP klein und testbar. Balancing kann spaeter ueber versionierte Definitionen angepasst werden.
 
+## 2026-06-08: Phase-1-Kampf-Verluste
+
+Entscheidung: Der MVP-Kampf teilt Schaden deterministisch und ohne Teilschaden-Persistenz zu. Beide Seiten verursachen im selben Tick ihren Angriffswert als Schaden; voll zerstoerte Schiffe werden in stabiler Schiffstyp-Reihenfolge als Verluste gezaehlt.
+
+Begruendung: Phase 1 braucht reproduzierbare Kampfberichte ohne Zufall, Rundenlogik oder komplexe Zielprioritaeten. Die Regel ist absichtlich einfach und kann spaeter durch versionierte Kampfdefinitionen fuer EMP, Hack, First Strike oder Zielprioritaeten ersetzt werden.
+
 ## Arbeitsmodus nach MVP
 
 Entscheidung: Erst MVP bauen, dann die naechste Detailplanung anhand eines spielbaren Stands schaerfen.
