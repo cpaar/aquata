@@ -294,12 +294,12 @@ Umgesetzt am 2026-06-08:
 
 Operativer Detailplan: `docs/PHASE_2_PLAN.md`.
 
-- [ ] Neues Drizzle-Schema fuer MVP-Tabellen.
-- [ ] Migrationen und Seeds.
-- [ ] Auth: Registrierung, Login, Logout, Session.
-- [ ] Round-/Player-/Station-Erstellung.
-- [ ] Commands fuer Bau, Forschung und Flottenbewegung.
-- [ ] Manueller Tick-Endpunkt fuer Dev/Test, geschuetzter Job fuer Produktion.
+- [x] Neues Drizzle-Schema fuer MVP-Tabellen.
+- [x] Migrationen und Seeds.
+- [x] Auth: Registrierung, Login, Logout, Session.
+- [x] Round-/Player-/Station-Erstellung.
+- [x] Commands fuer Bau, Forschung und Flottenbewegung.
+- [x] Manueller Tick-Endpunkt fuer Dev/Test, geschuetzter Job fuer Produktion.
 
 Abnahme:
 
@@ -307,7 +307,14 @@ Abnahme:
 - Zwei Spieler koennen erstellt und bewegt werden.
 - Tick laeuft idempotent und schreibt `tick_runs`.
 
+Umgesetzt am 2026-06-08:
+
+- Phase 2 wurde als Commit `723ac67 phase 2` abgeschlossen.
+- Drizzle-Kit, Migration, Seed, API-Config, DB-Provider, Auth, Game-Snapshot, Commands, persistierter Dev-Tick und API-Integrationstests sind vorhanden.
+
 ### Phase 3: Frueh spielbares Web
+
+Operativer Detailplan: `docs/PHASE_3_PLAN.md`.
 
 - [ ] App-Shell mit Navigation fuer Dashboard, Bau, Forschung, Flotten, Berichte.
 - [ ] Dashboard mit Ressourcen, Produktion, Position, naechstem Tick.
