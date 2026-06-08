@@ -316,22 +316,30 @@ Umgesetzt am 2026-06-08:
 
 Operativer Detailplan: `docs/PHASE_3_PLAN.md`.
 
-- [ ] App-Shell mit Navigation fuer Dashboard, Bau, Forschung, Flotten, Berichte.
-- [ ] Dashboard mit Ressourcen, Produktion, Position, naechstem Tick.
-- [ ] Mobile-first Layout als primaere Umsetzung.
-- [ ] Onboarding-Flow mit Dummy-Ziel fuer ersten Angriff.
-- [ ] Bauansicht fuer Sammler und einfache Schiffe.
-- [ ] Forschungsansicht.
-- [ ] Flottenansicht mit Senden und Status.
-- [ ] Kampfberichtsanzeige.
-- [ ] Playwright-MVP-Flow.
+- [x] App-Shell mit Navigation fuer Dashboard, Bau, Forschung, Flotten, Berichte.
+- [x] Dashboard mit Ressourcen, Produktion, Position, naechstem Tick.
+- [x] Mobile-first Layout als primaere Umsetzung.
+- [x] Onboarding-Flow mit Dummy-Ziel fuer ersten Angriff.
+- [x] Bauansicht fuer Sammler und einfache Schiffe.
+- [x] Forschungsansicht.
+- [x] Flottenansicht mit Senden und Status.
+- [x] Kampfberichtsanzeige.
+- [x] Playwright-MVP-Flow.
 
 Abnahme:
 
 - Ein neuer User kann ohne manuelle DB-Eingriffe sinnvoll spielen.
 - Der MVP-E2E-Flow ist stabil.
 
+Umgesetzt am 2026-06-08:
+
+- Phase 3 wurde als Commit `d175279 phase 3` abgeschlossen.
+- Web-MVP mit Auth, Game-Shell, Dashboard, Bau, Forschung, Flotten, Berichten, Dev-Tick und Playwright-MVP-Flow ist vorhanden.
+- `GET /game/me` liefert fuer das Web zusaetzlich Catalog-Daten, aktive eigene Flotten und letzte eigene Kampfberichte.
+
 ### Phase 4: Spieltiefe ausbauen
+
+Operativer Detailplan: `docs/PHASE_4_PLAN.md`.
 
 - [ ] Kampfregeln naeher an Aquata bringen: EMP, First Strike, Hackboot, Zielprioritaeten.
 - [ ] Mehrtick-Kampf pruefen und ggf. einfuehren.
