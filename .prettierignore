@@ -1,16 +1,9 @@
-*.sql
-/data
-/uploads
-/vendor
-/old/
-.DS_Store
-.idea
+old/
 node_modules/
 dist/
 coverage/
 playwright-report/
 test-results/
-.env
-.env.*
-!.env.example
+pnpm-lock.yaml
 *.tsbuildinfo
+Aquata - Game Design Document.md

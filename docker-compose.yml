@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: aquata
+      POSTGRES_USER: aquata
+      POSTGRES_PASSWORD: aquata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aquata -d aquata"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgres://aquata:aquata@postgres:5432/aquata
+      NODE_ENV: development
+      PORT: 3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      VITE_API_URL: http://localhost:3000
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+
+volumes:
+  postgres-data:

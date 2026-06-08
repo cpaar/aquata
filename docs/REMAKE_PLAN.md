@@ -247,20 +247,26 @@ Pflicht fuer:
 
 ### Phase 0: Projektfundament
 
-- [ ] Entscheidung Stack finalisieren.
-- [ ] Entscheiden, ob bestehende `.git`-Historie geloescht und ein wirklich neues Git-Repo initialisiert werden soll.
-- [ ] Neues Monorepo scaffolden.
-- [ ] Docker Compose fuer PostgreSQL, API und Web.
-- [ ] TypeScript strict, ESLint, Prettier, pnpm Workspaces.
-- [ ] CI einrichten: install, lint, typecheck, test, e2e.
-- [ ] Playwright-Grundsetup mit Healthcheck-Test.
-- [ ] `docs/DECISIONS.md`, `docs/GAME_DESIGN.md`, `docs/TEST_STRATEGY.md` anlegen.
+- [x] Entscheidung Stack finalisieren.
+- [x] Entscheiden, ob bestehende `.git`-Historie geloescht und ein wirklich neues Git-Repo initialisiert werden soll.
+- [x] Neues Monorepo scaffolden.
+- [x] Docker Compose fuer PostgreSQL, API und Web.
+- [x] TypeScript strict, ESLint, Prettier, pnpm Workspaces.
+- [x] CI einrichten: install, lint, typecheck, test, e2e.
+- [x] Playwright-Grundsetup mit Healthcheck-Test.
+- [x] `docs/DECISIONS.md`, `docs/GAME_DESIGN.md`, `docs/TEST_STRATEGY.md` anlegen.
 
 Abnahme:
 
 - `pnpm test`, `pnpm typecheck`, `pnpm e2e` laufen lokal.
 - Web und API starten mit einem Kommando.
 - Eine leere Startseite/API-Healthcheck ist per E2E getestet.
+
+Umgesetzt am 2026-06-08:
+
+- Workspace im Repo-Root mit `apps/api`, `apps/web`, `apps/e2e`, `packages/domain`, `packages/db`.
+- Lokale Shell nutzt bei Bedarf `corepack pnpm`, weil auf Chris' Maschine kein direkter `pnpm`-Shim im PATH lag.
+- Verifiziert: `corepack pnpm lint`, `corepack pnpm typecheck`, `corepack pnpm test`, `corepack pnpm e2e`, `corepack pnpm build`.
 
 ### Phase 1: Spieldefinitionen und Domain-Core
 

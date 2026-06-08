@@ -1,0 +1,30 @@
+{
+  "name": "aquata-remake",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "corepack pnpm --parallel --filter @aquata/api --filter @aquata/web dev",
+    "dev:api": "corepack pnpm --filter @aquata/api dev",
+    "dev:web": "corepack pnpm --filter @aquata/web dev",
+    "build": "corepack pnpm -r build",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "corepack pnpm -r typecheck",
+    "test": "corepack pnpm --filter @aquata/domain test",
+    "e2e": "corepack pnpm --filter @aquata/e2e test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/node": "^22.15.31",
+    "eslint": "^9.29.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
+  }
+}
