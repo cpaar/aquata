@@ -84,7 +84,7 @@ Leitplanken:
 
 Diese Punkte gelten als bevorzugte Richtung, solange `docs/DECISIONS.md` nichts anderes festhaelt:
 
-- Tickdauer zuerst mit 30 oder 60 Minuten bewerten.
+- Produktannahme fuer normale Runden ist ein 30-Minuten-Tick.
 - Tickreihenfolge: Ressourcen auszahlen, Bauauftraege updaten, Flotten bewegen, Kampf, Errungenschaften pruefen.
 - Spielwelt als 2D-Grid statt alter Ozean/Siedlung/Station-Struktur als harte Vorgabe.
 - Reisezeiten in gut lesbaren Stufen statt krummer Formeln.
@@ -408,7 +408,7 @@ Kandidaten zum Behalten:
 
 ## 12. Erste konkrete Tasks
 
-1. Stack-Entscheidung bestaetigen und `docs/DECISIONS.md` anlegen.
+1. MVP-Entscheidungen in `docs/DECISIONS.md` aktuell halten.
 2. Neues Monorepo mit `apps/api`, `apps/web`, `packages/domain`, `packages/db`, `apps/e2e` scaffolden.
 3. Docker Compose mit PostgreSQL und Healthchecks erstellen.
 4. Playwright smoke test: Web startet und API-Healthcheck ist erreichbar.
