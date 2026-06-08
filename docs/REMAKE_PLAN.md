@@ -272,20 +272,27 @@ Umgesetzt am 2026-06-08:
 
 Operativer Detailplan: `docs/PHASE_1_PLAN.md`.
 
-- [ ] Schiffstypen aus Altcode als versionierte Config uebernehmen und bereinigen.
-- [ ] Forschungstypen modellieren.
-- [ ] Ressourcenmodell definieren.
-- [ ] 2D-Kartenmodell und gestufte Reisezeit definieren.
-- [ ] Reisezeitmodell definieren.
-- [ ] Minimalen Kampf-Simulator bauen.
-- [ ] Domain-Tests fuer alle Regeln schreiben.
+- [x] Schiffstypen aus Altcode als versionierte Config uebernehmen und bereinigen.
+- [x] Forschungstypen modellieren.
+- [x] Ressourcenmodell definieren.
+- [x] 2D-Kartenmodell und gestufte Reisezeit definieren.
+- [x] Reisezeitmodell definieren.
+- [x] Minimalen Kampf-Simulator bauen.
+- [x] Domain-Tests fuer alle Regeln schreiben.
 
 Abnahme:
 
 - Kampf und Tick koennen ohne Datenbank gegen Snapshots getestet werden.
 - Balancewerte sind in Config-Dateien versioniert.
 
+Umgesetzt am 2026-06-08:
+
+- Domain-Core in `packages/domain` mit Ressourcen/Produktion, Karte/Reisezeit, MVP-Schiffen, Forschung, FIFO-Bauqueue, Flottenbewegung, deterministischem Kampf und `runGameTick`.
+- Verifiziert: `corepack pnpm format:check`, `corepack pnpm lint`, `corepack pnpm typecheck`, `corepack pnpm test`, `corepack pnpm build`, `corepack pnpm e2e`.
+
 ### Phase 2: Datenbank und API-MVP
+
+Operativer Detailplan: `docs/PHASE_2_PLAN.md`.
 
 - [ ] Neues Drizzle-Schema fuer MVP-Tabellen.
 - [ ] Migrationen und Seeds.
@@ -416,15 +423,16 @@ Kandidaten zum Behalten:
 
 ## 12. Erste konkrete Tasks
 
-1. Phase-1-Entscheidungen aus `docs/PHASE_1_PLAN.md` bestaetigen und bei Bedarf in `docs/DECISIONS.md` eintragen.
-2. Ressourcenmodell und Produktionsregeln in `packages/domain` ausbauen.
-3. 2D-Karte und gestufte Reisezeit implementieren.
-4. MVP-Schiffstypen und Loadouts als versionierte Config anlegen.
-5. Forschung/Unlocks und Bauqueue als pure Domain-Regeln modellieren.
-6. Flottenbewegung und Ankunftslogik implementieren.
-7. Minimalen Kampf-Simulator mit CombatReport-Snapshot bauen.
-8. Tick-Snapshot-Funktion fuer einen kompletten Domain-Tick schreiben.
-9. Phase-1-Abschluss mit Lint, Typecheck, Domain-Tests, Build und optional E2E verifizieren.
+1. Phase-2-Entscheidungen aus `docs/PHASE_2_PLAN.md` bestaetigen und bei Bedarf in `docs/DECISIONS.md` eintragen.
+2. Drizzle-Kit, Migrationen und DB-Client in `packages/db` einrichten.
+3. MVP-Schema fuer User, Sessions, Runden, Spieler, Stationen, Orders, Research, Fleets, Reports und Tick Runs implementieren.
+4. Seeds und Testdaten fuer aktive Runde, Dummy-Gegner und Dev-User vorbereiten.
+5. API-Infrastruktur mit DB Provider, Config und Validation aufsetzen.
+6. Auth-Endpunkte mit HTTP-only Session-Cookie implementieren.
+7. Player/Station-Bootstrap und Stationssnapshot-Endpoint implementieren.
+8. Build-, Research- und Fleet-Commands transaktional implementieren.
+9. Persistierten Dev/Test-Tick mit Idempotenz und CombatReport-Persistenz implementieren.
+10. API-Integrationstests gegen PostgreSQL schreiben und Phase 2 verifizieren.
 
 ## 13. Technische Referenzen
 

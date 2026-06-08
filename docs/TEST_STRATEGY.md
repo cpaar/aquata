@@ -18,3 +18,15 @@ Playwright ist die fuehrende Akzeptanzschicht fuer spielbare Flows. Deterministi
 - Domain-Tests fuer Ressourcenproduktion, Bauzeiten, Reisezeiten, Kampf und Tick-Idempotenz.
 - API-Integrationstests gegen eine isolierte PostgreSQL-Testdatenbank.
 - E2E-Flows fuer Registrierung, Login, Station, Tick, Bau, Forschung, Flottenbewegung und Kampfbericht.
+
+## Phase 1
+
+- `packages/domain` deckt Ressourcen/Produktion, Karte/Reisezeit, Schiffsdaten, Forschung, Bauqueue, Flottenbewegung, Kampf und Tick-Snapshot mit Vitest ab.
+- Abschlussverifikation lief mit Formatcheck, Lint, Typecheck, Domain-Tests, Build und E2E-Smoke.
+
+## Phase 2
+
+- API-Integrationstests laufen gegen eine echte PostgreSQL-Testdatenbank.
+- Tests pruefen Registrierung/Login/Logout, Session, Station-Bootstrap, Build/Research/Fleet-Commands und persistierten Tick.
+- Tick-Tests muessen Idempotenz beweisen: derselbe `(roundId, tickNumber)` wird nicht doppelt angewendet.
+- E2E bleibt zunaechst Smoke-Level; echte UI-Flows kommen in Phase 3.
