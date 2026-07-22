@@ -1,0 +1,216 @@
+# Warfare, intelligence, and recovery
+
+Stand: 2026-07-22
+
+## Strategic premise
+
+Aquata combat is not primarily about pressing an attack button or calculating a larger number. The interesting play is:
+
+- finding a worthwhile target,
+- judging incomplete information,
+- considering geography and possible support,
+- deciding how much power to expose,
+- coordinating allies,
+- hiding the true purpose of an operation,
+- accepting and recovering from consequences.
+
+## Target selection
+
+A good target sits between two bad extremes:
+
+- A target that is too strong may destroy the attacking fleet.
+- A target that is too weak offers little meaningful loot, salvage, or experience.
+
+Target value also depends on:
+
+- distance and commitment time,
+- known and estimated defenses,
+- nearby allied fleets,
+- freshness and quality of scans,
+- recent activity,
+- likely reaction from an alliance,
+- whether pressure on this target supports a larger operation.
+
+The interface should expose the factors and uncertainty. It must not reduce the choice to a guaranteed red, yellow, or green outcome.
+
+## Intelligence
+
+Information is a resource with:
+
+- acquisition cost,
+- age,
+- confidence,
+- scope,
+- ownership,
+- sharing permissions,
+- possible countermeasures.
+
+Scans may reveal resources, fleet composition, command-ship capabilities, production, or movement. Scan defense and skills may reduce precision, hide facts, delay information, or create misleading confidence.
+
+Players must be able to tell:
+
+- when information was obtained,
+- what it actually proves,
+- what remains estimated or unknown,
+- who may access it,
+- whether newer events may have invalidated it.
+
+Perfect information would remove bluffing. Completely opaque information would make losses feel arbitrary. Aquata should live between those extremes.
+
+## Geography and support
+
+Distance determines more than travel duration. It affects:
+
+- who can reinforce in time,
+- how long a fleet is committed,
+- the credibility of a threat,
+- opportunities for interception or counterattack,
+- the safety of reserves,
+- the political importance of local neighborhoods.
+
+Before committing, a player should be able to inspect plausible support relationships without receiving certainty that only a fresh scan or actual movement could provide.
+
+These relationships arise on a continuous two-dimensional map. Resource geography creates organic local clusters, but those clusters are not fixed settlements, oceans, teams, or attack boundaries. Local targets should dominate everyday play through convenience and support relationships, while distant targets remain viable for deliberate operations without a special cross-region penalty.
+
+## Operations and deception
+
+An operation can coordinate several actions around a shared intention:
+
+- main attacks,
+- secondary attacks,
+- decoy fleets,
+- defensive support,
+- held reserves,
+- scans and observation,
+- recalls or timing changes.
+
+Historically, several simultaneous fleets and scan defense made it difficult for the opponent to know who would receive the main force. This information warfare is a core mechanic to preserve.
+
+The operation system should help allies coordinate timing and roles without automatically executing the strategy for them. The players should still make and commit the decisions.
+
+## Combat resolution
+
+Combat must be deterministic enough to test and explain, while retaining uncertainty before the battle through imperfect intelligence and human decisions.
+
+Reports should distinguish:
+
+- participants and roles,
+- fleet composition,
+- relevant command-ship or skill effects,
+- attacks and losses,
+- loot and salvage,
+- experience and progression,
+- which pre-battle assumptions proved false.
+
+The exact damage formula, number of combat rounds, and role of randomness are not yet product decisions.
+
+## Combat points
+
+Combat points measure the quality and impact of PvP combat, not a raw number of kills.
+
+The historical implementation used principles worth preserving:
+
+- destroyed ship value created positive credit,
+- the player's own destroyed ship value reduced that credit within the battle,
+- relative committed fleet value changed how much the destruction was worth,
+- average firepower, shields, hit chance, and evasion bonuses also influenced the ratio,
+- a smaller force received more credit for damaging a stronger force,
+- an overwhelmingly stronger force received less credit for the same destroyed value,
+- points in a multi-player battle were divided according to each participant's committed fleet value,
+- a bad battle could yield zero new combat points but did not subtract from the accumulated season total.
+
+Historically, enemy losses used a fourteen-percent base factor, own losses a four-percent offset, and the final force-ratio multiplier was bounded between 0.1 and 1.5. These values are reference material, not current balance decisions.
+
+The remake should retain the ratio-sensitive principle and make the result explainable in every battle report. Players should be able to see destroyed value, own-loss offset, relative-strength modifier, personal contribution, bonuses, and final combat points without reverse-engineering a hidden formula.
+
+The new calculation must be simulated against deliberately uneven battles, alliance operations, defensive reinforcement, low-value farming, arranged sacrifice, and different fleet compositions before it becomes an award metric.
+
+## Loss and salvage
+
+Historically, combat always produced Müll as recoverable material:
+
+- a larger portion came from the player's own destroyed ships,
+- a smaller portion came from enemy ships destroyed,
+- depending on command-ship and other effects, roughly 30 to 50 percent of own losses may have been recoverable.
+
+These numbers are historical context, not current balance decisions.
+
+The underlying principle is current:
+
+- defeat must consume real power,
+- destroying enemy ships should provide some value even when the final result is unfavorable,
+- part of a lost fleet should return as rebuilding capacity,
+- salvage should soften a defeat without making it irrelevant.
+
+Müll may remain as an Aquata term if it fits the final tone and is clearly explained.
+
+## Recovery after defeat
+
+A catastrophic defeat should be a serious setback, but normally not the end of the season.
+
+Recovery can come from:
+
+- salvage from the battle,
+- collectors and production that remained at home,
+- stored resources and reserves,
+- support or transfers within a social group,
+- smaller appropriate raids,
+- neutral or systemic recovery opportunities,
+- temporary protection after extreme losses.
+
+Historically, weakened players could rebuild by farming smaller or inactive players. Inactive stations were especially valuable for new players learning their first successful attacks and for defeated players rebuilding with a small fleet.
+
+The remake should preserve this ladder of understandable, lower-risk targets. Accounts should not disappear from the world immediately after becoming inactive.
+
+After fourteen days of seasonal inactivity, the player and their alliance receive a warning. After twenty-eight total days, the player's seasonal state is deactivated and their progress is forfeited while the persistent account survives. The former station should then become a neutral abandoned station or ruin, detached from the player's control, so it can continue to support first attacks and recovery without treating an absent person as a permanent victim.
+
+A returning player starts a fresh seasonal state from zero and does not reclaim the ruin in addition to receiving a new station. Exact ruin production, decay, loot, collector behavior, lifetime, target protection, and return placement remain open. The account lifecycle is defined in IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md.
+
+## Attack boundaries
+
+Attack boundaries are a core fairness mechanism. They protect small players from overwhelming powers and give recovering players a viable field of opponents.
+
+The historical principle should remain, but the experience must become legible.
+
+Before launching, the player should see:
+
+- whether the target is eligible,
+- which rule establishes eligibility,
+- whether only part of the fleet may be used,
+- how the permitted commitment or reward changes,
+- when a temporary restriction expires,
+- how recent losses, protection, or activity affect the boundary.
+
+The system must avoid hidden formulas and unexplained rejection messages.
+
+Attack boundaries should prevent predation by vastly stronger players without removing target judgment, bluffing, or the possibility of taking a calculated risk.
+
+## Sleep, safety, and income
+
+Players should be able to choose between maximum economic output and a safer rest period.
+
+A voluntary safety posture should:
+
+- be selected before danger is already known,
+- reduce resource income or otherwise impose a meaningful economic cost,
+- make attacks less attractive rather than impossible,
+- preserve strategic reasons to attack despite reduced immediate loot,
+- last for a bounded rest period,
+- be understandable to both the protected player and potential attackers,
+- avoid becoming a permanent default state with no real tradeoff.
+
+The exact deterrent may combine reduced lootable resources, redirected production, defensive preparation, or lower attacker rewards. The final mechanism is open.
+
+Choosing maximum income means accepting more exposure. This is a deliberate competitive tradeoff: relaxed players can sleep with a modest penalty, while top competitors may remain exposed and organize active coverage to preserve maximum growth.
+
+Alliance night watches are part of the intended social strategy.
+
+Historically, only a fleet's owner could compose and release it. One settlement General could recall released fleets from active missions, but had no further control. Settlement members could call an available released fleet only to defend their own station.
+
+The remake should preserve this narrow delegation without requiring settlements. An operation may appoint one commander who can recall explicitly released participating fleets. Separately released readiness fleets may be called by authorized players for self-defense. No delegate may change composition, launch an attack, or redirect a fleet beyond the granted defensive purpose.
+
+All delegated actions must be visible to the owner and recorded. The final trust scope and conflict rules are still open.
+
+## Unresolved balance goals
+
+Exact salvage rates, attack-band formulas, safety-posture duration and penalty, raid rewards, experience distribution, and repeated-target limits remain open. They should be decided through simulations and playable tests rather than copied directly from historical values.
