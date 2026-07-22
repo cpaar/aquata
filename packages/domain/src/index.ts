@@ -121,14 +121,31 @@ export function calculateTravelTicks(
   return band.ticks;
 }
 
-export type ShipClass = "combat" | "economic";
+export type ShipClass = "lt" | "md" | "fr" | "hv" | "economic";
 
-export type ShipTypeId = "fighter" | "interceptor" | "frigate" | "harvester";
+export type ShipTrait = "normal" | "emp" | "firstStrike" | "hack";
+
+export type ShipTypeId =
+  | "piranha"
+  | "qualle"
+  | "hai"
+  | "hackboot"
+  | "taifun"
+  | "tsunami"
+  | "blizzard"
+  | "hurricane"
+  | "bermuda"
+  | "kittyHawk"
+  | "enterprise"
+  | "atlantis"
+  | "harvester";
 
 export type ShipTypeDefinition = {
   id: ShipTypeId;
+  legacyId?: number;
   displayName: string;
   class: ShipClass;
+  trait: ShipTrait;
   cost: ResourceStock;
   buildTimeTicks: number;
   attack: number;
@@ -140,29 +157,96 @@ export type ShipLoadout = Partial<Record<ShipTypeId, number>>;
 
 export type ShipDefinitions = Record<ShipTypeId, ShipTypeDefinition>;
 
-export const mvpShipDefinitionsVersion = "mvp-2026-06-08";
+export const phase4ShipDefinitionsVersion = "phase-4-legacy-catalog-2026-06-08";
+export const mvpShipDefinitionsVersion = phase4ShipDefinitionsVersion;
 
-export const mvpShipDefinitions: ShipDefinitions = {
-  fighter: {
-    attack: 8,
-    buildTimeTicks: 2,
-    cargo: 0,
-    class: "combat",
-    cost: { aluminium: 80, energy: 20, steel: 40 },
-    displayName: "Fighter",
-    durability: 10,
-    id: "fighter",
-  },
-  frigate: {
-    attack: 18,
-    buildTimeTicks: 4,
-    cargo: 0,
-    class: "combat",
-    cost: { aluminium: 160, energy: 60, steel: 140 },
-    displayName: "Frigate",
-    durability: 30,
-    id: "frigate",
-  },
+export const shipTypeIds = [
+  "piranha",
+  "qualle",
+  "hai",
+  "hackboot",
+  "taifun",
+  "tsunami",
+  "blizzard",
+  "hurricane",
+  "bermuda",
+  "kittyHawk",
+  "enterprise",
+  "atlantis",
+  "harvester",
+] as const satisfies readonly ShipTypeId[];
+
+export const combatShipTypeIds = shipTypeIds.filter(
+  (shipType): shipType is Exclude<ShipTypeId, "harvester"> => shipType !== "harvester",
+);
+
+export const phase4ShipDefinitions: ShipDefinitions = {
+  atlantis: legacyCombatShip({
+    attack: 210,
+    buildTimeTicks: 12,
+    class: "hv",
+    durability: 516,
+    legacyId: 7,
+    name: "Atlantis",
+    trait: "normal",
+    aluminium: 70,
+    steel: 16,
+  }),
+  bermuda: legacyCombatShip({
+    attack: 78,
+    buildTimeTicks: 8,
+    class: "hv",
+    durability: 180,
+    legacyId: 10,
+    name: "Bermuda",
+    trait: "emp",
+    aluminium: 14,
+    steel: 12,
+  }),
+  blizzard: legacyCombatShip({
+    attack: 34,
+    buildTimeTicks: 5,
+    class: "fr",
+    durability: 62,
+    legacyId: 9,
+    name: "Blizzard",
+    trait: "emp",
+    aluminium: 2,
+    steel: 8,
+  }),
+  enterprise: legacyCombatShip({
+    attack: 96,
+    buildTimeTicks: 8,
+    class: "hv",
+    durability: 160,
+    legacyId: 6,
+    name: "Enterprise",
+    trait: "normal",
+    aluminium: 24,
+    steel: 6,
+  }),
+  hackboot: legacyCombatShip({
+    attack: 9,
+    buildTimeTicks: 3,
+    class: "md",
+    durability: 12,
+    legacyId: 4,
+    name: "Hackboot",
+    trait: "hack",
+    aluminium: 2,
+    steel: 0.75,
+  }),
+  hai: legacyCombatShip({
+    attack: 10,
+    buildTimeTicks: 3,
+    class: "md",
+    durability: 14,
+    legacyId: 2,
+    name: "Hai",
+    trait: "normal",
+    aluminium: 2,
+    steel: 1,
+  }),
   harvester: {
     attack: 0,
     buildTimeTicks: 3,
@@ -172,45 +256,98 @@ export const mvpShipDefinitions: ShipDefinitions = {
     displayName: "Harvester",
     durability: 8,
     id: "harvester",
+    trait: "normal",
   },
-  interceptor: {
-    attack: 5,
+  hurricane: legacyCombatShip({
+    attack: 52,
+    buildTimeTicks: 6,
+    class: "fr",
+    durability: 52,
+    legacyId: 11,
+    name: "Hurricane",
+    trait: "firstStrike",
+    aluminium: 10,
+    steel: 3,
+  }),
+  kittyHawk: legacyCombatShip({
+    attack: 120,
+    buildTimeTicks: 10,
+    class: "hv",
+    durability: 170,
+    legacyId: 12,
+    name: "Kitty Hawk",
+    trait: "firstStrike",
+    aluminium: 36,
+    steel: 9,
+  }),
+  piranha: legacyCombatShip({
+    attack: 2,
     buildTimeTicks: 1,
-    cargo: 0,
-    class: "combat",
-    cost: { aluminium: 45, energy: 25, steel: 25 },
-    displayName: "Interceptor",
-    durability: 6,
-    id: "interceptor",
-  },
+    class: "lt",
+    durability: 3,
+    legacyId: 1,
+    name: "Piranha",
+    trait: "firstStrike",
+    aluminium: 1.5,
+    steel: 0,
+  }),
+  qualle: legacyCombatShip({
+    attack: 1,
+    buildTimeTicks: 1,
+    class: "lt",
+    durability: 3,
+    legacyId: 8,
+    name: "Qualle",
+    trait: "emp",
+    aluminium: 0,
+    steel: 1.5,
+  }),
+  taifun: legacyCombatShip({
+    attack: 30,
+    buildTimeTicks: 5,
+    class: "fr",
+    durability: 35,
+    legacyId: 3,
+    name: "Taifun",
+    trait: "normal",
+    aluminium: 6.75,
+    steel: 2,
+  }),
+  tsunami: legacyCombatShip({
+    attack: 44,
+    buildTimeTicks: 6,
+    class: "fr",
+    durability: 58,
+    legacyId: 5,
+    name: "Tsunami",
+    trait: "normal",
+    aluminium: 12,
+    steel: 4,
+  }),
 };
+
+export const mvpShipDefinitions = phase4ShipDefinitions;
 
 export function getShipType(
   id: ShipTypeId,
-  definitions: ShipDefinitions = mvpShipDefinitions,
+  definitions: ShipDefinitions = phase4ShipDefinitions,
 ): ShipTypeDefinition {
   return definitions[id];
 }
 
 export function normalizeLoadout(loadout: ShipLoadout): Record<ShipTypeId, number> {
-  return {
-    fighter: loadout.fighter ?? 0,
-    frigate: loadout.frigate ?? 0,
-    harvester: loadout.harvester ?? 0,
-    interceptor: loadout.interceptor ?? 0,
-  };
+  return Object.fromEntries(
+    shipTypeIds.map((shipType) => [shipType, loadout[shipType] ?? 0]),
+  ) as Record<ShipTypeId, number>;
 }
 
 export function addLoadouts(left: ShipLoadout, right: ShipLoadout): Record<ShipTypeId, number> {
   const normalizedLeft = normalizeLoadout(left);
   const normalizedRight = normalizeLoadout(right);
 
-  return {
-    fighter: normalizedLeft.fighter + normalizedRight.fighter,
-    frigate: normalizedLeft.frigate + normalizedRight.frigate,
-    harvester: normalizedLeft.harvester + normalizedRight.harvester,
-    interceptor: normalizedLeft.interceptor + normalizedRight.interceptor,
-  };
+  return Object.fromEntries(
+    shipTypeIds.map((shipType) => [shipType, normalizedLeft[shipType] + normalizedRight[shipType]]),
+  ) as Record<ShipTypeId, number>;
 }
 
 export function subtractLoadouts(
@@ -219,12 +356,9 @@ export function subtractLoadouts(
 ): Record<ShipTypeId, number> {
   const normalizedLeft = normalizeLoadout(left);
   const normalizedRight = normalizeLoadout(right);
-  const result = {
-    fighter: normalizedLeft.fighter - normalizedRight.fighter,
-    frigate: normalizedLeft.frigate - normalizedRight.frigate,
-    harvester: normalizedLeft.harvester - normalizedRight.harvester,
-    interceptor: normalizedLeft.interceptor - normalizedRight.interceptor,
-  };
+  const result = Object.fromEntries(
+    shipTypeIds.map((shipType) => [shipType, normalizedLeft[shipType] - normalizedRight[shipType]]),
+  ) as Record<ShipTypeId, number>;
 
   for (const [shipType, count] of Object.entries(result)) {
     if (count < 0) {
@@ -241,7 +375,7 @@ export function isFleetEmpty(loadout: ShipLoadout): boolean {
 
 export function calculateFleetCost(
   loadout: ShipLoadout,
-  definitions: ShipDefinitions = mvpShipDefinitions,
+  definitions: ShipDefinitions = phase4ShipDefinitions,
 ): ResourceStock {
   return shipTypeIds.reduce((total, shipType) => {
     const count = normalizeLoadout(loadout)[shipType];
@@ -252,15 +386,16 @@ export function calculateFleetCost(
 
 export function calculateFleetPower(
   loadout: ShipLoadout,
-  definitions: ShipDefinitions = mvpShipDefinitions,
+  definitions: ShipDefinitions = phase4ShipDefinitions,
 ): { attack: number; durability: number } {
   return shipTypeIds.reduce(
     (total, shipType) => {
       const count = normalizeLoadout(loadout)[shipType];
       assertNonNegativeInteger(count, `${shipType} count`);
+      const definition = definitions[shipType];
       return {
-        attack: total.attack + definitions[shipType].attack * count,
-        durability: total.durability + definitions[shipType].durability * count,
+        attack: total.attack + attackWithTraitHook(definition) * count,
+        durability: total.durability + definition.durability * count,
       };
     },
     { attack: 0, durability: 0 },
@@ -301,7 +436,12 @@ export const mvpResearchDefinitions: Record<ResearchId, ResearchDefinition> = {
     durationTicks: 4,
     id: "frigateEngineering",
     prerequisites: ["shipbuilding"],
-    unlocks: [{ kind: "ship", shipTypeId: "frigate" }],
+    unlocks: [
+      { kind: "ship", shipTypeId: "taifun" },
+      { kind: "ship", shipTypeId: "tsunami" },
+      { kind: "ship", shipTypeId: "blizzard" },
+      { kind: "ship", shipTypeId: "hurricane" },
+    ],
   },
   industrialLogistics: {
     cost: { aluminium: 140, energy: 100, steel: 80 },
@@ -318,8 +458,10 @@ export const mvpResearchDefinitions: Record<ResearchId, ResearchDefinition> = {
     id: "shipbuilding",
     prerequisites: [],
     unlocks: [
-      { kind: "ship", shipTypeId: "fighter" },
-      { kind: "ship", shipTypeId: "interceptor" },
+      { kind: "ship", shipTypeId: "piranha" },
+      { kind: "ship", shipTypeId: "qualle" },
+      { kind: "ship", shipTypeId: "hai" },
+      { kind: "ship", shipTypeId: "hackboot" },
       { kind: "ship", shipTypeId: "harvester" },
     ],
   },
@@ -440,12 +582,9 @@ export type CompletedBuildOrder = {
   output: Record<ShipTypeId, number>;
 };
 
-export const mvpBuildables: Record<ShipTypeId, BuildableDefinition> = {
-  fighter: shipBuildable("fighter"),
-  frigate: shipBuildable("frigate"),
-  harvester: shipBuildable("harvester"),
-  interceptor: shipBuildable("interceptor"),
-};
+export const mvpBuildables = Object.fromEntries(
+  shipTypeIds.map((shipType) => [shipType, shipBuildable(shipType)]),
+) as Record<ShipTypeId, BuildableDefinition>;
 
 export function canStartBuild(
   resources: ResourceStock,
@@ -526,9 +665,9 @@ export function advanceBuildQueue(
   };
 }
 
-export type FleetMission = "attack" | "return";
+export type FleetMission = "attack" | "defend" | "return";
 
-export type FleetMovementStatus = "inTransit" | "arrived";
+export type FleetMovementStatus = "inTransit" | "stationed" | "returning";
 
 export type FleetMovement = {
   id: string;
@@ -540,15 +679,19 @@ export type FleetMovement = {
   totalTicks: number;
   remainingTicks: number;
   status: FleetMovementStatus;
+  stationTicks: number;
+  stationTicksRemaining: number;
+  recalled: boolean;
 };
 
 export function createFleetMovement(input: {
   id: string;
   ownerId: string;
-  mission: FleetMission;
+  mission: Exclude<FleetMission, "return">;
   origin: Coordinate;
   destination: Coordinate;
   ships: ShipLoadout;
+  stationTicks?: number;
   travelConfig?: TravelConfig;
 }): FleetMovement {
   if (isFleetEmpty(input.ships)) {
@@ -559,6 +702,8 @@ export function createFleetMovement(input: {
     throw new Error("Fleet destination must differ from origin");
   }
 
+  const stationTicks = input.stationTicks ?? 1;
+  validateStationTicks(input.mission, stationTicks);
   const totalTicks = calculateTravelTicks(input.origin, input.destination, input.travelConfig);
 
   return {
@@ -567,8 +712,11 @@ export function createFleetMovement(input: {
     mission: input.mission,
     origin: { ...input.origin },
     ownerId: input.ownerId,
+    recalled: false,
     remainingTicks: totalTicks,
     ships: normalizeLoadout(input.ships),
+    stationTicks,
+    stationTicksRemaining: stationTicks,
     status: "inTransit",
     totalTicks,
   };
@@ -577,27 +725,60 @@ export function createFleetMovement(input: {
 export function advanceFleetMovement(fleet: FleetMovement, ticks = 1): FleetMovement {
   assertNonNegativeInteger(ticks, "Fleet movement ticks");
 
-  if (fleet.status === "arrived") {
+  if (fleet.status === "stationed") {
     return { ...fleet, ships: { ...fleet.ships } };
   }
 
   const remainingTicks = Math.max(0, fleet.remainingTicks - ticks);
 
+  if (remainingTicks === 0 && fleet.status === "returning") {
+    return { ...fleet, remainingTicks, ships: { ...fleet.ships } };
+  }
+
   return {
     ...fleet,
     remainingTicks,
     ships: { ...fleet.ships },
-    status: remainingTicks === 0 ? "arrived" : "inTransit",
+    status: remainingTicks === 0 ? "stationed" : fleet.status,
   };
 }
 
 export function hasArrived(fleet: FleetMovement): boolean {
-  return fleet.status === "arrived";
+  return (
+    fleet.status === "stationed" || (fleet.status === "returning" && fleet.remainingTicks === 0)
+  );
 }
+
+export function recallFleetMovement(fleet: FleetMovement): FleetMovement {
+  if (fleet.status === "returning") {
+    throw new Error("Fleet is already returning");
+  }
+
+  const elapsedOutboundTicks = Math.max(1, fleet.totalTicks - fleet.remainingTicks);
+  const returnTicks = fleet.status === "stationed" ? fleet.totalTicks : elapsedOutboundTicks;
+
+  return {
+    ...fleet,
+    destination: { ...fleet.origin },
+    origin: { ...fleet.destination },
+    recalled: true,
+    remainingTicks: returnTicks,
+    ships: { ...fleet.ships },
+    status: "returning",
+  };
+}
+
+export type CombatRole = "attacker" | "defender";
 
 export type CombatSide = {
   ownerId: string;
   ships: ShipLoadout;
+};
+
+export type CombatParticipant = CombatSide & {
+  id: string;
+  role: CombatRole;
+  source: "fleet" | "station";
 };
 
 export type CombatOutcome = "attacker_wins" | "defender_wins" | "mutual_destruction" | "no_combat";
@@ -608,8 +789,21 @@ export type CombatInput = {
   defender: CombatSide;
 };
 
+export type CombatV2Input = {
+  id: string;
+  attackers: readonly CombatParticipant[];
+  defenders: readonly CombatParticipant[];
+};
+
+export type CombatParticipantResult = CombatParticipant & {
+  before: Record<ShipTypeId, number>;
+  losses: Record<ShipTypeId, number>;
+  remaining: Record<ShipTypeId, number>;
+};
+
 export type CombatReport = {
   id: string;
+  version: "combat-v2-2026-06-08";
   attackerOwnerId: string;
   defenderOwnerId: string;
   outcome: CombatOutcome;
@@ -619,14 +813,45 @@ export type CombatReport = {
   defenderLosses: Record<ShipTypeId, number>;
   attackerRemaining: Record<ShipTypeId, number>;
   defenderRemaining: Record<ShipTypeId, number>;
+  participants: CombatParticipantResult[];
 };
 
 export function simulateCombat(
   input: CombatInput,
-  definitions: ShipDefinitions = mvpShipDefinitions,
+  definitions: ShipDefinitions = phase4ShipDefinitions,
 ): CombatReport {
-  const attackerBefore = normalizeLoadout(input.attacker.ships);
-  const defenderBefore = normalizeLoadout(input.defender.ships);
+  return simulateCombatV2(
+    {
+      attackers: [
+        {
+          id: "attacker",
+          ownerId: input.attacker.ownerId,
+          role: "attacker",
+          ships: input.attacker.ships,
+          source: "fleet",
+        },
+      ],
+      defenders: [
+        {
+          id: "defender",
+          ownerId: input.defender.ownerId,
+          role: "defender",
+          ships: input.defender.ships,
+          source: "station",
+        },
+      ],
+      id: input.id,
+    },
+    definitions,
+  );
+}
+
+export function simulateCombatV2(
+  input: CombatV2Input,
+  definitions: ShipDefinitions = phase4ShipDefinitions,
+): CombatReport {
+  const attackerBefore = aggregateParticipants(input.attackers);
+  const defenderBefore = aggregateParticipants(input.defenders);
 
   if (isFleetEmpty(attackerBefore) && isFleetEmpty(defenderBefore)) {
     throw new Error("Combat requires at least one ship");
@@ -640,15 +865,17 @@ export function simulateCombat(
   const defenderRemaining = subtractLoadouts(defenderBefore, defenderLosses);
   const attackerAlive = !isFleetEmpty(attackerRemaining);
   const defenderAlive = !isFleetEmpty(defenderRemaining);
+  const attackerResults = distributeParticipantLosses(input.attackers, attackerLosses);
+  const defenderResults = distributeParticipantLosses(input.defenders, defenderLosses);
 
   return {
     attackerBefore,
     attackerLosses,
-    attackerOwnerId: input.attacker.ownerId,
+    attackerOwnerId: input.attackers[0]?.ownerId ?? "unknown-attacker",
     attackerRemaining,
     defenderBefore,
     defenderLosses,
-    defenderOwnerId: input.defender.ownerId,
+    defenderOwnerId: input.defenders[0]?.ownerId ?? "unknown-defender",
     defenderRemaining,
     id: input.id,
     outcome: determineCombatOutcome(
@@ -657,6 +884,8 @@ export function simulateCombat(
       attackerPower.attack,
       defenderPower.attack,
     ),
+    participants: [...attackerResults, ...defenderResults],
+    version: "combat-v2-2026-06-08",
   };
 }
 
@@ -718,37 +947,107 @@ export function runGameTick(input: GameTickInput): GameTickResult {
     };
   });
 
-  const fleets = input.fleets.map((fleet) => advanceFleetMovement(fleet));
-  const survivingFleets: FleetMovement[] = [];
+  const advancedFleets = input.fleets.map((fleet) => advanceFleetMovement(fleet));
+  const returnedFleetIds = new Set<string>();
+  const consumedFleetIds = new Set<string>();
+  const survivingFleetsById = new Map<string, FleetMovement>();
 
-  for (const fleet of fleets) {
-    const targetStation = stations.find(
-      (station) =>
-        station.position.x === fleet.destination.x && station.position.y === fleet.destination.y,
+  for (const fleet of advancedFleets) {
+    if (fleet.status === "returning" && fleet.remainingTicks === 0) {
+      const homeStation = stations.find(
+        (station) =>
+          station.ownerId === fleet.ownerId &&
+          station.position.x === fleet.destination.x &&
+          station.position.y === fleet.destination.y,
+      );
+      if (homeStation) {
+        homeStation.ships = addLoadouts(homeStation.ships, fleet.ships);
+      }
+      returnedFleetIds.add(fleet.id);
+    }
+  }
+
+  for (const station of stations) {
+    const attackers = advancedFleets.filter(
+      (fleet) =>
+        fleet.status === "stationed" &&
+        fleet.mission === "attack" &&
+        sameCoordinate(fleet.destination, station.position) &&
+        !returnedFleetIds.has(fleet.id),
+    );
+    if (attackers.length === 0) {
+      continue;
+    }
+
+    const defenders = advancedFleets.filter(
+      (fleet) =>
+        fleet.status === "stationed" &&
+        fleet.mission === "defend" &&
+        sameCoordinate(fleet.destination, station.position) &&
+        !returnedFleetIds.has(fleet.id),
     );
 
-    if (fleet.status === "arrived" && fleet.mission === "attack" && targetStation) {
-      const report = simulateCombat({
-        attacker: { ownerId: fleet.ownerId, ships: fleet.ships },
-        defender: { ownerId: targetStation.ownerId, ships: targetStation.ships },
-        id: `combat-${input.tickNumber}-${fleet.id}`,
-      });
-      combatReports.push(report);
-      targetStation.ships = report.defenderRemaining;
+    const report = simulateCombatV2({
+      attackers: attackers.map((fleet) => ({
+        id: fleet.id,
+        ownerId: fleet.ownerId,
+        role: "attacker",
+        ships: fleet.ships,
+        source: "fleet",
+      })),
+      defenders: [
+        {
+          id: station.id,
+          ownerId: station.ownerId,
+          role: "defender",
+          ships: station.ships,
+          source: "station",
+        },
+        ...defenders.map((fleet) => ({
+          id: fleet.id,
+          ownerId: fleet.ownerId,
+          role: "defender" as const,
+          ships: fleet.ships,
+          source: "fleet" as const,
+        })),
+      ],
+      id: `combat-${input.tickNumber}-${station.id}`,
+    });
+    combatReports.push(report);
 
-      if (!isFleetEmpty(report.attackerRemaining)) {
-        survivingFleets.push({
+    for (const participant of report.participants) {
+      if (participant.source === "station" && participant.id === station.id) {
+        station.ships = participant.remaining;
+      } else {
+        const fleet = advancedFleets.find((candidate) => candidate.id === participant.id);
+        if (fleet) {
+          fleet.ships = participant.remaining;
+          if (isFleetEmpty(participant.remaining)) {
+            consumedFleetIds.add(fleet.id);
+          }
+        }
+      }
+    }
+  }
+
+  for (const fleet of advancedFleets) {
+    if (returnedFleetIds.has(fleet.id) || consumedFleetIds.has(fleet.id)) {
+      continue;
+    }
+
+    if (fleet.status === "stationed") {
+      const stationTicksRemaining = Math.max(0, fleet.stationTicksRemaining - 1);
+      if (stationTicksRemaining === 0) {
+        survivingFleetsById.set(fleet.id, startReturnTrip(fleet));
+      } else {
+        survivingFleetsById.set(fleet.id, {
           ...fleet,
-          mission: "return",
-          origin: { ...fleet.destination },
-          destination: { ...fleet.origin },
-          remainingTicks: fleet.totalTicks,
-          ships: report.attackerRemaining,
-          status: "inTransit",
+          ships: { ...fleet.ships },
+          stationTicksRemaining,
         });
       }
-    } else if (fleet.status !== "arrived" || fleet.mission !== "attack") {
-      survivingFleets.push(fleet);
+    } else {
+      survivingFleetsById.set(fleet.id, fleet);
     }
   }
 
@@ -756,22 +1055,102 @@ export function runGameTick(input: GameTickInput): GameTickResult {
     combatReports,
     completedBuilds,
     completedResearch,
-    fleets: survivingFleets,
+    fleets: [...survivingFleetsById.values()],
     stations,
     tickNumber: input.tickNumber,
   };
 }
 
-const shipTypeIds: readonly ShipTypeId[] = ["fighter", "interceptor", "frigate", "harvester"];
+export type StationScanInput = {
+  id: string;
+  scannerPlayerId: string;
+  target: TickStationSnapshot;
+  visibleFleets?: readonly FleetMovement[];
+  tickNumber: number;
+  createdAt?: Date;
+};
 
-function mapResources(
+export type StationScanReport = {
+  id: string;
+  type: "stationScan";
+  scannerPlayerId: string;
+  targetStationId: string;
+  targetOwnerId: string;
+  tickNumber: number;
+  createdAt: string;
+  result: {
+    position: Coordinate;
+    resources: ResourceStock;
+    ships: Record<ShipTypeId, number>;
+    fleets: Array<{
+      id: string;
+      ownerId: string;
+      mission: FleetMission;
+      status: FleetMovementStatus;
+      ships: Record<ShipTypeId, number>;
+      remainingTicks: number;
+      stationTicksRemaining: number;
+    }>;
+  };
+};
+
+export const stationScanEnergyCost = 50;
+export const stationScanCost: ResourceStock = {
+  aluminium: 0,
+  energy: stationScanEnergyCost,
+  steel: 0,
+};
+
+export function canStartStationScan(resources: ResourceStock): boolean {
+  return canAfford(resources, stationScanCost);
+}
+
+export function createStationScanReport(input: StationScanInput): StationScanReport {
+  return {
+    createdAt: (input.createdAt ?? new Date()).toISOString(),
+    id: input.id,
+    result: {
+      fleets: (input.visibleFleets ?? [])
+        .filter((fleet) => sameCoordinate(fleet.destination, input.target.position))
+        .map((fleet) => ({
+          id: fleet.id,
+          mission: fleet.mission,
+          ownerId: fleet.ownerId,
+          remainingTicks: fleet.remainingTicks,
+          ships: normalizeLoadout(fleet.ships),
+          stationTicksRemaining: fleet.stationTicksRemaining,
+          status: fleet.status,
+        })),
+      position: { ...input.target.position },
+      resources: { ...input.target.resources },
+      ships: normalizeLoadout(input.target.ships),
+    },
+    scannerPlayerId: input.scannerPlayerId,
+    targetOwnerId: input.target.ownerId,
+    targetStationId: input.target.id,
+    tickNumber: input.tickNumber,
+    type: "stationScan",
+  };
+}
+
+export function startStationScan(
   resources: ResourceStock,
-  mapper: (type: ResourceType) => number,
-): ResourceStock {
-  for (const type of resourceTypes) {
-    assertFiniteNumber(resources[type], `${type} amount`);
+  input: StationScanInput,
+): { resources: ResourceStock; report: StationScanReport } {
+  if (!canStartStationScan(resources)) {
+    throw new Error("Insufficient energy for station scan");
   }
 
+  return {
+    report: createStationScanReport(input),
+    resources: subtractResources(resources, stationScanCost),
+  };
+}
+
+function mapResources(
+  _resources: ResourceStock,
+  mapper: (type: ResourceType) => number,
+): ResourceStock {
   return {
     aluminium: mapper("aluminium"),
     energy: mapper("energy"),
@@ -779,8 +1158,43 @@ function mapResources(
   };
 }
 
+function legacyCombatShip(input: {
+  legacyId: number;
+  name: string;
+  class: Exclude<ShipClass, "economic">;
+  trait: ShipTrait;
+  aluminium: number;
+  steel: number;
+  buildTimeTicks: number;
+  attack: number;
+  durability: number;
+}): ShipTypeDefinition {
+  const id = legacyNameToId(input.name);
+  return {
+    attack: input.attack,
+    buildTimeTicks: input.buildTimeTicks,
+    cargo: 0,
+    class: input.class,
+    cost: {
+      aluminium: Math.round(input.aluminium * 50),
+      energy: 0,
+      steel: Math.round(input.steel * 50),
+    },
+    displayName: input.name,
+    durability: input.durability,
+    id,
+    legacyId: input.legacyId,
+    trait: input.trait,
+  };
+}
+
+function legacyNameToId(name: string): ShipTypeId {
+  const id = name.replaceAll(" ", "");
+  return `${id.charAt(0).toLowerCase()}${id.slice(1)}` as ShipTypeId;
+}
+
 function shipBuildable(shipTypeId: ShipTypeId): BuildableDefinition {
-  const ship = mvpShipDefinitions[shipTypeId];
+  const ship = phase4ShipDefinitions[shipTypeId];
   return {
     buildTimeTicks: ship.buildTimeTicks,
     cost: ship.cost,
@@ -793,12 +1207,9 @@ function shipBuildable(shipTypeId: ShipTypeId): BuildableDefinition {
 function multiplyLoadout(loadout: ShipLoadout, factor: number): Record<ShipTypeId, number> {
   assertPositiveInteger(factor, "Loadout multiplier");
   const normalized = normalizeLoadout(loadout);
-  return {
-    fighter: normalized.fighter * factor,
-    frigate: normalized.frigate * factor,
-    harvester: normalized.harvester * factor,
-    interceptor: normalized.interceptor * factor,
-  };
+  return Object.fromEntries(
+    shipTypeIds.map((shipType) => [shipType, normalized[shipType] * factor]),
+  ) as Record<ShipTypeId, number>;
 }
 
 function allocateLosses(
@@ -824,6 +1235,52 @@ function allocateLosses(
   return losses;
 }
 
+function attackWithTraitHook(definition: ShipTypeDefinition): number {
+  if (definition.trait === "firstStrike") {
+    return definition.attack * 1.15;
+  }
+
+  if (definition.trait === "emp") {
+    return definition.attack * 0.8;
+  }
+
+  return definition.attack;
+}
+
+function aggregateParticipants(
+  participants: readonly CombatParticipant[],
+): Record<ShipTypeId, number> {
+  return participants.reduce(
+    (total, participant) => addLoadouts(total, participant.ships),
+    normalizeLoadout({}),
+  );
+}
+
+function distributeParticipantLosses(
+  participants: readonly CombatParticipant[],
+  aggregateLosses: Record<ShipTypeId, number>,
+): CombatParticipantResult[] {
+  const remainingLosses = { ...aggregateLosses };
+
+  return participants.map((participant) => {
+    const before = normalizeLoadout(participant.ships);
+    const losses = normalizeLoadout({});
+    for (const shipType of shipTypeIds) {
+      const destroyed = Math.min(before[shipType], remainingLosses[shipType]);
+      losses[shipType] = destroyed;
+      remainingLosses[shipType] -= destroyed;
+    }
+
+    return {
+      ...participant,
+      before,
+      losses,
+      remaining: subtractLoadouts(before, losses),
+      ships: before,
+    };
+  });
+}
+
 function determineCombatOutcome(
   attackerAlive: boolean,
   defenderAlive: boolean,
@@ -847,6 +1304,32 @@ function determineCombatOutcome(
   }
 
   return attackerAttack > defenderAttack ? "attacker_wins" : "defender_wins";
+}
+
+function startReturnTrip(fleet: FleetMovement): FleetMovement {
+  return {
+    ...fleet,
+    destination: { ...fleet.origin },
+    origin: { ...fleet.destination },
+    remainingTicks: fleet.totalTicks,
+    ships: { ...fleet.ships },
+    status: "returning",
+  };
+}
+
+function validateStationTicks(
+  mission: Exclude<FleetMission, "return">,
+  stationTicks: number,
+): void {
+  assertPositiveInteger(stationTicks, "Station ticks");
+  const max = mission === "defend" ? 6 : 3;
+  if (stationTicks > max) {
+    throw new Error(`${mission} fleets can station for at most ${max} ticks`);
+  }
+}
+
+function sameCoordinate(left: Coordinate, right: Coordinate): boolean {
+  return left.x === right.x && left.y === right.y;
 }
 
 function sameUnlockTarget(left: UnlockTarget, right: UnlockTarget): boolean {

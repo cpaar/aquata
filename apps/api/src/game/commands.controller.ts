@@ -1,9 +1,9 @@
-import { Body, Controller, Inject, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
 
 import { AuthGuard } from "../auth/auth.guard.js";
 import { CurrentUser } from "../auth/current-user.decorator.js";
 import type { AuthenticatedUser } from "../auth/auth.types.js";
-import { SendFleetDto, StartBuildDto, StartResearchDto } from "./game.dto.js";
+import { SendFleetDto, StartBuildDto, StartResearchDto, StartScanDto } from "./game.dto.js";
 import { GameService } from "./game.service.js";
 
 @Controller()
@@ -23,6 +23,16 @@ export class CommandsController {
 
   @Post("fleets")
   sendFleet(@CurrentUser() user: AuthenticatedUser, @Body() dto: SendFleetDto) {
-    return this.game.sendFleet(user, dto.targetStationId, dto.ships);
+    return this.game.sendFleet(user, dto);
+  }
+
+  @Post("fleets/:id/recall")
+  recallFleet(@CurrentUser() user: AuthenticatedUser, @Param("id") fleetId: string) {
+    return this.game.recallFleet(user, fleetId);
+  }
+
+  @Post("scans")
+  startScan(@CurrentUser() user: AuthenticatedUser, @Body() dto: StartScanDto) {
+    return this.game.startScan(user, dto.targetStationId);
   }
 }

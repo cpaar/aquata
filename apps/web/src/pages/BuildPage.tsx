@@ -2,18 +2,15 @@ import type { ReactElement } from "react";
 import { useState } from "react";
 
 import type { ShipType } from "../api/types.js";
-import { formatResources, shipOrder } from "../game/format.js";
+import { formatCost, shipOrder } from "../game/format.js";
 import { useGameSnapshot, useStartBuildMutation } from "../game/useGame.js";
 
 export function BuildPage(): ReactElement {
   const { data } = useGameSnapshot();
   const mutation = useStartBuildMutation();
-  const [quantities, setQuantities] = useState<Record<ShipType, number>>({
-    fighter: 1,
-    frigate: 1,
-    harvester: 1,
-    interceptor: 1,
-  });
+  const [quantities, setQuantities] = useState<Record<ShipType, number>>(
+    Object.fromEntries(shipOrder.map((shipType) => [shipType, 1])) as Record<ShipType, number>,
+  );
 
   if (!data) {
     return <p className="muted">Lade Bauhof...</p>;
@@ -38,7 +35,8 @@ export function BuildPage(): ReactElement {
             <article className="action-card" key={shipType}>
               <div>
                 <h3>{ship.displayName}</h3>
-                <p>{formatResources(buildable.cost)}</p>
+                <p>{formatCost(buildable.cost)}</p>
+                <p>Typ: {ship.trait}</p>
                 <p>{buildable.buildTimeTicks} Tick(s) pro Einheit</p>
                 <p>Bestand: {data.station.ships[shipType]}</p>
               </div>

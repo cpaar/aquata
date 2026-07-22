@@ -8,6 +8,13 @@
       "when": 1780915132747,
       "tag": "0001_huge_darwin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780947798427,
+      "tag": "0002_daily_loners",
+      "breakpoints": true
     }
   ]
 }

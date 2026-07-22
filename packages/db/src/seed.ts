@@ -5,8 +5,23 @@ import { players, researchStates, rounds, stationShips, stations, users } from "
 
 const databaseUrl = process.env.DATABASE_URL ?? "postgres://aquata:aquata@localhost:55432/aquata";
 
-const dummyShips = { fighter: 0, frigate: 0, harvester: 0, interceptor: 1 };
-const playerShips = { fighter: 1, frigate: 0, harvester: 1, interceptor: 2 };
+const emptyShips = {
+  atlantis: 0,
+  bermuda: 0,
+  blizzard: 0,
+  enterprise: 0,
+  hackboot: 0,
+  hai: 0,
+  harvester: 0,
+  hurricane: 0,
+  kittyHawk: 0,
+  piranha: 0,
+  qualle: 0,
+  taifun: 0,
+  tsunami: 0,
+};
+const dummyShips = { ...emptyShips, piranha: 2, qualle: 1 };
+const playerShips = { ...emptyShips, hai: 1, harvester: 1, piranha: 4, qualle: 2 };
 const playerResources = { aluminium: 500, energy: 300, steel: 400 };
 const playerProduction = [
   { count: 2, id: "aluminium-collector", produces: { aluminium: 6, energy: 0, steel: 0 } },

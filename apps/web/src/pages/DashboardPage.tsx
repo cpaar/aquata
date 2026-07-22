@@ -1,6 +1,12 @@
 import type { ReactElement } from "react";
 
-import { formatLoadout, formatResources, resourceLabels, shipOrder } from "../game/format.js";
+import {
+  formatLoadout,
+  formatResources,
+  resourceLabels,
+  resourceOrder,
+  shipOrder,
+} from "../game/format.js";
 import { useGameSnapshot } from "../game/useGame.js";
 
 export function DashboardPage(): ReactElement {
@@ -23,10 +29,10 @@ export function DashboardPage(): ReactElement {
       </div>
 
       <div className="metric-grid">
-        {Object.entries(data.station.resources).map(([key, value]) => (
-          <article className="metric" key={key}>
-            <span>{resourceLabels[key as keyof typeof resourceLabels]}</span>
-            <strong>{value}</strong>
+        {resourceOrder.map((resourceType) => (
+          <article className="metric" key={resourceType}>
+            <span>{resourceLabels[resourceType]}</span>
+            <strong>{data.station.resources[resourceType]}</strong>
           </article>
         ))}
       </div>
@@ -74,6 +80,10 @@ export function DashboardPage(): ReactElement {
             <strong>{data.activeFleets.length}</strong>
           </div>
           <div className="row">
+            <span>Defense vor Ort</span>
+            <strong>{data.stationedDefenseFleets.length}</strong>
+          </div>
+          <div className="row">
             <span>Dummy-Ziel</span>
             <strong>
               {data.targets[0]
@@ -84,6 +94,14 @@ export function DashboardPage(): ReactElement {
           <div className="row">
             <span>Letzter Bericht</span>
             <strong>{data.recentCombatReports[0]?.report.outcome ?? "keiner"}</strong>
+          </div>
+          <div className="row">
+            <span>Letzter Scan</span>
+            <strong>
+              {data.recentScanReports[0]
+                ? `${data.recentScanReports[0].report.result.position.x}:${data.recentScanReports[0].report.result.position.y}`
+                : "keiner"}
+            </strong>
           </div>
           <div className="row">
             <span>Flottenladung</span>

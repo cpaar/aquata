@@ -1,4 +1,6 @@
 *.sql
+!packages/db/drizzle/0001_huge_darwin.sql
+!packages/db/drizzle/0002_daily_loners.sql
 /data
 /uploads
 /vendor

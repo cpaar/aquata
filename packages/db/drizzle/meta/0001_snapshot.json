@@ -1,6 +1,6 @@
 {
-  "id": "9c3cac55-d3f1-4d9b-b053-11d8a3c609ea",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c822960b-c292-4d8d-b674-bfb70a665fca",
+  "prevId": "9c3cac55-d3f1-4d9b-b053-11d8a3c609ea",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -264,6 +264,27 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "station_ticks": {
+          "name": "station_ticks",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "station_ticks_remaining": {
+          "name": "station_ticks_remaining",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "recalled": {
+          "name": "recalled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "created_at": {
           "name": "created_at",
@@ -532,6 +553,134 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.scan_reports": {
+      "name": "scan_reports",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "round_id": {
+          "name": "round_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scanner_player_id": {
+          "name": "scanner_player_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "target_station_id": {
+          "name": "target_station_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tick_number": {
+          "name": "tick_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "report": {
+          "name": "report",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "scan_reports_round_scanner_idx": {
+          "name": "scan_reports_round_scanner_idx",
+          "columns": [
+            {
+              "expression": "round_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "scanner_player_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "scan_reports_target_idx": {
+          "name": "scan_reports_target_idx",
+          "columns": [
+            {
+              "expression": "target_station_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "scan_reports_round_id_rounds_id_fk": {
+          "name": "scan_reports_round_id_rounds_id_fk",
+          "tableFrom": "scan_reports",
+          "tableTo": "rounds",
+          "columnsFrom": ["round_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "scan_reports_scanner_player_id_players_id_fk": {
+          "name": "scan_reports_scanner_player_id_players_id_fk",
+          "tableFrom": "scan_reports",
+          "tableTo": "players",
+          "columnsFrom": ["scanner_player_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "scan_reports_target_station_id_stations_id_fk": {
+          "name": "scan_reports_target_station_id_stations_id_fk",
+          "tableFrom": "scan_reports",
+          "tableTo": "stations",
+          "columnsFrom": ["target_station_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

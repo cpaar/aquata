@@ -4,7 +4,20 @@ export type ResourceStock = {
   energy: number;
 };
 
-export type ShipType = "fighter" | "interceptor" | "frigate" | "harvester";
+export type ShipType =
+  | "piranha"
+  | "qualle"
+  | "hai"
+  | "hackboot"
+  | "taifun"
+  | "tsunami"
+  | "blizzard"
+  | "hurricane"
+  | "bermuda"
+  | "kittyHawk"
+  | "enterprise"
+  | "atlantis"
+  | "harvester";
 export type ResearchType = "shipbuilding" | "frigateEngineering" | "industrialLogistics";
 
 export type ShipLoadout = Record<ShipType, number>;
@@ -37,6 +50,7 @@ export type ShipDefinition = {
   attack: number;
   durability: number;
   cargo: number;
+  trait: "normal" | "emp" | "firstStrike" | "hack";
 };
 
 export type ResearchDefinition = {
@@ -92,8 +106,8 @@ export type TargetStation = {
 
 export type Fleet = {
   id: string;
-  mission: "attack" | "return";
-  status: "inTransit" | "arrived";
+  mission: "attack" | "defend" | "return";
+  status: "inTransit" | "stationed" | "returning";
   originX: number;
   originY: number;
   destinationX: number;
@@ -101,6 +115,9 @@ export type Fleet = {
   ships: ShipLoadout;
   totalTicks: number;
   remainingTicks: number;
+  stationTicks: number;
+  stationTicksRemaining: number;
+  recalled: boolean;
 };
 
 export type CombatReport = {
@@ -115,6 +132,29 @@ export type CombatReport = {
     defenderLosses: ShipLoadout;
     attackerRemaining: ShipLoadout;
     defenderRemaining: ShipLoadout;
+    participants: Array<{
+      id: string;
+      ownerId: string;
+      role: "attacker" | "defender";
+      source: "fleet" | "station";
+      before: ShipLoadout;
+      losses: ShipLoadout;
+      remaining: ShipLoadout;
+    }>;
+  };
+};
+
+export type ScanReport = {
+  id: string;
+  tickNumber: number;
+  type: "stationScan";
+  report: {
+    result: {
+      position: { x: number; y: number };
+      resources: ResourceStock;
+      ships: ShipLoadout;
+      fleets: Fleet[];
+    };
   };
 };
 
@@ -128,8 +168,10 @@ export type GameSnapshot = {
   round: Round;
   station: Station;
   activeFleets: Fleet[];
+  stationedDefenseFleets: Fleet[];
   targets: TargetStation[];
   recentCombatReports: CombatReport[];
+  recentScanReports: ScanReport[];
 };
 
 export type ApiErrorBody = {

@@ -25,8 +25,21 @@ export function startResearch(payload: { researchId: ResearchType }): Promise<un
 export function sendFleet(payload: {
   targetStationId: string;
   ships: Partial<ShipLoadout>;
+  mission: "attack" | "defend";
+  stationTicks: number;
 }): Promise<unknown> {
   return apiRequest<unknown>("/fleets", {
+    body: JSON.stringify(payload),
+    method: "POST",
+  });
+}
+
+export function recallFleet(fleetId: string): Promise<unknown> {
+  return apiRequest<unknown>(`/fleets/${fleetId}/recall`, { method: "POST" });
+}
+
+export function startScan(payload: { targetStationId: string }): Promise<unknown> {
+  return apiRequest<unknown>("/scans", {
     body: JSON.stringify(payload),
     method: "POST",
   });

@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 
-import { formatLoadout } from "../game/format.js";
+import { formatLoadout, formatResources } from "../game/format.js";
 import { useGameSnapshot } from "../game/useGame.js";
 
 export function ReportsPage(): ReactElement {
@@ -39,6 +39,38 @@ export function ReportsPage(): ReactElement {
                 <strong>{formatLoadout(combatReport.report.attackerLosses)}</strong>
                 <span>Verteidiger Verluste</span>
                 <strong>{formatLoadout(combatReport.report.defenderLosses)}</strong>
+                <span>Beteiligte</span>
+                <strong>
+                  {combatReport.report.participants
+                    ?.map((participant) => `${participant.role}:${participant.source}`)
+                    .join(", ") ?? "keine"}
+                </strong>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="panel">
+        <h3>Scanberichte</h3>
+        <div className="list">
+          {data.recentScanReports.length === 0 ? <p className="muted">Keine Scanberichte</p> : null}
+          {data.recentScanReports.map((scanReport) => (
+            <article className="report" key={scanReport.id}>
+              <div className="report-header">
+                <h3>
+                  Scan bei Tick {scanReport.tickNumber} {scanReport.report.result.position.x}:
+                  {scanReport.report.result.position.y}
+                </h3>
+                <strong data-testid="scan-report">Station</strong>
+              </div>
+              <div className="report-grid">
+                <span>Ressourcen</span>
+                <strong>{formatResources(scanReport.report.result.resources)}</strong>
+                <span>Schiffe</span>
+                <strong>{formatLoadout(scanReport.report.result.ships)}</strong>
+                <span>Sichtbare Flotten</span>
+                <strong>{scanReport.report.result.fleets.length}</strong>
               </div>
             </article>
           ))}

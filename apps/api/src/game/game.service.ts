@@ -5,6 +5,7 @@ import {
   players,
   researchStates,
   rounds,
+  scanReports,
   stationShips,
   stations,
   type AquataDb,
@@ -22,13 +23,17 @@ import {
   mvpResearchDefinitions,
   mvpShipDefinitions,
   normalizeLoadout,
+  recallFleetMovement,
   startBuildOrder,
   startResearch,
+  startStationScan,
   subtractLoadouts,
   type BuildQueueState,
+  type FleetMission,
   type ResearchId,
   type ResearchState,
   type ShipTypeId,
+  type TickStationSnapshot,
 } from "@aquata/domain";
 import { and, asc, count, desc, eq, or } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
@@ -44,7 +49,21 @@ const startProduction: ProductionSource[] = [
   { count: 2, id: "steel-collector", produces: { aluminium: 0, energy: 0, steel: 5 } },
   { count: 1, id: "reactor", produces: { aluminium: 0, energy: 4, steel: 0 } },
 ];
-const startShips: ShipLoadout = { fighter: 1, frigate: 0, harvester: 1, interceptor: 2 };
+const startShips: ShipLoadout = {
+  atlantis: 0,
+  bermuda: 0,
+  blizzard: 0,
+  enterprise: 0,
+  hackboot: 0,
+  hai: 1,
+  harvester: 1,
+  hurricane: 0,
+  kittyHawk: 0,
+  piranha: 4,
+  qualle: 2,
+  taifun: 0,
+  tsunami: 0,
+};
 const startResearchState: ResearchState = { completed: [] };
 
 @Injectable()
@@ -82,6 +101,18 @@ export class GameService {
           and(eq(fleets.roundId, context.round.id), eq(fleets.ownerPlayerId, context.player.id)),
         )
         .orderBy(asc(fleets.createdAt));
+      const stationedDefenseFleets = await tx
+        .select()
+        .from(fleets)
+        .where(
+          and(
+            eq(fleets.roundId, context.round.id),
+            eq(fleets.mission, "defend"),
+            eq(fleets.destinationX, context.station.x),
+            eq(fleets.destinationY, context.station.y),
+          ),
+        )
+        .orderBy(asc(fleets.createdAt));
       const recentCombatReports = await tx
         .select()
         .from(combatReports)
@@ -96,6 +127,17 @@ export class GameService {
         )
         .orderBy(desc(combatReports.tickNumber), desc(combatReports.createdAt))
         .limit(10);
+      const recentScanReports = await tx
+        .select()
+        .from(scanReports)
+        .where(
+          and(
+            eq(scanReports.roundId, context.round.id),
+            eq(scanReports.scannerPlayerId, context.player.id),
+          ),
+        )
+        .orderBy(desc(scanReports.tickNumber), desc(scanReports.createdAt))
+        .limit(10);
 
       return {
         catalog: {
@@ -105,6 +147,7 @@ export class GameService {
         },
         player: context.player,
         recentCombatReports,
+        recentScanReports,
         round: context.round,
         station: {
           ...context.station,
@@ -113,6 +156,7 @@ export class GameService {
           ships: shipsRow?.ships ?? startShips,
         },
         activeFleets,
+        stationedDefenseFleets,
         targets: dummyTargets,
       };
     });
@@ -188,13 +232,21 @@ export class GameService {
     });
   }
 
-  async sendFleet(user: AuthenticatedUser, targetStationId: string, ships: Partial<ShipLoadout>) {
+  async sendFleet(
+    user: AuthenticatedUser,
+    input: {
+      targetStationId: string;
+      ships: Partial<ShipLoadout>;
+      mission?: Exclude<FleetMission, "return">;
+      stationTicks?: number;
+    },
+  ) {
     return this.client.db.transaction(async (tx) => {
       const context = await this.ensurePlayerStation(tx, user);
       const [target] = await tx
         .select()
         .from(stations)
-        .where(eq(stations.id, targetStationId))
+        .where(eq(stations.id, input.targetStationId))
         .limit(1);
       if (!target || target.roundId !== context.round.id) {
         throw new NotFoundException("Target station not found");
@@ -206,7 +258,7 @@ export class GameService {
         .where(eq(stationShips.stationId, context.station.id))
         .limit(1);
       const currentShips = shipsRow?.ships ?? startShips;
-      const requestedShips = normalizeLoadout(ships);
+      const requestedShips = normalizeLoadout(input.ships);
       if (isFleetEmpty(requestedShips)) {
         throw new BadRequestException("Fleet must contain at least one ship");
       }
@@ -216,10 +268,11 @@ export class GameService {
         const movement = createFleetMovement({
           destination: { x: target.x, y: target.y },
           id: randomUUID(),
-          mission: "attack",
+          mission: input.mission ?? "attack",
           origin: { x: context.station.x, y: context.station.y },
           ownerId: context.player.id,
           ships: requestedShips,
+          stationTicks: input.stationTicks ?? 1,
         });
 
         await tx
@@ -237,11 +290,151 @@ export class GameService {
           remainingTicks: movement.remainingTicks,
           roundId: context.round.id,
           ships: movement.ships,
+          recalled: movement.recalled,
+          stationTicks: movement.stationTicks,
+          stationTicksRemaining: movement.stationTicksRemaining,
           status: movement.status,
           totalTicks: movement.totalTicks,
         });
 
         return { fleet: movement, ships: remainingShips };
+      } catch (error) {
+        throw commandError(error);
+      }
+    });
+  }
+
+  async recallFleet(user: AuthenticatedUser, fleetId: string) {
+    return this.client.db.transaction(async (tx) => {
+      const context = await this.ensurePlayerStation(tx, user);
+      const [fleet] = await tx
+        .select()
+        .from(fleets)
+        .where(
+          and(
+            eq(fleets.id, fleetId),
+            eq(fleets.roundId, context.round.id),
+            eq(fleets.ownerPlayerId, context.player.id),
+          ),
+        )
+        .limit(1);
+      if (!fleet) {
+        throw new NotFoundException("Fleet not found");
+      }
+
+      try {
+        const recalled = recallFleetMovement({
+          destination: { x: fleet.destinationX, y: fleet.destinationY },
+          id: fleet.id,
+          mission: fleet.mission as FleetMission,
+          origin: { x: fleet.originX, y: fleet.originY },
+          ownerId: fleet.ownerPlayerId,
+          recalled: fleet.recalled,
+          remainingTicks: fleet.remainingTicks,
+          ships: normalizeLoadout(fleet.ships),
+          stationTicks: fleet.stationTicks,
+          stationTicksRemaining: fleet.stationTicksRemaining,
+          status: fleet.status as "inTransit" | "stationed" | "returning",
+          totalTicks: fleet.totalTicks,
+        });
+        const [updated] = await tx
+          .update(fleets)
+          .set({
+            destinationX: recalled.destination.x,
+            destinationY: recalled.destination.y,
+            originX: recalled.origin.x,
+            originY: recalled.origin.y,
+            recalled: recalled.recalled,
+            remainingTicks: recalled.remainingTicks,
+            status: recalled.status,
+          })
+          .where(eq(fleets.id, fleet.id))
+          .returning();
+        return { fleet: updated };
+      } catch (error) {
+        throw commandError(error);
+      }
+    });
+  }
+
+  async startScan(user: AuthenticatedUser, targetStationId: string) {
+    return this.client.db.transaction(async (tx) => {
+      const context = await this.ensurePlayerStation(tx, user);
+      const [target] = await tx
+        .select()
+        .from(stations)
+        .where(eq(stations.id, targetStationId))
+        .limit(1);
+      if (!target || target.roundId !== context.round.id) {
+        throw new NotFoundException("Target station not found");
+      }
+      const [targetPlayer] = await tx
+        .select()
+        .from(players)
+        .where(eq(players.id, target.playerId))
+        .limit(1);
+      const [targetShips] = await tx
+        .select()
+        .from(stationShips)
+        .where(eq(stationShips.stationId, target.id))
+        .limit(1);
+      if (!targetPlayer || !targetShips) {
+        throw new NotFoundException("Target station not found");
+      }
+      const visibleFleets = await tx
+        .select()
+        .from(fleets)
+        .where(eq(fleets.roundId, context.round.id));
+      const targetSnapshot: TickStationSnapshot = {
+        buildQueue: { orders: [] },
+        id: target.id,
+        ownerId: targetPlayer.id,
+        position: { x: target.x, y: target.y },
+        production: target.production,
+        research: { completed: [] },
+        resources: target.resources,
+        ships: normalizeLoadout(targetShips.ships),
+      };
+
+      try {
+        const reportId = randomUUID();
+        const result = startStationScan(context.station.resources, {
+          id: reportId,
+          scannerPlayerId: context.player.id,
+          target: targetSnapshot,
+          tickNumber: context.round.currentTick,
+          visibleFleets: visibleFleets.map((fleet) => ({
+            destination: { x: fleet.destinationX, y: fleet.destinationY },
+            id: fleet.id,
+            mission: fleet.mission as FleetMission,
+            origin: { x: fleet.originX, y: fleet.originY },
+            ownerId: fleet.ownerPlayerId,
+            recalled: fleet.recalled,
+            remainingTicks: fleet.remainingTicks,
+            ships: normalizeLoadout(fleet.ships),
+            stationTicks: fleet.stationTicks,
+            stationTicksRemaining: fleet.stationTicksRemaining,
+            status: fleet.status as "inTransit" | "stationed" | "returning",
+            totalTicks: fleet.totalTicks,
+          })),
+        });
+        await tx
+          .update(stations)
+          .set({ resources: result.resources })
+          .where(eq(stations.id, context.station.id));
+        const [created] = await tx
+          .insert(scanReports)
+          .values({
+            id: reportId,
+            report: result.report,
+            roundId: context.round.id,
+            scannerPlayerId: context.player.id,
+            targetStationId: target.id,
+            tickNumber: context.round.currentTick,
+            type: result.report.type,
+          })
+          .returning();
+        return { report: created, resources: result.resources };
       } catch (error) {
         throw commandError(error);
       }

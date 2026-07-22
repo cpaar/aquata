@@ -24,7 +24,7 @@ describe("research and unlocks", () => {
     );
   });
 
-  it("starts, advances, completes, and exposes unlocks", () => {
+  it("starts, advances, completes, and exposes Phase 4 ship unlocks", () => {
     const started = startResearch({ completed: [] }, "shipbuilding", {
       aluminium: 1_000,
       energy: 1_000,
@@ -39,10 +39,10 @@ describe("research and unlocks", () => {
 
     const completed = advanceResearch(afterOneTick);
     expect(completed).toEqual({ completed: ["shipbuilding"] });
-    expect(isUnlocked(completed, { kind: "none" }, { kind: "ship", shipTypeId: "fighter" })).toBe(
+    expect(isUnlocked(completed, { kind: "none" }, { kind: "ship", shipTypeId: "piranha" })).toBe(
       true,
     );
-    expect(isUnlocked(completed, { kind: "none" }, { kind: "ship", shipTypeId: "frigate" })).toBe(
+    expect(isUnlocked(completed, { kind: "none" }, { kind: "ship", shipTypeId: "taifun" })).toBe(
       false,
     );
   });
@@ -53,43 +53,42 @@ describe("FIFO build queue", () => {
     const queue: BuildQueueState = { orders: [] };
     const resources = { aluminium: 500, energy: 500, steel: 500 };
 
-    expect(canStartBuild(resources, "fighter", 2)).toBe(true);
+    expect(canStartBuild(resources, "piranha", 2)).toBe(true);
 
     const result = startBuildOrder(queue, resources, {
-      buildableId: "fighter",
+      buildableId: "piranha",
       id: "build-1",
       quantity: 2,
     });
 
-    expect(result.resources).toEqual({ aluminium: 340, energy: 460, steel: 420 });
+    expect(result.resources).toEqual({ aluminium: 350, energy: 500, steel: 500 });
     expect(result.queue.orders).toEqual([
-      { buildableId: "fighter", id: "build-1", quantity: 2, remainingTicks: 4 },
+      { buildableId: "piranha", id: "build-1", quantity: 2, remainingTicks: 2 },
     ]);
   });
 
   it("advances only the first order until it completes", () => {
     const queue: BuildQueueState = {
       orders: [
-        { buildableId: "fighter", id: "build-1", quantity: 1, remainingTicks: 2 },
-        { buildableId: "interceptor", id: "build-2", quantity: 1, remainingTicks: 1 },
+        { buildableId: "hai", id: "build-1", quantity: 1, remainingTicks: 3 },
+        { buildableId: "qualle", id: "build-2", quantity: 1, remainingTicks: 1 },
       ],
     };
 
     const afterOneTick = advanceBuildQueue(queue);
     expect(afterOneTick.completed).toEqual([]);
     expect(afterOneTick.queue.orders[0]).toEqual({
-      buildableId: "fighter",
+      buildableId: "hai",
       id: "build-1",
       quantity: 1,
-      remainingTicks: 1,
+      remainingTicks: 2,
     });
 
-    const afterSecondTick = advanceBuildQueue(afterOneTick.queue);
-    expect(afterSecondTick.completed).toEqual([
-      { orderId: "build-1", output: { fighter: 1, frigate: 0, harvester: 0, interceptor: 0 } },
-    ]);
-    expect(afterSecondTick.queue.orders).toEqual([
-      { buildableId: "interceptor", id: "build-2", quantity: 1, remainingTicks: 1 },
+    const afterThirdTick = advanceBuildQueue(afterOneTick.queue, 2);
+    expect(afterThirdTick.completed[0]).toMatchObject({ orderId: "build-1" });
+    expect(afterThirdTick.completed[0]?.output.hai).toBe(1);
+    expect(afterThirdTick.queue.orders).toEqual([
+      { buildableId: "qualle", id: "build-2", quantity: 1, remainingTicks: 1 },
     ]);
   });
 
@@ -97,17 +96,16 @@ describe("FIFO build queue", () => {
     const result = advanceBuildQueue(
       {
         orders: [
-          { buildableId: "interceptor", id: "build-1", quantity: 1, remainingTicks: 1 },
-          { buildableId: "interceptor", id: "build-2", quantity: 1, remainingTicks: 1 },
+          { buildableId: "piranha", id: "build-1", quantity: 1, remainingTicks: 1 },
+          { buildableId: "qualle", id: "build-2", quantity: 1, remainingTicks: 1 },
         ],
       },
       2,
     );
 
-    expect(result.completed).toEqual([
-      { orderId: "build-1", output: { fighter: 0, frigate: 0, harvester: 0, interceptor: 1 } },
-      { orderId: "build-2", output: { fighter: 0, frigate: 0, harvester: 0, interceptor: 1 } },
-    ]);
+    expect(result.completed.map((completed) => completed.orderId)).toEqual(["build-1", "build-2"]);
+    expect(result.completed[0]?.output.piranha).toBe(1);
+    expect(result.completed[1]?.output.qualle).toBe(1);
     expect(result.queue.orders).toEqual([]);
   });
 });

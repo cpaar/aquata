@@ -18,9 +18,18 @@ export type ResourceStock = {
 };
 
 export type ShipLoadout = {
-  fighter: number;
-  interceptor: number;
-  frigate: number;
+  piranha: number;
+  qualle: number;
+  hai: number;
+  hackboot: number;
+  taifun: number;
+  tsunami: number;
+  blizzard: number;
+  hurricane: number;
+  bermuda: number;
+  kittyHawk: number;
+  enterprise: number;
+  atlantis: number;
   harvester: number;
 };
 
@@ -45,6 +54,7 @@ export type BuildOrderSnapshot = {
 };
 
 export type CombatReportSnapshot = Record<string, unknown>;
+export type ScanReportSnapshot = Record<string, unknown>;
 
 export const rounds = pgTable("rounds", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -176,6 +186,9 @@ export const fleets = pgTable(
     ships: jsonb("ships").$type<ShipLoadout>().notNull(),
     totalTicks: integer("total_ticks").notNull(),
     remainingTicks: integer("remaining_ticks").notNull(),
+    stationTicks: integer("station_ticks").notNull().default(1),
+    stationTicksRemaining: integer("station_ticks_remaining").notNull().default(1),
+    recalled: boolean("recalled").notNull().default(false),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index("fleets_round_status_idx").on(table.roundId, table.status)],
@@ -199,6 +212,30 @@ export const combatReports = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index("combat_reports_round_tick_idx").on(table.roundId, table.tickNumber)],
+);
+
+export const scanReports = pgTable(
+  "scan_reports",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    roundId: uuid("round_id")
+      .notNull()
+      .references(() => rounds.id, { onDelete: "cascade" }),
+    scannerPlayerId: uuid("scanner_player_id")
+      .notNull()
+      .references(() => players.id, { onDelete: "cascade" }),
+    targetStationId: uuid("target_station_id").references(() => stations.id, {
+      onDelete: "set null",
+    }),
+    tickNumber: integer("tick_number").notNull(),
+    type: varchar("type", { length: 32 }).notNull(),
+    report: jsonb("report").$type<ScanReportSnapshot>().notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("scan_reports_round_scanner_idx").on(table.roundId, table.scannerPlayerId),
+    index("scan_reports_target_idx").on(table.targetStationId),
+  ],
 );
 
 export const tickRuns = pgTable(

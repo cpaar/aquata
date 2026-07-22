@@ -6,12 +6,35 @@ export const resourceLabels: Record<keyof ResourceStock, string> = {
   steel: "Stahl",
 };
 
-export const shipOrder = ["interceptor", "fighter", "frigate", "harvester"] as const;
+export const resourceOrder = ["aluminium", "steel", "energy"] as const;
+
+export const shipOrder = [
+  "piranha",
+  "qualle",
+  "hai",
+  "hackboot",
+  "taifun",
+  "tsunami",
+  "blizzard",
+  "hurricane",
+  "bermuda",
+  "kittyHawk",
+  "enterprise",
+  "atlantis",
+  "harvester",
+] as const;
 
 export const researchOrder = ["shipbuilding", "frigateEngineering", "industrialLogistics"] as const;
 
 export function formatResources(resources: ResourceStock): string {
   return `${resources.aluminium} Alu / ${resources.steel} Stahl / ${resources.energy} Energie`;
+}
+
+export function formatCost(resources: ResourceStock): string {
+  const parts = resourceOrder
+    .filter((resourceType) => resources[resourceType] > 0)
+    .map((resourceType) => `${resources[resourceType]} ${resourceLabels[resourceType]}`);
+  return parts.length > 0 ? parts.join(" / ") : "kostenlos";
 }
 
 export function formatLoadout(loadout: Partial<ShipLoadout>): string {
