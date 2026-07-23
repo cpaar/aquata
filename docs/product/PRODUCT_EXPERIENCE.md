@@ -48,7 +48,9 @@ Most routine activity should still be local because shorter commitments, nearby 
 
 The map separates visible economic geography from the uncertain tactical picture. Resource nodes and the basic geography needed for strategic station placement are visible enough to compare locations. Foreign stations, fleets, movements, and activity are not automatically exposed by that geographic layer.
 
-A player initially detects tactical contacts only within limited reconnaissance reach and sees few coarse facts about them. Reconnaissance progression expands both detection range and the quality of those first observations, while a targeted scan turns a possible lead into more precise, time-stamped intelligence. Alliance discoveries and shared scans can extend the known operational picture beyond a player's personal reach.
+A player initially detects tactical contacts only within the passive sensor field around their station and sees few coarse facts about them. Research primarily expands this field. Persistent energy allocation improves passive observation or strengthens countermeasures, while stored energy powers manual scans.
+
+The map supports a clear intelligence ladder: passive contacts create local leads, a sector scan searches a selected area for distant contacts or opportunities, and a targeted deep scan produces more precise, time-stamped intelligence about a detected contact. A passive fleet contact begins with no more than a known origin where available, direction, and broad size class. Exact destination and composition require stronger information. Alliance discoveries and shared scans can extend the known operational picture beyond a player's personal reach.
 
 Exploration must create target-finding decisions without becoming manual grid sweeping. The command view and map should surface a manageable set of leads such as nearby contacts, activity signals, resource-rich areas, neutral opportunities, and intelligence shared by allies. Rankings may provide strategic context and prestige, but must not replace reconnaissance with an exact, live target directory.
 

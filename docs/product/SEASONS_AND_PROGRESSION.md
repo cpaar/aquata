@@ -229,11 +229,90 @@ The opening must not become identical compulsory chores every season. Variation 
 
 ## Command ship as progression anchor
 
-The command ship is both a combat unit and the player's primary seasonal progression avatar. Choosing its archetype is a defining strategic commitment: its type, skills, and modules shape the value and behavior of the player's fleets and therefore influence the whole style of play rather than adding a small universal bonus.
+The command ship is both a combat unit and the player's primary seasonal progression avatar. Choosing its archetype is a defining strategic commitment: its type, specialization, and modules shape the value and behavior of the player's fleets and therefore influence the whole style of play rather than adding a small universal bonus.
+
+Aquata retains three strong command-ship archetypes:
+
+- **Fight** makes the command ship and its fleet unusually capable in direct engagements, including credible answers to heavy warships.
+- **Support** improves the effectiveness of allied ships participating in the same operation and becomes especially valuable through coordinated team play.
+- **Economy** creates strong economic potential through resource, recovery, salvage, and related logistical advantages.
+
+These concise functional names are the canonical archetype labels. A localized interface may present them as Kampf, Support, and Wirtschaft without changing their identity or rules.
+
+Reconnaissance is not a fourth command-ship archetype in the initial model. Passive sensors, manual scans, intelligence sharing, and their basic progression are available to every player through station systems, research, fleets, and modules. A dedicated reconnaissance archetype may be reconsidered in a later expansion only if the universal system first demonstrates enough distinct active play to support a full seasonal identity.
+
+An archetype is a hard identity rather than a loose starting bonus. A command ship should not spend incidental leftover points on weak versions of the other two roles, and modules must not turn it into a near-equivalent of another archetype.
+
+Each archetype's essential capabilities advance as part of its core progression. Obvious mandatory skills should not masquerade as choices. Beyond that core, the player chooses among a small number of consequential specializations within the archetype and develops one of them deeply. This preserves individual mastery while making an alliance's deliberate combination of command-ship roles and specialists strategically important.
+
+Command-ship progression combines automatic strength with controlled personal allocation. Every level advances the reliable core of the chosen archetype and also contributes to a single archetype-specific development pool. Those points tune only published build axes inside that archetype; there are no separate Fight, Support, Economy, and universal pools that leave every ship with incidental off-role points. A player never spends these points merely to keep the command ship functional.
+
+The experience curve starts quickly and becomes increasingly steep, creating a practical soft cap rather than a normally reachable hard stop. The command ship can remain a source of advancement and seasonal comparison throughout the round, while increasingly expensive levels slow runaway power. After a short period of core growth, major progression milestones introduce the ship's specialization and a small number of further consequential choices. Regular development points provide continuous authorship between those milestones; modules remain the reconfigurable tactical layer.
+
+Experience comes from resolved, meaningful operations in which the physical command ship participates. Combat rewards reflect real stakes and relative opposition rather than a binary victory flag, and a credible defeat may still grant experience so risk-taking is not reserved for players already ahead. Fight and Support ships primarily grow through qualifying combat operations; Economy ships may also grow through qualifying routes, expeditions, salvage, and risky deliveries. Passive production, elapsed time, repetitive trivial orders, and a recurring training button do not grant command-ship experience or development points.
+
+The initial model has no parallel time-generated command-ship skill tree, universal-point drip, decaying training value, or bonus that compounds future command-ship experience merely because the player already has more experience. Achievements and the command-ship award may recognize exceptional development without feeding that recognition back into faster command-ship progression.
+
+### Fight core and specializations
+
+The Fight command ship fights automatically and grows into an unusually powerful combatant. Its automatic core progression develops its own firepower and durability, preserves reliable damage and accuracy without target-class penalties, and lets the player adjust target priorities. These capabilities make the ship broadly dangerous without requiring mandatory skill purchases.
+
+Every Fight command ship can switch between normal and EMP cannon modes without changing specialization or rebuilding its progression. Invested weapon strength is translated into the selected mode, preserving the historical ability to adapt the same developed command ship to the current tactical problem.
+
+Its initial specialization choice is between two deep directions:
+
+- **Assault** emphasizes direct damage, penetration, and quickly destroying prioritized targets.
+- **Disruption** emphasizes EMP effectiveness, suppression, and temporarily limiting particularly dangerous targets.
+
+Specialization creates excellence rather than exclusion: an Assault ship retains a useful EMP mode, and a Disruption ship can still use normal cannons for direct damage.
+
+Weapon distribution is a separate build axis shared by both specializations. Fewer stronger cannons concentrate effect against valuable or durable targets, while more weaker cannons distribute effect across small targets and reduce wasted overkill. Modules may sharpen either architecture without turning it into a third specialization.
+
+Area effects are initially a bounded module option rather than a universal third cannon mode. An Assault build may spread damage and a Disruption build may spread EMP, but every area effect needs explicit target or total-effect limits so fleet size cannot make it the automatic endgame choice.
+
+### Support core and specializations
+
+The Support command ship multiplies the value of allied ships participating in the same operation rather than relying primarily on its own direct damage. Its automatic core progression strengthens its general support capability while retaining useful armament and defenses, so it can protect itself and answer light threats without becoming a Fight command ship.
+
+Its initial specialization choice is between two deep directions:
+
+- **Offensive** improves allied attack performance through effects such as firepower, target acquisition or hit chance, and coordinated focus fire.
+- **Defensive** improves allied survival through effects such as shields, evasion, EMP resistance, and protection against concentrated attacks.
+
+Specific support protocols and modules may emphasize different effect categories within either specialization. This lets coordinated allies complement one another instead of every Support command ship converging on the same build.
+
+Equivalent Support effects use diminishing returns when several command ships affect the same operation. The strongest contribution remains fully relevant and additional overlapping contributions add progressively less value; they are not discarded merely because a stronger ally is present. Different effect categories do not suppress one another, so an offensive and a defensive specialist, or two specialists emphasizing different protocols, can combine efficiently. The exact diminishing-returns curve remains a balancing parameter and may need to fall faster as more overlapping command ships join an operation.
+
+### Economy core and specializations
+
+The Economy command ship automatically develops a useful baseline in resource and collector efficiency, salvage and economic expedition efficiency, the economic yield of successful operations, and self-defense armament. The historical resource and salvage bonuses are part of the archetype's core identity rather than mandatory skill purchases.
+
+Its initial specialization choice is between two deep directions:
+
+- **Production** emphasizes reliable long-term growth through resource nodes, collector routes, processing, and potentially more efficient Plutonium-to-energy conversion or storage.
+- **Recovery** emphasizes value preserved or recovered through battle salvage, ruins, expeditions, rebuilding after losses, and the economic outcome of risky operations.
+
+Recovery must reward participation and resilient play without making arranged destruction or intentionally wasteful losses profitable. Production and Recovery remain economic identities; neither absorbs the universal reconnaissance system.
+
+Logistics is initially a module theme rather than a third specialization. Cargo capacity, fuel processing, expedition reach, salvage equipment, or reactor improvements may adapt either Economy build without becoming another catch-all progression branch. A third specialization should be added only if later play demonstrates a distinct full-season doctrine.
+
+A module loadout provides tactical adaptation without replacing archetype or specialization. Modules should create visible operational differences rather than accumulate many minor passive percentages or consume capacity merely to keep the command ship functional. The exact number of slots or other loadout limit remains open. Multiple command ships of the same archetype must remain useful through different specializations, loadouts, or contributions; a weaker participant should not become irrelevant solely because an ally brings a stronger version of the same broad effect. Support overlap follows the diminishing-returns model above rather than a finite support network or a highest-bonus-only rule.
+
+Modules are seasonal unlocks rather than fragile loot. Once a player unlocks a module, it remains available for the rest of that season and cannot be lost through combat, command-ship destruction, or loadout changes.
+
+Module acquisition combines three complementary paths:
+
+- targeted missions provide agency by pursuing a known module or category,
+- incidental discoveries during meaningful fleet activity provide surprise without rewarding spammed trivial orders,
+- cumulative activity points provide dependable progress, with at most one credit per active calendar day and no streak or reset after a missed day.
+
+An activity milestone grants a module choice or a choice from a small revealed selection rather than a blind random draw. An already unlocked module cannot be awarded again. Targeted missions provide a route for late entrants and players with missed activity days to catch up rather than leaving attendance as an irreversible seasonal advantage.
+
+Module discovery must never become a premium or gacha system. Players cannot buy modules, random draws, rerolls, additional attempts, or faster unlock progress. Any random discovery exists inside a finite, understandable seasonal system rather than an open-ended paid or grindable pulling loop.
 
 Its strongest tactical effects require the command ship to participate in the relevant operation. A fleet sent without it remains useful, but lacks the command profile that makes the player's main force distinctive. Because the command ship can accompany only selected commitments, its location creates a strategic choice about where the player's full strength and specialized capabilities are exposed.
 
-Command-ship growth should come primarily from meaningful participation in combat and operations, tying advancement to commitment and risk instead of passive time alone. The exact archetypes, skill structure, modules, progression metric, reset details, and destruction consequences remain open.
+The exact experience curve, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and destruction consequences remain open.
 
 ## Reset contract
 

@@ -86,6 +86,11 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Check loading, empty, error, disabled, and recovery states.
 - Avoid asserting the obsolete page structure when the product flow is being redesigned.
 - Verify the map distinguishes unknown space, coarse contacts, and scanned intelligence without leaking authoritative hidden state.
+- Test passive sensor boundaries before and after research, including detected-station launches and arrivals, fleet paths that enter or miss the field, and contacts becoming stale.
+- Prove a passive movement contact reveals only its earned origin, direction, and size band and never leaks exact destination, mission, or composition.
+- Verify sector and deep scans spend stored energy atomically, persist time-stamped intelligence at the correct tier, and respect distance, research, countermeasures, ownership, and sharing permissions.
+- Prove identical scan inputs produce the same result tier and cannot be improved through repeated retries without a relevant state or committed-energy change.
+- Verify Plutonium conversion and persistent sensor, countermeasure, and reserve allocation conserve resources through ticks, retries, concurrent updates, and depleted storage.
 - Verify the placement view exposes the intended resource geography without revealing foreign tactical state.
 - Verify target leads are usable on mobile without requiring exhaustive manual grid sweeping.
 
@@ -130,6 +135,24 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Verify the economy snapshot reacts to collector construction, theft, and loss before the lock, assigns every eligible collector exactly once, and ignores all changes after the lock.
 - Verify achievement ranking compares completed achievements first, total levels second, and first-attainment time third.
 - Prove seasonal achievement progress resets while persistent profile recognition survives and contributes no next-season ranking or power.
+- Verify each command-ship archetype receives its defined core progression without spending choices on mandatory capabilities, while specialization choices and module loadouts remain distinct.
+- Verify every level grants its versioned automatic core reward and archetype-bound development entitlement exactly once, and that no archetype can spend development points on another archetype's axes.
+- Test the experience curve is monotonic, increasingly expensive across its published ranges, and has no unintended reachable hard stop or overflow during a full simulated season.
+- Verify credible victories and defeats can both grant combat experience from published stakes and opposition rules, while absent command ships, passive time, production ticks, recurring training actions, trivial orders, duplicate outcomes, and arranged repeats grant none.
+- Verify qualifying Fight, Support, and Economy operations use comparable authoritative progression rules without allocating Support experience solely by escort fleet value or forcing Economy progression through combat.
+- Prove achievements and command-ship ranking recognition cannot increase later command-ship experience rates or mint development points.
+- Verify Fight command ships retain the published target-class effectiveness and target-priority behavior in both normal and EMP modes, with no specialization respec or duplicated progression created by switching modes.
+- Test Assault and Disruption excellence without making the alternate cannon mode useless; cover both few-strong and many-weak cannon distributions, overkill behavior, target ordering, and every permitted reconfiguration stage.
+- Prove AoE modules respect their target and total-effect bounds in small and endgame-scale battles and do not multiply output without limit as the opposing fleet grows.
+- Verify offensive and defensive Support effects apply only while the command ship participates in the relevant operation, combine independently across different effect categories, and use the published deterministic diminishing-returns curve within the same category.
+- Prove every additional overlapping Support command ship still contributes positive value while identical-effect mass stacking remains bounded and cannot bypass modifier caps through ordering, join timing, or operation composition.
+- Verify Production and Recovery modify only their published Economy capabilities, while logistics modules adapt either build without silently creating a third progression branch.
+- Prove passive production ticks never grant Economy command-ship experience; qualifying routes, expeditions, salvage, and risky deliveries grant it at most once under the published participation rules.
+- Test arranged battles, repeated recovery, duplicate reports, and deliberately wasteful losses cannot produce net-positive resources or farm Economy progression.
+- Prove modules cannot reproduce another archetype's defining role and that supported combinations of similar command ships contribute according to the published overlap rules.
+- Prove a seasonal module unlock is granted at most once per qualifying event, cannot duplicate an existing unlock, remains available after loadout changes or command-ship destruction, and disappears from competitive state at season reset.
+- Verify retries, concurrent claims, repeated logins, or repeated fleet commands cannot duplicate an unlock or activity credit beyond the published acquisition rule.
+- Verify an activity milestone offers an authoritative revealed choice rather than a blind draw and that missing a calendar day never resets accumulated progress.
 - Verify the published command-ship comparison uses only authoritative seasonal progression facts and remains stable after the standings lock.
 - Prove personal achievement levels never enter an alliance award total.
 - Prove command-ship development never enters an alliance award total.

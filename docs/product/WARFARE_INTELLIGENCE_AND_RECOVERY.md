@@ -45,7 +45,44 @@ Information is a resource with:
 - sharing permissions,
 - possible countermeasures.
 
-Scans may reveal resources, fleet composition, command-ship capabilities, production, or movement. Scan defense and skills may reduce precision, hide facts, delay information, or create misleading confidence.
+Reconnaissance begins with three layers rather than a global directory of targets.
+
+### Passive sensor field
+
+Every station maintains a passive sensor field around its position. Research primarily expands its radius. Within that radius, the player automatically receives coarse contacts for nearby stations, launches and arrivals at detected stations, fleets crossing the field, ruins, anomalies, and other possible opportunities.
+
+Passive contact data creates leads rather than complete answers. The initial fleet-movement baseline is a known origin when that station is already identified, direction, and a broad size class. It does not reveal the exact destination, ship composition, or mission. Previously observed geography may remain on the map while tactical contacts and activity become stale when they are no longer observed.
+
+Continuous energy assigned to sensors improves observation quality or refresh behavior inside the researched field. It does not freely redefine the field's radius; this keeps the boundary understandable while research remains the main source of passive reach.
+
+### Sector scan
+
+A manual sector scan spends stored energy to investigate a selected area at or beyond passive sensor reach. It may reveal previously unknown stations, movement contacts, ruins, resource opportunities, anomalies, and possible module-related missions. Sector scans make distant discovery possible without restoring the historical ability to select every player from a fully exposed map or ranking.
+
+### Targeted deep scan
+
+A detected contact can receive a manual deep scan. The player chooses an intelligence focus rather than invoking a separate unrelated subsystem for every report:
+
+- economy and resources,
+- fleets,
+- command ship and production,
+- current movement.
+
+The result is a time-stamped report with a defined detail level, ranges, unknown fields, and confidence. A current-movement focus does not copy the target's private event history as the historical news scan did. Scans and discovered contacts may be shared through explicit alliance permissions.
+
+Scan strength, distance, research, and the target's countermeasure allocation determine the information tier. An unchanged scan against unchanged defenses should not be repeatable until a random attempt succeeds. Strong defense degrades precision or conceals fields rather than making fabricated exact values the default. More elaborate decoys and deliberate misinformation may be added later only if their counterplay remains understandable.
+
+### Reconnaissance energy
+
+The station converts Plutonium into a stored energy resource. Production rate, efficiency, and storage can grow through progression. The player maintains a persistent allocation policy for generated energy between:
+
+- passive sensors,
+- countermeasures,
+- storage for manual scans.
+
+Countermeasures reduce the quality of hostile scans and movement signatures. They do not make a nearby permanent station unconditionally invisible. The allocation continues without repeated manual input and must expose its Plutonium cost and expected energy flow before confirmation.
+
+This reconnaissance foundation is universal rather than gated behind a dedicated command-ship archetype. Research, fleets, station systems, and modules may improve or modify it, but every player can participate in discovery, scanning, counterintelligence, and intelligence sharing. A fourth reconnaissance command ship is outside the initial model and may be reconsidered later.
 
 Players must be able to tell:
 

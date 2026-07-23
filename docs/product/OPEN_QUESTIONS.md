@@ -32,8 +32,10 @@ This file contains only unresolved questions that materially affect the product.
 - Which exact eligibility rules and cost make rare station relocation fair, using roughly forty-eight hours of resource production as the historical reference?
 - How do coordinated group placement and map capacity work without turning the opening into a fastest-click reservation race?
 - How does map size and available placement space adapt to the season's player population?
-- Which coarse facts and activity signals does a detected contact reveal before a targeted scan?
-- How do reconnaissance range and initial observation quality grow through seasonal progression?
+- Which exact radii, refresh intervals, size bands, and confidence levels define passive sensor progression?
+- How much do sensor-energy allocation and research improve passive observation without making their effects hard to predict?
+- What range, area, cost, duration, and result tiers govern a manual sector scan?
+- Which exact fields and information tiers belong to each deep-scan focus?
 - How should travel scale so local targets remain the everyday choice while deliberate long-distance operations stay viable?
 - How are neutral targets, ruins, and new opportunities placed, discovered, depleted, and renewed?
 - How does the game keep exploration useful without turning it into repetitive map sweeping?
@@ -51,6 +53,7 @@ This file contains only unresolved questions that materially affect the product.
 
 - Which early decisions create different viable openings?
 - What is the relationship between station, collectors, resources, research, and command ship?
+- Which Plutonium conversion rate, energy storage curve, and persistent allocation controls make reconnaissance energy consequential without requiring constant adjustment?
 - Which capabilities unlock through research, command-ship development, achievements, or seasonal choices?
 - How do neutral targets and PvP targets divide early growth and recovery?
 - How is repetitive early-round execution reduced without removing the competitive opening race?
@@ -65,7 +68,7 @@ This file contains only unresolved questions that materially affect the product.
 - How severe should a catastrophic defeat be, and what is the desired recovery time?
 - How do repeated attacks and farming interact with protection?
 - Which transparent measure defines attack eligibility and maximum commitment?
-- How much misinformation can scan defense create before outcomes feel arbitrary?
+- Which later decoy or misinformation mechanics add readable counterplay beyond the initial defense model of lower precision and concealed fields?
 
 ## Operations and alliances
 
@@ -86,9 +89,20 @@ This file contains only unresolved questions that materially affect the product.
 ## Command ship
 
 - Which parts of command-ship progression reset?
-- Which archetypes, skills, and modules create genuinely different fleet doctrines?
-- Which operations count as meaningful participation for command-ship progression?
-- How do modules and skills create identity without compounding permanent power?
+- Which experience curve, development-point cadence, and specialization milestone levels produce fast early growth and a durable seasonal soft cap?
+- Which archetype-specific point allocations preserve personal authorship without recreating mandatory stats or off-role leftovers?
+- Which modules give each of the three established archetype specializations multiple consequential builds without eroding their roles?
+- Which operation-value, opposition, contribution, and repeat-participant rules define meaningful command-ship progression and reject arranged farming?
+- At which operation stages may a Fight command ship change target priorities or switch normal and EMP modes, and when does the change take effect?
+- How freely may a Fight command ship redistribute between fewer strong and more weak cannons, and how are AoE target and total-effect limits bounded?
+- Which exact milestones distinguish the Economy ship's Production and Recovery specializations?
+- Which Economy effects require the command ship to be docked, accompany an operation, or merely remain operational?
+- How are salvage and recovery rewards bounded so arranged or intentionally wasteful losses cannot generate profit or farm progression?
+- How many modules may be equipped, and is the limit expressed as slots, capacity, compatibility, or another constraint?
+- Which activity threshold, mission costs, discovery probabilities, and catch-up rate govern the three module-acquisition paths?
+- How much of the seasonal module catalog and its distribution changes between seasons?
+- When and at what cost may modules or specializations be changed?
+- What diminishing-returns curve and effect-category boundaries keep overlapping Support command ships useful without making mass stacking optimal?
 - What happens when a command ship is destroyed?
 
 ## Community

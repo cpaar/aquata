@@ -46,6 +46,8 @@ Routine production should be understandable and largely automatic after a decisi
 
 Players use scans, observation, previous combat reports, map context, alliance knowledge, and opponent behavior to form a picture that is never perfectly certain.
 
+Passive station sensors surface nearby contacts and movement opportunities without requiring constant manual map sweeps. A manual sector scan searches beyond that local picture, while a targeted deep scan turns a detected lead into focused intelligence about economy, fleets, command-ship and production state, or current movement. These actions draw on energy produced from Plutonium and stored through the player's persistent balance between sensors, countermeasures, and scan reserve.
+
 Useful intelligence includes:
 
 - resources and economic attractiveness,
