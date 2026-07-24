@@ -9,16 +9,17 @@ Aquata is currently in product rediscovery. The existing code proves technical m
 ## Reading order
 
 1. product/VISION.md
-2. product/CORE_LOOP.md
-3. product/ECONOMY_AND_GROWTH.md
-4. product/SEASONS_AND_PROGRESSION.md
-5. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
-6. product/COMMUNITY_AND_SOCIAL_PLAY.md
-7. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
-8. product/PRODUCT_EXPERIENCE.md
-9. product/OPEN_QUESTIONS.md
-10. engineering/ARCHITECTURE.md
-11. engineering/TESTING.md
+2. GLOSSARY.md
+3. product/CORE_LOOP.md
+4. product/ECONOMY_AND_GROWTH.md
+5. product/SEASONS_AND_PROGRESSION.md
+6. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
+7. product/COMMUNITY_AND_SOCIAL_PLAY.md
+8. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
+9. product/PRODUCT_EXPERIENCE.md
+10. product/OPEN_QUESTIONS.md
+11. engineering/ARCHITECTURE.md
+12. engineering/TESTING.md
 
 ## Authority
 
@@ -32,6 +33,7 @@ When documents and implementation disagree, do not silently preserve the impleme
 ## Maintenance rules
 
 - Keep these documents current instead of appending a historical narrative.
+- Use the canonical concepts and labels in GLOSSARY.md across documents, interface copy, code, reports, and tests.
 - Incorporate a confirmed decision into the document that owns the topic.
 - Remove the corresponding item from product/OPEN_QUESTIONS.md.
 - Delete superseded documents and contradictory text. Do not retain deprecated or archived variants inside the active documentation tree.

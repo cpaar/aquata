@@ -85,7 +85,7 @@ Multi-account play that concentrates resources, experience, favorable battles, i
 
 Creating another login does not create permission to operate another seasonal player. The supported route for a different public identity is the seasonal-persona system.
 
-The game should remove common reasons for account sharing by providing legitimate collaboration features such as readiness fleets, operation command, shared intelligence, and bounded emergency recall. No collaboration feature grants permission to log into another person's account.
+The game should remove common reasons for account sharing by providing legitimate collaboration features such as alliance fleet release, defense calls, operation command, shared intelligence, and bounded emergency recall. No collaboration feature grants permission to log into another person's account.
 
 ## Account sharing
 

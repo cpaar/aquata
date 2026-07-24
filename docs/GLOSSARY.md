@@ -1,0 +1,107 @@
+# Aquata glossary
+
+Stand: 2026-07-24
+
+This glossary defines the canonical vocabulary used across product documents, rules, interface copy, code, reports, and tests. It names concepts; the owning product documents still define their complete mechanics.
+
+English terms are canonical for the current documentation and implementation. The German labels are working player-facing localization. When either label changes, it should change here first and then be applied consistently everywhere else.
+
+## Fleet and operation vocabulary
+
+| Canonical term             | German UI term              | Meaning                                                                                                                                                                                                                                               |
+| -------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Operation**              | **Operation**               | A shared planning and coordination space with an objective, participants, intelligence, timing, and roles. An operation may contain several fleet orders and does not itself travel or fight.                                                         |
+| **Fleet**                  | **Flotte**                  | A persistent, owner-configured group of concrete ships. It keeps its identity while docked, traveling, fighting, and returning; surviving ships remain in the fleet after return.                                                                     |
+| **Fleet template**         | **Flottenvorlage**          | A saved desired composition used to create, refill, or rebuild a fleet. It contains no actual ships, cannot travel, and cannot be released to allies.                                                                                                 |
+| **Fleet order**            | **Flottenbefehl**           | An authoritative instruction for one complete fleet, such as attack, reinforce, withdraw, or recall. An order never selects an arbitrary subset of that fleet's ships; it is locked and executed at the applicable hourly boundary.                   |
+| **Alliance fleet release** | **Allianz-Flottenfreigabe** | A persistent all-or-none setting through which an owner lets members of the current alliance call any of their available fleets for the caller's own defense. It is not granted separately per fleet.                                                 |
+| **Defense call**           | **Verteidigungsruf**        | An allied player's authorized fleet order that sends one complete available fleet belonging to an owner with alliance fleet release enabled to defend the caller's station.                                                                           |
+| **Movement contact**       | **Bewegungskontakt**        | An intelligence observation of a traveling fleet. Its visible fields depend on how the observer detected it and do not expose the fleet's internal identity.                                                                                          |
+| **Incoming attack**        | **Eingehender Angriff**     | The attack warning received by the target after launch. It is more precise than an incidental movement contact but still conceals ship composition.                                                                                                   |
+| **Engagement**             | **Gefecht**                 | One resolved confrontation at a target, including all participating fleets and up to three combat steps.                                                                                                                                              |
+| **Combat step**            | **Kampfschritt**            | One authoritative hourly resolution inside an engagement.                                                                                                                                                                                             |
+| **Operation round**        | **Operationsrunde**         | The shared hourly boundary cadence for fleet launches, arrivals, and combat steps.                                                                                                                                                                    |
+| **Command window**         | **Befehlsfenster**          | The hour preceding an operation round during which owners may submit or change commands for that boundary.                                                                                                                                            |
+| **Launch overhead**        | **Startverbrauch**          | The exact fixed Plutonium consumed for launching one fleet, independent of its route and in addition to route-dependent travel fuel.                                                                                                                  |
+| **Travel fuel rate**       | **Reiseverbrauch**          | The current fleet's exact variable Plutonium rate per published distance unit. It can be shown without a target; selecting a fleet order and target produces the exact total.                                                                         |
+| **Onboard fuel**           | **Bordtreibstoff**          | Plutonium transferred from the owner's station onto a launched fleet for its complete planned travel, including the intended return. Movement consumes it; any remainder still aboard when the fleet returns is credited back to the owner's station. |
+| **Return cargo**           | **Rückfracht**              | Secured Müll, captured collectors, and stolen resources attached to a returning fleet or empty recovery return until arrival.                                                                                                                         |
+| **Deployment value**       | **Einsatzwert**             | The published normalized value of committed ships and a participating command ship used for challenge and progression calculations. It is not a hidden estimate of combat effectiveness.                                                              |
+| **Battle report**          | **Kampfbericht**            | The authoritative record of an engagement for its eligible participants. It may be deliberately shared as a permission-bearing game object by an authorized participant, but is never a scan result.                                                  |
+
+## Intelligence vocabulary
+
+| Canonical term          | German UI term       | Meaning                                                                                                                                                                                                                            |
+| ----------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Game-world activity** | **Spielaktivität**   | Externally observable actions and changes inside the game world, such as fleet launches, arrivals, returns, reinforcements, and movement through watched space. It excludes login state, session behavior, chat, and account data. |
+| **Movement Analysis**   | **Bewegungsanalyse** | A focused deep-scan method that combines current movement intelligence with a bounded retrospective of externally observable game-world movement. It is not a copy of a target's private event history.                            |
+| **Observation Network** | **Beobachtungsnetz** | A time-limited, continuously energy-consuming sensor observation of a known station, known contact, or bounded area that records supported future game-world events and explicit coverage gaps.                                    |
+
+## Ship and combat vocabulary
+
+| Canonical term      | German UI term       | Meaning                                                                                                                                                                                       |
+| ------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ship type**       | **Schiffstyp**       | One named regular-ship design such as Piranha, Qualle, or Atlantis. A ship type has a published role, hull class, firing phase, weapon values, matchup values, and target order.              |
+| **Hull class**      | **Rumpfklasse**      | The physical size family of a regular ship: fighter, corvette, frigate, or battleship. It is separate from technology tier, combat role, and firing phase.                                    |
+| **Technology tier** | **Technologiestufe** | The progression stage at which a ship type becomes available. It does not describe the ship's hull class or firing behavior.                                                                  |
+| **Combat role**     | **Kampfrolle**       | The tactical job for which a ship type is designed, such as swarm clearance, heavy-target attack, EMP disruption, escort, or collector capture.                                               |
+| **Firing phase**    | **Feuerphase**       | The point within a combat step at which a weapon acts: EMP, first strike, or main fire.                                                                                                       |
+| **EMP**             | **EMP**              | A non-damaging weapon effect that disables an eligible target's weapons for the remainder of the current combat step.                                                                         |
+| **First strike**    | **Erstschlag**       | Direct fire resolved after EMP and before main fire in every combat step. Its losses therefore reduce the ships able to participate in main fire.                                             |
+| **Main fire**       | **Hauptfeuer**       | The simultaneous direct-fire phase after EMP and first strike. Losses created within main fire do not create an ordering advantage inside that phase.                                         |
+| **Cannon**          | **Kanone**           | One weapon channel that may attempt to affect one target during its firing phase. A cannon cannot destroy more than one regular ship with one shot.                                           |
+| **Firepower**       | **Feuerkraft**       | The base direct damage produced by one successful cannon hit before applying the target-specific damage factor. EMP weapons do not use firepower to damage hulls.                             |
+| **Hull points**     | **Hüllenpunkte**     | A ship type's published durability against direct damage.                                                                                                                                     |
+| **Hit chance**      | **Trefferchance**    | The published target-specific probability that a cannon affects its selected target before visible combat modifiers are applied. The effective probability never exceeds one hundred percent. |
+| **Damage factor**   | **Schadensfaktor**   | The published target-specific multiplier applied to a direct-fire weapon's firepower. It is not another name for firepower or final damage.                                                   |
+| **Target priority** | **Zielpriorität**    | One target type's position within a ship type's ordered targeting behavior.                                                                                                                   |
+| **Target order**    | **Zielreihenfolge**  | The complete ordered list through which a ship type assigns available cannons to eligible enemy ship types.                                                                                   |
+
+## Research vocabulary
+
+| Canonical term              | German UI term              | Meaning                                                                                                                                                                                                                       |
+| --------------------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Research field**          | **Forschungsbereich**       | A thematic family of non-exclusive seasonal capabilities, such as ship engineering, sensor technology, or drive technology.                                                                                                   |
+| **Research project**        | **Forschungsvorhaben**      | One timed and resource-funded capability unlock. Exactly one project may be active and progressing for a player at a time.                                                                                                    |
+| **Research queue**          | **Forschungswarteschlange** | The player's ordered plan of projects waiting behind the one active project. Queued projects do not progress simultaneously.                                                                                                  |
+| **Drive technology**        | **Antriebstechnik**         | The research field that improves fleet travel time and route-dependent travel-fuel efficiency without replacing ship-specific base pace, slowest-ship behavior, or the fixed launch overhead.                                 |
+| **Research catch-up bonus** | **Forschungs-Aufholbonus**  | A personal, non-transferable speed bonus for foundational research behind the current season-age baseline. It cannot be stored or applied to leading-edge research and tapers as the player approaches the intended baseline. |
+
+## Capability and infrastructure vocabulary
+
+| Canonical term                | German UI term                  | Meaning                                                                                                                                                                                                       |
+| ----------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Station facility**          | **Stationsanlage**              | A physical seasonal station capability. A facility may enable an action or define the hardware ceiling for several research projects; it is not another name for research.                                    |
+| **Station core**              | **Stationskern**                | The non-upgradable foundation included at station placement. It hosts collector control, research planning, basic fleet administration, weak passive sensing, and the included Energy Core I.                 |
+| **Shipyard**                  | **Werft**                       | The station facility that determines which hull classes can physically be produced. Individual ship designs still require their applicable technology tiers.                                                  |
+| **Sensor array**              | **Sensoranlage**                | The station facility that enables player-directed reconnaissance and defines the physical ceiling for researched sensor methods. Every station retains only a weak passive baseline without it.               |
+| **Communications center**     | **Kommunikationszentrale**      | The station facility that establishes the operational alliance link and later enables shared tactical data, operations, defense calls, and alliance fleet release according to its level and permissions.     |
+| **Operational alliance link** | **Operative Allianzverbindung** | The current seasonal station's permission-bearing connection to alliance map context, intelligence, operations, and delegated defense. It is separate from social membership and conversation.                |
+| **Command dock**              | **Kommandoschiff-Dock**         | The single-level station facility for selecting, constructing, equipping, supported reconfiguration, and repair of the player's seasonal command ship.                                                        |
+| **Energy core**               | **Energiekern**                 | The station facility that converts Plutonium into energy. Levels increase conversion throughput and storage capacity together but do not automatically improve the normal Plutonium-to-energy ratio.          |
+| **Learning milestone**        | **Lernmeilenstein**             | A contextual onboarding or interface reveal triggered when a capability becomes relevant. It teaches or surfaces tools but does not create hidden competitive power or replace an authoritative prerequisite. |
+
+## Reserved distinctions
+
+- Use **fleet**, not _formation_, _task force_, or _deployment_, for the persistent group of actual ships.
+- Use **fleet order**, not _mission_, for a fleet's concrete assignment. **Mission** is reserved for authored objectives such as a targeted module-acquisition mission.
+- Use **operation** only for the shared planning context, never as a synonym for one fleet or one fleet order.
+- Use **movement contact** for observed travel and **incoming attack** for the target's direct warning; their information precision is intentionally different.
+- Use **game-world activity** only for observable events inside Aquata. Never use scan output to describe player activity, online presence, or behavior outside authoritative game actions.
+- Keep **Movement Analysis** retrospective and bounded, and the **Observation Network** future-facing from activation. Neither is a news-feed copy, and neither exposes a foreign **battle report**.
+- Use **alliance fleet release** for the owner's persistent alliance-wide permission and **defense call** for an ally's concrete use of one fleet. Do not describe individual fleets as separately released.
+- Keep **onboard fuel** separate from **return cargo**: both travel with a fleet, but fuel powers movement and only its unconsumed remainder returns as Plutonium.
+- Use **return cargo** from the moment assets are secured until they arrive home; do not alternate between cargo, loot, and operation cargo when describing that authoritative state.
+- Use **hull class** only for fighter, corvette, frigate, and battleship. Do not call EMP, first strike, main fire, technology tiers, or tactical roles ship classes.
+- Keep **firepower**, **damage factor**, and final damage distinct: firepower belongs to the cannon, the damage factor belongs to the attacker-target matchup, and final damage is their resolved result after modifiers.
+- Use **target priority** for one position and **target order** for the complete ordered list. Do not use either term for a player's operation objective.
+- Use **hull points**, not life, health, structure, or durability points, for the regular ship value consumed by direct damage.
+- Use **research field** for a thematic progression path and **research project** for one concrete timed unlock. Do not alternate among research, technology, project, and upgrade when the distinction matters.
+- Keep the **research catch-up bonus** separate from research points or another resource balance: it changes eligible project speed and never creates currency that can be saved or transferred.
+- Keep a **station facility**, **research project**, and **learning milestone** distinct: they respectively provide physical capability, understood technology, and contextual presentation.
+- Keep social alliance membership separate from the **operational alliance link**. A social relationship does not silently grant tactical intelligence or fleet permissions.
+- Keep **Energy Core** throughput and storage separate from conversion efficiency: the facility levels raise the first two together, while the universal ratio remains stable unless a named capability explicitly modifies it.
+
+## Maintenance
+
+Add a term when it distinguishes a durable game concept or prevents a recurring ambiguity. Do not add every interface label. If two entries begin to describe the same concept, choose one canonical term and remove the duplicate instead of maintaining synonyms.

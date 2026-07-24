@@ -227,6 +227,164 @@ The opening must not become identical compulsory chores every season. Variation 
 - altered strategic objectives,
 - different alliance and victory conditions.
 
+## Capability discovery and onboarding progression
+
+Seasonal progression should make the game itself unfold. The player begins with a deliberately small station and possibility space, then brings additional station systems online until Aquata has grown from a local economic and scouting game into coordinated alliance warfare. Every meaningful unlock should introduce a new decision rather than merely expose another menu or increase a number.
+
+Four sources of progression have distinct responsibilities:
+
+- **Station facilities** provide physical capability, such as building a hull class, performing scans, establishing an operational alliance link, or deploying the command ship.
+- **Research projects** provide understood technology and procedures, such as individual ship designs, stronger sensor methods, or more efficient drives.
+- **Command-ship progression** develops only the player's chosen Fight, Support, or Economy identity.
+- **Learning milestones** reveal explanations, expert views, and relevant interface tools when the player can use them. They do not grant hidden power or replace physical prerequisites.
+
+Core seasonal capabilities are not unlocked by persistent account level or profile history. Seasonal achievements may provide published seasonal rewards and persistent recognition, but they must not be mandatory gates for ordinary ships, alliances, scanning, the command ship, or other foundational play. This preserves an equal seasonal ruleset for newcomers and veterans.
+
+The guided discovery order is:
+
+1. **Arrival:** choose a station position with visible resource geography, operate the initial collector pool, and receive a few coarse local leads through baseline passive sensing.
+2. **First operation:** bring a basic sensor array online, scan a controlled or neutral contact, produce Piranha and Qualle ships, compare a safer and riskier opportunity, and commit a first fleet.
+3. **First result:** learn withdrawal, travel commitment, the combat report, return cargo, material recovery, and persistent fleet handling from an actual resolved operation.
+4. **Economic warfare:** unlock Hai and Hackboot through ship engineering and suitable shipyard capability, then learn escort composition, collector capture, and the difference between destroying and stealing value.
+5. **Seasonal identity:** bring the command dock online early in the opening, choose a command-ship archetype, and begin its combat-driven progression before a long introductory gate could make meaningful experience unavailable.
+6. **Operational connection:** bring a communications center online, connect the seasonal station to its social alliance, and begin sharing contextual scans and reports.
+7. **Coordination and expansion:** unlock operation rooms, defense calls, alliance fleet release, broader sensor methods, more efficient drives, and frigate-scale roles as the practical map expands.
+8. **Strategic depth:** add focused deep scans, countermeasures, heavy ships, command-ship specializations and modules, and large alliance or coalition operations as conflict approaches the endgame.
+
+This order is a teaching path, not one mandatory linear technology rail. A returning player may skip explanations and prioritize available facilities or research differently, but uses the same placement rules, resource costs, construction and research times, and seasonal prerequisites as everyone else. A newcomer may follow contextual guidance through the same authoritative game rather than being placed in a weaker parallel tutorial ruleset.
+
+Interface disclosure is separate from capability gating. Fleet templates can be introduced after the first fleet returns, the research queue when a second project becomes relevant, energy allocation when sensors or countermeasures first consume energy, and battle forecasting after the first report provides evidence to interpret. Progress that is tracked for standings or achievements must be tracked from the season start even if its detailed interface is introduced later.
+
+Withdrawal, exact cost and fuel information, incoming-attack warnings, readable reports, recovery, account safety, and basic social communication are not progression rewards. They remain available whenever their underlying situation exists.
+
+### Opening pacing bands
+
+The initial capability sequence uses five target windows measured from the individual player's station placement:
+
+- **First session:** understand the station, make the first economic and research choices, prepare a scan, and confirm the first fleet order.
+- **First loop:** resolve the first operation, read its report, and return the fleet later the same day.
+- **Early opening:** approximately days one through three.
+- **Middle opening:** approximately days three through seven.
+- **Late opening:** approximately days seven through fourteen, leading into the broader expansion stage.
+
+These are experience and balance targets, not personal time locks. Fulfilling a prerequisite early makes its capability available early. Late entrants use the same relative learning sequence while applicable personal catch-up changes eligible foundational research speed.
+
+Relative cost bands describe how strongly an unlock should compete with other opening choices before exact recipes exist:
+
+- **Included** capabilities belong to the initial station.
+- **Bootstrap** purchases are each affordable from the starting stock, but the stock cannot fund every bootstrap option and a large fleet simultaneously.
+- **Low** costs represent several hours of ordinary opening production.
+- **Medium** costs represent roughly half to one day of opening production or the value of one useful small return.
+- **Major** costs represent approximately one to three days of opening production or several successful returns.
+
+These bands are internal targets rather than necessarily player-facing cost labels. Final resource recipes, construction times, research times, and starting quantities remain balancing values.
+
+### Opening capability matrix
+
+| Target window               | Prerequisite                                                         | Capability or presentation unlocked                                                                                                                                                              | Cost direction                                                                 | Decision introduced                                                                       |
+| --------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Station founding            | Join the season                                                      | Guided placement using visible resource geography                                                                                                                                                | Included                                                                       | Where should the station produce, raid, and support allies from?                          |
+| First session               | Place the station                                                    | Initial collector pool and allocation, weak passive sensor baseline, fighter-capable Shipyard I with Piranha and Qualle, Energy Core I, one active research slot, and basic social communication | Included                                                                       | Which resource, local opportunity, ship mix, and foundational research should come first? |
+| By the next operation round | Initial station                                                      | Sensor Array I, basic targeted scanning, energy controls, and enough initial stored energy for the first meaningful scan                                                                         | Bootstrap; Aluminium and Steel construction with Plutonium operation           | How much information is worth acquiring before committing?                                |
+| Next operation round        | Produce a small fleet and scan a nearby controlled or neutral target | First persistent fleet order with exact travel time, launch overhead, and onboard fuel                                                                                                           | Bootstrap to low; primarily Aluminium and Plutonium                            | Take the safer target, accept more risk for reward, or wait?                              |
+| Later the same day          | Resolve and return the first operation                               | Combat report, return cargo, material recovery, persistent-fleet result, and contextual introduction to templates and battle forecasting                                                         | No separate unlock price                                                       | What succeeded, what should be replaced, and is another commitment justified?             |
+| Days zero to one            | Build Communications Center I                                        | Operational alliance link plus permission-bound sharing and receipt of scans and battle reports                                                                                                  | Low; primarily Aluminium and Steel                                             | Invest early in cooperation or first strengthen personal capability?                      |
+| Days one to three           | Complete Ship Engineering tier two and build Shipyard II             | Hai, Hackboot, escorted collector capture, and economic warfare                                                                                                                                  | Medium; the project occupies the research slot and the shipyard is Steel-heavy | Prioritize economic raiding over sensor or drive progress?                                |
+| Days one to four            | Accumulate the required resources and build the Command Dock         | Command-ship archetype choice and combat-driven seasonal identity                                                                                                                                | Major; broad cost with strong Steel commitment                                 | Which seasonal role is worth delaying other growth for?                                   |
+| Days two to five            | Upgrade Communications Center I                                      | Communications Center II, operation rooms, defense calls, and alliance fleet release                                                                                                             | Medium                                                                         | How much infrastructure, fleet readiness, and fuel should support the alliance?           |
+| Days three to seven         | Complete the applicable sensor or drive project                      | Sector scanning or improved travel time and variable fuel efficiency                                                                                                                             | Medium; Plutonium and the single research slot are important tradeoffs         | Discover more opportunities or reach known opportunities more efficiently?                |
+| Days seven to fourteen      | Follow the selected development direction                            | Sensor Array II and deeper methods, Energy Core II, further drive progress, or the beginning of Shipyard III and Ship Engineering tier three                                                     | Major                                                                          | Which strength should define entry into expansion?                                        |
+
+Sensor Array I and the first small batch of fighters should be able to complete within one operation-round interval. The first fleet should therefore be confirmable during the first session and depart at the next shared boundary. A nearby controlled or neutral opportunity should allow combat resolution and return later the same day without using a special weaker combat or travel ruleset.
+
+Shipyard III and the first frigates are ambitious late-opening specialist goals rather than the normal state of every player before expansion. The ordinary frigate progression still belongs to the expansion stage.
+
+### Initial research choice and opening routes
+
+After the initial collector decision, the guided interface presents three understandable foundational projects while the expert view may expose all currently actionable detail:
+
+- Ship Engineering tier two leads toward Hai and Hackboot.
+- A foundational sensor project leads toward sector scanning through the existing sensor hardware.
+- Drive Technology tier two improves travel time and variable travel-fuel efficiency.
+
+The guide recommends the historical economic-warfare lesson through Ship Engineering tier two, but the other projects are equally authoritative choices. Starting another project delays Hai and Hackboot because only one research project progresses at a time.
+
+At least five viable opening directions should result from combining the research slot with construction spending:
+
+- A **guided raiding opening** builds Sensor Array I, completes the first operation, then pursues Ship Engineering tier two, Shipyard II, collector capture, and the command ship.
+- A **command-ship rush** fights with Piranha and Qualle, saves for the Command Dock, and accepts slower collector, corvette, or communications growth in exchange for earlier combat experience.
+- A **reconnaissance and coordination opening** prioritizes sensor research and communications capability, finds and shares more opportunities, and remains on the initial ships longer.
+- A **mobility opening** prioritizes drive research to exploit more distant neutral targets or unusual geography while delaying collector capture and stronger scanning.
+- An **economic opening** directs construction resources into collectors and operates a smaller fleet, gaining growth while accepting greater exposure and later military facilities.
+
+These are not exclusive classes. Research, supported construction jobs, ship production, and collector growth may proceed in parallel, while shared resources and the single active research project create the opportunity costs.
+
+No station facility depends on completing a tutorial checklist. It depends only on its authoritative physical, research, resource, and timing prerequisites. Guidance recognizes actions already completed before their explanation. Skipping guidance grants no alternate starting stock, reward, cost, build speed, research speed, travel rule, or placement advantage. A required cooperation lesson may use a controlled example for a solo player, but a scripted valuable fleet loss is never mandatory.
+
+## Research and capability unlocking
+
+Research is the universal seasonal capability progression between economic growth and command-ship identity. It introduces new operational choices rather than serving mainly as an accumulating list of percentage bonuses. Research choices determine when a player gains access to broader fleet, intelligence, and movement options; the command ship remains the separate source of hard personal specialization.
+
+A player may have exactly one active research project. Additional projects may be placed in a research queue so completion does not require attendance at an exact minute, but only the active project progresses. Ship and collector construction remain separate and may proceed while research is active. This single active project makes research order a real strategic commitment even when a wealthy player could afford several available projects at once.
+
+Research fields are not mutually exclusive permanent branches. A player may eventually advance through every field, while the timing and order create the seasonal strategy. The complete initial research tree contains exactly three fields:
+
+- **Ship engineering**, which unlocks the paired regular-ship technology tiers.
+- **Sensor technology**, which expands universal reconnaissance capabilities without making reconnaissance a command-ship archetype.
+- **Drive technology**, which improves fleet travel time and variable travel-fuel efficiency while preserving each ship type's base pace and the slowest-ship behavior of a composed fleet.
+
+Research and station construction may form complementary prerequisites, but should not mirror each other one-for-one. Research answers which design or procedure the player understands; a facility answers what the station can physically perform. One facility level should therefore usually support several research projects or technology tiers.
+
+Every field begins at level I, which is included with the initial station. Each later project normally requires only the previous level in the same field; the initial tree contains no cross-field research prerequisites. A valid future chain may be arranged in the research queue even while an earlier prerequisite is still active or waiting ahead of it. A facility is not required to research and complete a project, but the applicable facility capability is required to use the result physically. This lets players prepare technology ahead of construction without turning the two systems into duplicate gates.
+
+The complete tree, its same-field prerequisites, unlocks, and applicable facility requirements are inspectable from the start. The guided interface emphasizes the few currently useful choices instead of hiding later capabilities. There are no global calendar locks: the opening, expansion, conflict, and endgame labels below are pacing targets, and a player may reach a project earlier by accepting its research-slot and resource opportunity costs.
+
+### Initial research catalog
+
+| Field and project                            | Capability unlocked                                                                                    | Intended seasonal role       | Physical use requirement                      |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------- | --------------------------------------------- |
+| Ship Engineering I — Fighter Systems         | Piranha and Qualle designs                                                                             | Included at station founding | Shipyard I                                    |
+| Ship Engineering II — Corvette Systems       | Hai and Hackboot designs                                                                               | Opening                      | Shipyard II                                   |
+| Ship Engineering III — Frigate Systems       | Taifun and Blizzard designs                                                                            | Expansion                    | Shipyard III                                  |
+| Ship Engineering IV — Advanced Frigates      | Tsunami and Hurricane designs                                                                          | Expansion                    | Shipyard III                                  |
+| Ship Engineering V — Battleship Systems      | Enterprise and Bermuda designs                                                                         | Conflict                     | Shipyard IV                                   |
+| Ship Engineering VI — Advanced Battleships   | Atlantis and Kitty Hawk designs                                                                        | Late conflict and endgame    | Shipyard IV                                   |
+| Sensor Technology I — Base Sonar             | Weak passive field and basic targeted scanning                                                         | Included at station founding | Passive baseline; Sensor Array I for scanning |
+| Sensor Technology II — Sector Cartography    | Manual sector scan and a modest passive-reach improvement                                              | Opening                      | Sensor Array I                                |
+| Sensor Technology III — Signature Analysis   | Deep-scan focuses for economy and resources, and for fleets                                            | Expansion                    | Sensor Array II                               |
+| Sensor Technology IV — Movement Analysis     | Current movement intelligence and a bounded retrospective of externally observable game-world movement | Expansion                    | Sensor Array II                               |
+| Sensor Technology V — Systems Intelligence   | Deep-scan focus for command ship and production                                                        | Conflict                     | Sensor Array II                               |
+| Sensor Technology VI — Observation Network   | Time-limited, energy-consuming future observation of a known station, known contact, or bounded area   | Late conflict and endgame    | Sensor Array II                               |
+| Drive Technology I — Standard Drive          | Initial ship-specific pace and travel-fuel behavior                                                    | Included at station founding | None beyond an order-capable fleet            |
+| Drive Technology II — Efficient Flow Control | Improved travel time and variable travel-fuel efficiency                                               | Opening                      | None beyond an order-capable fleet            |
+| Drive Technology III — High-Pressure Drive   | Further practical reach through improved travel time and variable travel-fuel efficiency               | Expansion                    | None beyond an order-capable fleet            |
+| Drive Technology IV — Long-Range Drive       | Efficient conflict-stage travel and reinforcement over broader distances                               | Conflict                     | None beyond an order-capable fleet            |
+| Drive Technology V — Strategic Drive         | Late-season mobility for large, long-distance alliance operations                                      | Late conflict and endgame    | None beyond an order-capable fleet            |
+
+The three first player-chosen projects are therefore level II in each field: earlier corvettes and economic warfare, stronger discovery and sector intelligence, or more practical reach. Ship Engineering becomes increasingly Steel-heavy and also consumes Aluminium. Sensor Technology is primarily a Steel-and-Plutonium commitment. Drive Technology is primarily a Plutonium-and-Steel commitment. Exact recipes and times remain balance parameters, but these profiles preserve competition between fleet production, sensor energy, construction, and mobility.
+
+The complete initial facility catalog and its construction rules are defined in ECONOMY_AND_GROWTH.md. It contains only the Station Core, Shipyard, Sensor Array, Communications Center, Command Dock, and Energy Core. This compact set is the capability framework; new facility families require a distinct physical responsibility that cannot be represented clearly by an existing facility, project, module, or system rule.
+
+The shipyard uses four broad physical capability levels: fighters, corvettes, frigates, and battleships. Six ship-technology tiers separately unlock the paired regular-ship designs. Fighter capability supports tier one, corvette capability supports tier two, frigate capability supports tiers three and four, and battleship capability supports tiers five and six. A player therefore needs both the relevant design and a capable shipyard without paying two identical gates for every pair.
+
+Sensor technology follows the same principle. Sensor Array I supports Sensor Technology I and II. Sensor Array II supports Sensor Technology III through VI. The research projects unlock passive reach, sector scanning, focused deep scans, Movement Analysis, and the Observation Network across those two broad hardware ceilings instead of duplicating a facility level for every method.
+
+Drive technology creates a soft expansion of the playable world. Early fleets can travel far in principle, but long journeys are slow and consume enough Plutonium that local targets dominate. Later drive generations make broader regions practical and eventually support large long-distance alliance operations. They do not create hard regional borders or erase the tactical value of grouping fleets by ship speed. Drive efficiency reduces route-dependent travel fuel, not the fixed launch overhead that prices independent fleet orders.
+
+A completed drive project applies only to fleet orders confirmed under the new published drive level. It does not recalculate an order already locked, alter a fleet's arrival while it is in motion, reduce fuel already transferred onboard, or create a retroactive refund. Existing ships do not require individual drive-component inventory or manual refits before using completed research on a later order.
+
+The regular-ship progression target follows the seasonal arc without using global date locks:
+
+- Piranha and Qualle are available at the season start.
+- Hai and Hackboot belong to the opening.
+- Taifun, Blizzard, Tsunami, and Hurricane expand the available roles during expansion.
+- Enterprise and Bermuda become conflict-stage capabilities.
+- Atlantis and Kitty Hawk first appear as difficult late-conflict goals and become characteristic endgame ships.
+
+These stages describe intended average pacing rather than granting every player a technology tier on a fixed date. A player may prioritize ship engineering and arrive earlier, while another accepts older ships in exchange for stronger sensors or drives. Global season stages may change world opportunities, objectives, and events, but do not replace personal research progression.
+
+Universal research does not grant general EMP resistance. A resistance technology that every established player eventually completes would globally suppress the EMP ship family and turn the project into a mandatory arms-race step. EMP resistance instead remains contextual through published ship matchups and bounded effects such as the relevant Support command-ship capability or modules.
+
 ## Command ship as progression anchor
 
 The command ship is both a combat unit and the player's primary seasonal progression avatar. Choosing its archetype is a defining strategic commitment: its type, specialization, and modules shape the value and behavior of the player's fleets and therefore influence the whole style of play rather than adding a small universal bonus.
@@ -328,7 +486,7 @@ Module discovery must never become a premium or gacha system. Players cannot buy
 
 Its strongest tactical effects require the command ship to participate in the relevant operation. A fleet sent without it remains useful, but lacks the command profile that makes the player's main force distinctive. Because the command ship can accompany only selected commitments, its location creates a strategic choice about where the player's full strength and specialized capabilities are exposed.
 
-A command ship disabled in combat is not permanently destroyed and does not teleport home. It returns with its fleet or, if no ordinary ship survives, with the operation's empty recovery return. After arrival it must be repaired before it can participate in another operation. Modules remain unlocked during this state. Exact repair cost and duration remain balancing decisions.
+A command ship disabled in combat is not permanently destroyed and does not teleport home. It returns with its fleet or, if no ordinary ship in that fleet survives, with the fleet's empty recovery return. After arrival it must be repaired before it can receive another fleet order. Modules remain unlocked during this state. Exact repair cost and duration remain balancing decisions.
 
 The exact experience curve, combat-experience values and multiplier curves, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and disabled-command-ship repair values remain open.
 
@@ -377,6 +535,8 @@ Catch-up should accelerate the player's path through obsolete early constraints 
 - temporary protection from vastly stronger players,
 - placement near players and targets of comparable effective power,
 - bonuses that taper as the player approaches the intended season-age baseline.
+
+Research catch-up uses a personal speed bonus rather than a stock of research points or another spendable currency. The bonus applies only to foundational projects behind the published baseline for the current season age, cannot be stored, transferred, or redirected into leading-edge research, and tapers continuously as the player approaches that baseline. Normal project resource costs remain real commitments, so catch-up restores access to relevant choices without minting a transferable resource package.
 
 Catch-up benefits must be bound to the late entrant's own progression where possible. They should not create a disposable fleet, resource package, or feeder account whose main value can immediately be transferred to an established player.
 

@@ -1,6 +1,6 @@
 # Product experience
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 ## Experience thesis
 
@@ -21,6 +21,20 @@ The first view after login should prioritize:
 - a clear next useful action.
 
 Raw totals remain accessible, but they are not the primary hierarchy.
+
+## Progressive disclosure
+
+The interface should unfold with the player's seasonal capabilities. It initially emphasizes station placement, collectors, the local sensor picture, and the next useful production decision instead of presenting the complete research, ship, intelligence, command-ship, ranking, and alliance catalog at once.
+
+Every newly relevant capability receives one contextual introduction and an immediate real use. The interface may introduce fleet templates after the first fleet returns, the research queue when a second project can be planned, energy allocation when sensors or countermeasures first consume energy, battle forecasting after the first report, and operation tools when the station gains an operational alliance link. These are presentation milestones rather than arbitrary power gates.
+
+Locked capabilities should be discoverable from context with a concise reason and prerequisite, not dominate the command view as a wall of disabled controls. The player should normally understand the next one or two possibilities without needing to study the whole season tree.
+
+An experienced player may disable explanations and use a denser view, but cannot skip seasonal prerequisites, costs, construction, research, or timing. Conversely, accepting guidance must never assign weaker rules, an inferior station position, lost achievement progress, or reduced competitive possibilities.
+
+During the first session, the guided view introduces placement, collector allocation, the local passive lead, one of three foundational research choices, Sensor Array I, and the first small Piranha-and-Qualle fleet in sequence rather than as one dense dashboard. The expert view may expose every currently actionable option immediately. Both presentations read and mutate the same seasonal state, and guidance credits qualifying actions completed before their explanation.
+
+Critical control and transparency are never withheld for tutorial pacing. Exact commitments, withdrawal, incoming threats, readable outcomes, recovery actions, safety controls, and available social communication appear whenever their underlying situation exists.
 
 ## Map
 
@@ -46,13 +60,13 @@ Anchoring a station makes its position consequential, but it does not trap a pla
 
 Most routine activity should still be local because shorter commitments, nearby support, and fresher knowledge make neighboring targets attractive. Distance must matter without recreating the historical feeling that another ocean is effectively a separate world. Distant targets remain reachable for deliberate raids, alliance operations, or unusual opportunities; crossing an invisible boundary never adds a special penalty.
 
-The map separates visible economic geography from the uncertain tactical picture. Resource nodes and the basic geography needed for strategic station placement are visible enough to compare locations. Foreign stations, fleets, movements, and activity are not automatically exposed by that geographic layer.
+The map separates visible economic geography from the uncertain tactical picture. Resource nodes and the basic geography needed for strategic station placement are visible enough to compare locations. Foreign stations, fleets, movements, and game-world activity are not automatically exposed by that geographic layer.
 
 A player initially detects tactical contacts only within the passive sensor field around their station and sees few coarse facts about them. Research primarily expands this field. Persistent energy allocation improves passive observation or strengthens countermeasures, while stored energy powers manual scans.
 
 The map supports a clear intelligence ladder: passive contacts create local leads, a sector scan searches a selected area for distant contacts or opportunities, and a targeted deep scan produces more precise, time-stamped intelligence about a detected contact. A passive fleet contact begins with no more than a known origin where available, direction, and broad size class. Exact destination and composition require stronger information. Alliance discoveries and shared scans can extend the known operational picture beyond a player's personal reach.
 
-Exploration must create target-finding decisions without becoming manual grid sweeping. The command view and map should surface a manageable set of leads such as nearby contacts, activity signals, resource-rich areas, neutral opportunities, and intelligence shared by allies. Rankings may provide strategic context and prestige, but must not replace reconnaissance with an exact, live target directory.
+Exploration must create target-finding decisions without becoming manual grid sweeping. The command view and map should surface a manageable set of leads such as nearby contacts, game-world activity signals, resource-rich areas, neutral opportunities, and intelligence shared by allies. Such signals describe observed in-world events, never login recency or online presence. Rankings may provide strategic context and prestige, but must not replace reconnaissance with an exact, live target directory.
 
 ## Fleet interaction
 
@@ -60,11 +74,14 @@ Ordinary fleet actions should be fast and legible on touch devices.
 
 Prefer:
 
-- fleet templates,
+- persistent preconfigured fleets,
+- templates for convenient creation, refill, and rebuilding,
 - operational roles,
 - sensible default quantities,
 - proportional controls,
 - clear reserve impact,
+- exact launch overhead and travel fuel rate before a target is selected,
+- exact total fuel split into launch overhead and onboard fuel once the fleet order, target, and planned return are known,
 - comparison with available intelligence,
 - a final commitment summary.
 
@@ -113,7 +130,7 @@ Fleet operations use hourly round boundaries that are easy to communicate. The i
 
 Desired tools may include:
 
-- operation drafts and prepared fleet compositions,
+- operation drafts and proposed fleet orders,
 - explicit hourly command and response windows,
 - a voluntary lower-income safety posture,
 - fleet templates,

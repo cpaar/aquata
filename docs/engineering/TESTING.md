@@ -72,6 +72,13 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Add deterministic examples and boundary tests.
 - Run domain tests, typecheck, lint, and format checks.
 - Add simulations when balance behavior cannot be judged from a few fixtures.
+- Verify the versioned regular-ship catalog contains exactly the twelve published ship types with distinct hull class, technology tier, combat role, firing phase, matchup values, and complete target order. Reject missing targets, duplicate priorities, hidden post-processing, and effective probabilities above one hundred percent.
+- Test every combat step in the published EMP, first-strike, and simultaneous-main-fire order. EMP must last only for the current step, regular EMP ships must not target regular EMP ships, first-strike losses must suppress later main fire, and main-fire results must remain invariant under ship, fleet, participant, and iteration ordering.
+- Prove direct fire uses cannon count, per-cannon firepower, hit chance, damage factor, hull points, and visible modifiers; one cannon cannot destroy more than one regular ship per shot. Fixed-point fixtures must retain sub-casualty effect across attacker groups and combat steps without rounding cliffs, floating-point drift, or retry duplication.
+- Cover every ship type's full target order with absent, partially exhausted, and fully exhausted priority targets, including the transition of remaining fire to later targets. Validate the player expert view and combat report against the same versioned matchup data used by resolution.
+- Prove one seasonal player can progress exactly one research project at a time while maintaining an ordered non-progressing queue. Cover completion, automatic queue advancement, insufficient resources, cancellation, retries, and concurrent commands without duplicate cost, progress, or unlocks.
+- Test research catch-up against several season ages and player baselines. It must accelerate only eligible foundational projects, taper monotonically to the normal rate, create no stored or transferable balance, and give no advantage on a project at or ahead of the published season-age baseline.
+- Verify drive technology preserves ship-specific pace and slowest-ship fleet behavior while changing only the published route-dependent time and fuel components. A completed project must affect newly confirmed quotes but never alter a locked or in-flight order, onboard fuel, return calculation, or fixed launch overhead.
 
 ### API or persistence
 
@@ -81,11 +88,17 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 
 ### Economy and growth
 
+- Verify the facility catalog contains only the non-upgradable Station Core, Shipyard I–IV, Sensor Array I–II, Communications Center I–II, the single-level Command Dock, and Energy Core I–III unless a later documented product decision changes it. No hidden headquarters level, building slot, research-lab upgrade, warehouse cap, collector factory, fleet or fuel dock, operations-center duplicate, salvage gate, or destructible static defense may appear implicitly.
+- Prove Energy Core I is included exactly once with the initial station. Levels II and III must each increase maximum conversion throughput and storage capacity together without changing the normal Plutonium-to-energy ratio, creating separate storage research, or duplicating capacity under retries and concurrent completion.
+- Verify every facility remains usable at its previous completed level while an upgrade is in progress, and completion adds the new capability once without cancelling or rewriting existing production, scans, communication, fleet state, energy allocation, or command-ship state.
 - Verify collector percentages conserve the one aggregate pool, use one selected node per raw resource, and derive production deterministically from allocation, node attributes, distance, and published modifiers without individual route entities.
 - Prove collector construction has no hard ownership cap, remains monotonic at normal and Havoc-scale counts, and gives identical total cost for one batch and the equivalent safely serialized sequence of ordinary or concurrent orders; retries must be idempotent.
 - Test that losing collectors reduces the total pool and future marginal construction price without changing the defender's allocation percentages or node choices.
 - Verify collectors cannot be intercepted or stolen away from station combat. Under optimal station-combat fixtures, each resolution step steals at most fifteen percent of the remaining pool and three steps steal approximately 38.6 percent of the starting total; retries cannot duplicate captured collectors.
 - Prove Aluminium, Steel, Plutonium, derived energy, fuel reservations, construction commitments, and captured collectors remain conserved across parallel commands and ownership transitions.
+- Verify a docked fleet exposes its exact fixed launch overhead and travel fuel rate without inventing a minimum, maximum, or average total. Once order, route, and intended return are selected, the exact launch-overhead-versus-onboard-fuel quote shown at confirmation must equal the authoritative reservation and transfer under the same rule version.
+- Prove confirmation reserves the complete amount at the owner station, cancellation before launch releases it, launch consumes the overhead and transfers travel fuel onto the fleet, movement consumes only onboard fuel, and home arrival credits exactly the unconsumed remainder once. An early recall must return only fuel physically left after its shorter outward and return route, including under retries and concurrent balance changes.
+- Prove each independently launched fleet incurs the overhead exactly once, splitting repeats it, retries never duplicate it, and normal or Havoc-scale fleet counts encounter no undocumented slot cap.
 - Verify supported construction and research jobs may progress in parallel without double-spending resources or implying an undocumented universal capacity limit.
 
 ### Web and interaction
@@ -95,19 +108,36 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Check loading, empty, error, disabled, and recovery states.
 - Avoid asserting the obsolete page structure when the product flow is being redesigned.
 - Verify the map distinguishes unknown space, coarse contacts, and scanned intelligence without leaking authoritative hidden state.
+- Prove passive sensors, sector scans, deep scans, Movement Analysis, and the Observation Network reveal only eligible game-world state and game-world activity. No result, activity band, confidence field, or derived hint may expose or infer login or logout time, online presence, session rhythm, chat behavior, device data, or other account-level activity.
 - Test passive sensor boundaries before and after research, including detected-station launches and arrivals, fleet paths that enter or miss the field, and contacts becoming stale.
-- Prove a passive movement contact reveals only its earned origin, direction, and size band and never leaks exact destination, mission, or composition.
+- Prove a passive movement contact reveals only its earned origin, direction, and size band and never leaks exact destination, fleet order, or composition.
+- Prove persistent fleets retain their internal identity and surviving membership across launch, combat, withdrawal, and return, while only the owner may split, combine, refill, or rebuild them at the home station.
+- Prove one fleet order commits every current member of exactly one fleet, travel pace follows its slowest surviving ship, and separately launched fleets never merge their orders, withdrawal state, return cargo, or return transitions accidentally.
+- Verify the target's incoming-attack projection reveals attacker, exact ship count, and earliest combat hour without exposing composition, private fleet name, internal fleet identifier, or a direct correlation to a scanned fleet. A fleet-focused deep scan may show observed fleet partitions and compositions without adding that correlation.
 - Verify sector and deep scans spend stored energy atomically, persist time-stamped intelligence at the correct tier, and respect distance, research, countermeasures, ownership, and sharing permissions.
+- Verify Movement Analysis returns only the published current contacts and bounded retrospective traces of externally observable movement. It must respect lookback, information tier, distance, and countermeasures; distinguish unknown or concealed intervals from confirmed inactivity; and never leak exact destination, composition, private order, internal fleet identity, or private event history.
+- Verify an Observation Network begins coverage only at activation, charges its visible continuous energy cost, records only supported future game-world events inside its target scope, and ends or records explicit gaps under expiration, energy exhaustion, and countermeasures. It must never backfill earlier events or silently represent an uncovered interval as “nothing happened.”
+- Prove a scan never returns or reconstructs a combat report, participant list, combat steps, shots, casualties, rewards, or authoritative battle result for an engagement in which the scanner did not participate. A later observable state may support player inference but must not bypass report authorization.
 - Prove identical scan inputs produce the same result tier and cannot be improved through repeated retries without a relevant state or committed-energy change.
 - Verify Plutonium conversion and persistent sensor, countermeasure, and reserve allocation conserve resources through ticks, retries, concurrent updates, and depleted storage.
 - Verify the placement view exposes the intended resource geography without revealing foreign tactical state.
 - Verify target leads are usable on mobile without requiring exhaustive manual grid sweeping.
+- Cover the guided capability-discovery path from placement and collectors through first scan, persistent fleet, report, recovery, economic raid, command-ship choice, and operational alliance link. An expert presentation may skip explanations but must use identical authoritative prerequisites, costs, timing, placement rules, and resulting state.
+- Prove presentation milestones never suppress critical controls or erase earlier progress. Withdrawal, exact commitment data, incoming threats, reports, recovery, and allowed communication must appear whenever applicable, while achievements and standings track from season start even before their detailed surfaces are introduced.
+- Verify the included opening state grants exactly one collector pool, fighter-capable Shipyard I, Piranha and Qualle designs, one active research slot, and the weak passive sensor baseline. Replaying, skipping, or racing guidance must never duplicate starting stock, the initial sensor charge, facilities, research, ships, or rewards.
+- Prove Sensor Array I and a supported small initial fighter batch can complete within the configured one-operation-round target, the first fleet can be confirmed during the first session, and a nearby controlled opportunity can resolve and return later the same day under the normal construction, travel, fuel, and combat rules.
+- Exercise at least the guided raiding, command-ship rush, reconnaissance and coordination, mobility, and economic opening directions. Each should be reachable without tutorial checklist gates and should expose its intended resource and single-research-slot opportunity costs.
 
 ### Social and permissions
 
 - Test visibility and sharing boundaries.
+- Prove battle-report access originates only from participation or an explicit permission-bearing share by an eligible participant. Alliance membership, operational linkage, proximity, passive detection, and every scan method must be insufficient on their own.
 - Verify blocked, removed, or unauthorized participants cannot read private operation data.
+- Verify alliance fleet release applies all-or-none to every currently available fleet belonging to that owner, including newly created or recomposed fleets, without per-fleet grants. A defense call must commit one complete fleet, cannot select a subset, and reserves and loads fuel from the fleet owner's station rather than the caller's station.
+- Race concurrent defense calls, owner orders, and fleet edits so at most one command acquires the fleet and every authorized call uses the latest committed composition. Disabling release or ending alliance membership must prevent new calls without carrying permission into a later alliance.
 - Include moderation and abuse cases when those systems are implemented.
+- Verify social alliance membership and non-tactical planning are possible without an operational station link, while alliance map context, shared scans and reports, operation data, defense calls, and fleet release remain unavailable until the applicable communications-center level and permissions are active.
+- Prove an operationally linked player without a sensor array may read an authorized shared scan but cannot create one, and that ending membership or losing the operational alliance link immediately blocks new tactical access without erasing allowed social history.
 
 ### Identity and account safety
 
@@ -123,7 +153,7 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Prove deactivation preserves the canonical account, forfeits seasonal progress, removes operational permissions, and detaches any neutral ruin from the returning player.
 - Verify a same-season return creates only a fresh zero-state player under the configured placement protections.
 - During vacation, prove all economic and military progression is frozen and gameplay commands fail while explicitly allowed profile and social actions still work.
-- Test vacation activation safeguards against active missions, incoming operations, repeated toggling, and concurrent commands.
+- Test vacation activation safeguards against active fleet orders, incoming operations, repeated toggling, and concurrent commands.
 
 ### Timing and seasonal behavior
 

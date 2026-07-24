@@ -12,7 +12,7 @@ This file contains only unresolved questions that materially affect the product.
 - Which normalized point values apply to resources, salvage, ships, construction, station infrastructure, research, unlocks, and command-ship progression?
 - Are live authoritative point totals public, delayed, shown in bands, or partially obscured while the official award calculation remains exact?
 - At which authoritative transition do construction, research in progress, stolen assets, and fleets in motion move between point components or owners?
-- How are collectors in construction, transfer, theft, or unresolved missions assigned at the economy standings lock?
+- How are collectors in construction, transfer, theft, or unresolved fleet returns assigned at the economy standings lock?
 - How is an award earned by an incognito persona represented before and after any voluntary identity reveal?
 - How is the final-battle target selected, and how are attacking and defending sides kept interesting across different populations?
 - Which participation bands and lasting cosmetic or historical rewards belong to the final battle?
@@ -36,6 +36,8 @@ This file contains only unresolved questions that materially affect the product.
 - How much do sensor-energy allocation and research improve passive observation without making their effects hard to predict?
 - What range, area, cost, duration, and result tiers govern a manual sector scan?
 - Which exact fields and information tiers belong to each deep-scan focus?
+- What exact retrospective window, event precision, size bands, confidence rules, and game-activity bands govern Movement Analysis?
+- Which target scopes, duration, continuous energy cost, detected event types, detail tiers, and coverage-gap rules govern the Observation Network, and can a watched target detect or counter the observation directly?
 - How should travel scale so local targets remain the everyday choice while deliberate long-distance operations stay viable?
 - How are neutral targets, ruins, and new opportunities placed, discovered, depleted, and renewed?
 - How does the game keep exploration useful without turning it into repetitive map sweeping?
@@ -50,18 +52,25 @@ This file contains only unresolved questions that materially affect the product.
 ## Progression and economy
 
 - Which early decisions create different viable openings?
+- Which construction costs, durations, and prerequisite relationships pace the two Sensor Array levels, two Communications Center levels, one Command Dock, four Shipyard capabilities, and Energy Core II and III without turning every opening into identical compulsory chores?
+- Which controlled targets and contextual tasks teach each discovery chapter while keeping repeat-season openings strategically variable?
+- At what exact duration or voluntary action does initial PvP protection end, and how is protected accumulation bounded without preventing the first same-day neutral operation?
 - Which exact station baseline, collector-output curve, and initial collector pool produce scarcity without making recovery impossible?
 - Which marginal collector-price curve and Aluminium/Steel cost mix slow reinvestment without creating a hard cap?
 - How long does changing collector percentages or selected resource nodes take, and when does the new output become authoritative?
-- Which Plutonium fuel rule, conversion rate, energy storage curve, and persistent allocation controls make fleet activity and reconnaissance consequential without requiring constant adjustment?
+- Which exact launch overhead, fleet travel-rate formula and rounding, in-flight rerouting or refueling rules, treatment of onboard fuel when no ordinary ship returns, base Plutonium-to-energy ratio, Energy Core II and III throughput and storage curves, and persistent allocation controls make fleet activity and reconnaissance consequential without requiring constant adjustment?
 - Does unrestricted parallel construction remain the final model, or does playable validation justify a narrow capacity constraint?
-- Which capabilities unlock through research, command-ship development, achievements, or seasonal choices?
+- Which additional research fields and projects complement the confirmed ship-engineering, sensor-technology, and drive-technology foundation without duplicating station or command-ship progression?
+- Which project prerequisites, resource costs, durations, queue-change rules, and cancellation treatment make the single active research project strategically meaningful without requiring exact-minute attendance?
+- Which drive generations and travel-time and variable-fuel curves create the intended soft expansion from local opening play to long-distance endgame operations without erasing ship-speed differences?
+- Which season-age baseline, eligibility rules, speed multiplier, and taper implement personal research catch-up without accelerating leading-edge research or enabling feeder accounts?
 - How do neutral targets and PvP targets divide early growth and recovery?
 - How is repetitive early-round execution reduced without removing the competitive opening race?
 
 ## Combat and recovery
 
-- Which combat aspects are deterministic, and where is uncertainty introduced?
+- Which exact hull points, cannon counts, firepower, matchup hit chances, damage factors, costs, build times, travel rates, fuel rates, EMP resistance values, and named ship exceptions produce the intended twelve-ship counter relationships?
+- Which fixed-point scale, damage-allocation order, remainder transfer when a target type is exhausted, and report presentation preserve continuous deterministic effect without creating hidden state or iteration-order advantages?
 - Which exact value, force-ratio, bonus, contribution, and own-loss factors define combat points in the remake?
 - Which battles and targets qualify for combat points, and how are arranged sacrifice and repeated farming limited?
 - What are the target salvage rates for own losses and enemy kills?
@@ -75,15 +84,14 @@ This file contains only unresolved questions that materially affect the product.
 ## Operations and alliances
 
 - What is the smallest useful operation-planning system?
-- Is alliance-wide readiness the default release scope, or must owners opt into it explicitly for each fleet?
-- May an alliance maintain persistent readiness assignments without introducing another organizational layer?
-- What happens when several authorized players call the same readiness fleet at nearly the same time?
-- When may an owner revoke a release, and when does an assigned mission take precedence?
+- Which docked refit, split, combine, refill, and rebuild interactions make persistent fleets convenient without hiding where concrete ships are committed?
+- What happens when several alliance members issue a defense call for the same available fleet at nearly the same time?
+- When may an owner disable alliance fleet release, and when does an already locked defense call take precedence?
 - What fixed alliance cap is the largest size that remains socially manageable?
 - Do dormant members stop counting toward the active cap, and how do they reactivate when the roster is full?
 - Which default roles and configurable permissions are necessary without creating excessive administration?
 - How long are leave, kick, rejoin, and operational-permission cooldowns?
-- What happens to released or participating fleets when their owner leaves or is removed?
+- What happens to defense-called or operation-participating fleets when their owner leaves or is removed?
 - Can alliances or coalitions win a season together?
 - Which information and permissions may cross an alliance treaty, and which require an explicit shared operation?
 - Which treaties are represented by the game and which remain informal?

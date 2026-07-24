@@ -1,6 +1,6 @@
 # Warfare, intelligence, and recovery
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 ## Strategic premise
 
@@ -27,7 +27,7 @@ Target value also depends on:
 - known and estimated defenses,
 - nearby allied fleets,
 - freshness and quality of scans,
-- recent activity,
+- recent observable game-world activity,
 - likely reaction from an alliance,
 - whether pressure on this target supports a larger operation.
 
@@ -45,13 +45,21 @@ Information is a resource with:
 - sharing permissions,
 - possible countermeasures.
 
+Reconnaissance observes **game-world state and game-world activity**, never the person behind an account. A scan may reveal eligible state such as resources or fleets and externally detectable events such as a fleet launch, arrival, return, reinforcement, or passage through observed space. It never exposes login or logout times, online presence, session rhythm, chat behavior, device data, or any other account-level or real-person activity. An activity label such as quiet, occasional, or high must be derived only from detected game-world events and must never be presented as a claim that a player is currently online or active.
+
+A scan never exposes or reconstructs the combat report of an engagement in which the scanning player did not participate. Battle reports are authoritative participant records. An eligible participant may deliberately share a report through its normal permission-bearing social object, but reconnaissance cannot create that access. A later scan may reveal the target's then-observable state or bounded movement traces from which losses can be inferred; it does not reveal the engagement's participants, combat steps, shots, casualties, rewards, or report contents merely because combat occurred there.
+
 Reconnaissance begins with three layers rather than a global directory of targets.
+
+The station begins with a deliberately weak passive sensor baseline that can surface a few coarse local leads. A **sensor array** provides the physical capability for player-directed reconnaissance; sensor research expands the methods and reach available through that hardware. Facility capability and research may both be required, but their levels do not mirror one another one-for-one.
+
+Sensor Array I is a bootstrap facility that should complete within one operation-round interval. Its activation makes energy controls relevant and leaves the station with enough initial stored energy for one meaningful basic targeted scan. This initial charge belongs to the one seasonal station state, cannot be reclaimed by replaying guidance, and uses the same scan rule as later stored energy. Further scans depend on normal Plutonium conversion and energy management.
 
 ### Passive sensor field
 
 Every station maintains a passive sensor field around its position. Research primarily expands its radius. Within that radius, the player automatically receives coarse contacts for nearby stations, launches and arrivals at detected stations, fleets crossing the field, ruins, anomalies, and other possible opportunities.
 
-Passive contact data creates leads rather than complete answers. The initial fleet-movement baseline is a known origin when that station is already identified, direction, and a broad size class. It does not reveal the exact destination, ship composition, or mission. Previously observed geography may remain on the map while tactical contacts and activity become stale when they are no longer observed.
+Passive contact data creates leads rather than complete answers. The initial fleet-movement baseline is a known origin when that station is already identified, direction, and a broad size class. It does not reveal the exact destination, ship composition, or fleet order. Previously observed geography may remain on the map while tactical contacts and activity become stale when they are no longer observed.
 
 Continuous energy assigned to sensors improves observation quality or refresh behavior inside the researched field. It does not freely redefine the field's radius; this keeps the boundary understandable while research remains the main source of passive reach.
 
@@ -66,21 +74,47 @@ A detected contact can receive a manual deep scan. The player chooses an intelli
 - economy and resources,
 - fleets,
 - command ship and production,
-- current movement.
+- movement analysis.
 
-The result is a time-stamped report with a defined detail level, ranges, unknown fields, and confidence. A current-movement focus does not copy the target's private event history as the historical news scan did. Scans and discovered contacts may be shared through explicit alliance permissions.
+The result is a time-stamped report with a defined detail level, ranges, unknown fields, and confidence. Scans and discovered contacts may be shared through explicit alliance permissions when the participating seasonal stations have the required operational alliance link.
+
+A sufficiently strong fleet-focused scan may reveal the target's current division of ships into fleets and, at higher detail, their compositions. It does not expose stable internal fleet identifiers, private fleet names, fleet orders, or a direct mapping from a scanned fleet to a movement contact or destination. Players may infer likely matches from ship counts, timing, speed, and subsequent observations, but the game does not confirm that correlation for them.
 
 Scan strength, distance, research, and the target's countermeasure allocation determine the information tier. An unchanged scan against unchanged defenses should not be repeatable until a random attempt succeeds. Strong defense degrades precision or conceals fields rather than making fabricated exact values the default. More elaborate decoys and deliberate misinformation may be added later only if their counterplay remains understandable.
 
+### Movement analysis
+
+Movement Analysis is the fourth Sensor Technology project and a focused deep-scan method. It combines the target's currently observable movement contacts with a bounded retrospective of externally detectable game-world movement. It answers “what appears to have happened here recently?” without copying a private news feed or exposing player activity.
+
+Depending on information tier, a result may contain:
+
+- current movement contacts,
+- recent detected launches, arrivals, returns, or reinforcements within a published lookback window,
+- approximate operation rounds or time bands, direction, and broad fleet-size bands,
+- an activity band derived solely from those detected game-world events,
+- at the strongest supported tier, the exact hourly operation round of an observed launch or arrival.
+
+It does not expose login state, exact destination, ship composition, private fleet name, stable fleet identifier, hidden fleet order, private event history, or a foreign battle report. Missing detail remains explicitly unknown. A low event count may mean that little observable movement occurred, that events fell outside the lookback window, or that distance and countermeasures concealed them; it is not proof that the player was absent.
+
+### Observation network
+
+The Observation Network is the sixth Sensor Technology project and the future-facing counterpart to Movement Analysis. The player commits a time-limited observation to a known station, known contact, or bounded area and pays a visible continuous energy cost. Coverage begins when the observation is activated and is never retroactive.
+
+While coverage is valid, it may record externally observable launches, arrivals, returns, reinforcements, and fleet passages through the watched area. Detail still depends on sensor strength, distance, energy commitment, and countermeasures. It does not automatically reveal exact destinations, compositions, private orders, production, research, resources, communication, account activity, or foreign battle reports. Players may correlate several observations and infer a plan, but the system does not confirm hidden links for them.
+
+Energy exhaustion, countermeasures, or other coverage loss creates a visible observation gap rather than a false statement that nothing happened. Observation results may be shared only through the same operational alliance link and explicit intelligence permissions as other scans. The network preserves the valuable historical practice of watching for launches and reinforcements while making the watched interval, cost, evidence, and uncertainty explicit.
+
 ### Reconnaissance energy
 
-The station converts Plutonium into a stored energy resource. Production rate, efficiency, and storage can grow through progression. The player maintains a persistent allocation policy for generated energy between:
+The station converts Plutonium into stored energy through its Energy Core. Energy Core I belongs to the initial station; levels II and III increase maximum conversion throughput and storage capacity together. The ordinary Plutonium-to-energy ratio does not improve automatically with these levels, and storage is neither a separate facility nor a sensor-research project. The player maintains a persistent allocation policy for generated energy between:
 
 - passive sensors,
 - countermeasures,
 - storage for manual scans.
 
 Countermeasures reduce the quality of hostile scans and movement signatures. They do not make a nearby permanent station unconditionally invisible. The allocation continues without repeated manual input and must expose its Plutonium cost and expected energy flow before confirmation.
+
+Storage at each Energy Core level must support several hours of ordinary generation and a healthy absence window. A larger store enables planned scan bursts and defensive reserves, while higher throughput supports sustained sensor and countermeasure allocation. Exact curves must preserve that distinction without creating pressure to spend energy at an exact minute merely to avoid a full store.
 
 This reconnaissance foundation is universal rather than gated behind a dedicated command-ship archetype. Research, fleets, station systems, and modules may improve or modify it, but every player can participate in discovery, scanning, counterintelligence, and intelligence sharing. A fourth reconnaissance command ship is outside the initial model and may be reconsidered later.
 
@@ -109,6 +143,18 @@ Before committing, a player should be able to inspect plausible support relation
 
 These relationships arise on a continuous two-dimensional map. Resource geography creates organic local clusters, but those clusters are not fixed settlements, oceans, teams, or attack boundaries. Local targets should dominate everyday play through convenience and support relationships, while distant targets remain viable for deliberate operations without a special cross-region penalty.
 
+## Persistent fleets
+
+A fleet is a persistent, owner-configured group of concrete ships rather than a temporary composition created only for one order. The owner may compose, split, combine, refill, or rebuild fleets while their ships are available at the home station. A fleet order always commits one complete fleet and may not select an arbitrary subset of its ships. A launched fleet keeps its identity through travel, combat, withdrawal, and return; surviving ships remain grouped when it arrives home. A fleet template is only an optional saved target composition for convenient creation or replenishment and never contains or controls actual ships.
+
+Persistent configuration lets a player prepare several forces for different jobs and launch quickly during a command window. It also makes every fleet visible through alliance fleet release a real pre-bundled defense contribution rather than permission to assemble an arbitrary force from another player's reserve. Only the owner may change that composition.
+
+Fleet partitioning is itself a tactical choice. A fleet travels at the pace of its slowest surviving ship. A player may therefore group ships by travel speed so slow ships depart first and faster ships remain available for a later reinforcement, or divide ships by count and composition to create ambiguous incoming signatures. Every launched fleet travels independently; it is not automatically merged with the owner's other fleets on the same route or at the same target. Several fleets may participate in the same engagement while retaining separate orders, contacts, withdrawal decisions, return cargo, and return journeys.
+
+This deception uses real commitment rather than fabricated contacts. An incoming fleet's ship count and travel timing may fit several materially different compositions, such as one heavy ship escorted by many light ships or the reverse. Scanning the owner may reveal possible fleet compositions, but does not reveal which scanned fleet received which order. The opponent can reason from evidence without receiving a system-confirmed answer.
+
+The initial model imposes no fixed limit on how many fleets a player may maintain or have active simultaneously. Every independently launched fleet pays the fixed Plutonium launch overhead as well as its route-dependent travel fuel, so additional partitioning remains possible but is not free. A hard limit should be introduced later only if playable validation shows that economic cost, truthful signatures, and interface grouping do not bound abusive fleet spam sufficiently.
+
 ## Operations and deception
 
 An operation can coordinate several actions around a shared intention:
@@ -129,13 +175,46 @@ The operation system should help allies coordinate timing and roles without auto
 
 Fleet launches, arrivals, and combat resolution use shared hourly boundaries. During the preceding hour, a fleet owner may confirm an offensive order for the next boundary. Operations may hold plans, roles, intelligence, and prepared fleet drafts further in advance, but the initial model does not turn those drafts into automatic future attacks. The owner must make the final launch decision during the immediately preceding command window.
 
-At departure, the target receives an incoming-attack notification and the earliest combat hour. Entering the order near the end of the command window does not create a movement or warning advantage: all confirmed orders in that window depart together. Offensive travel requires one additional operation round relative to defensive reinforcement under equivalent conditions. This preserves the historical commitment disadvantage of attacking and gives the notified defender a complete round in which to organize help. Exact fleet composition and other concealed facts remain subject to reconnaissance.
+At departure, the target receives an incoming-attack notification with the attacker, the exact number of ships in that fleet, and the earliest combat hour. Together with known geography, this exposes the fleet's travel timing but not its ship composition, private name, internal identity, or relationship to other contacts. Entering the order near the end of the command window does not create a movement or warning advantage: all confirmed orders in that window depart together. Offensive travel requires one additional operation round relative to defensive reinforcement under equivalent conditions. This preserves the historical commitment disadvantage of attacking and gives the notified defender a complete round in which to organize help.
+
+## Regular ship catalog
+
+The initial regular-ship catalog retains the twelve historical ship types and their established tactical identities. This is a product commitment to the roster, role relationships, firing behavior, and target-order baseline, not to every historical cost or numeric balance value. The command ship remains a separate player-developed unit rather than a thirteenth fixed regular ship type.
+
+Hull class, technology tier, combat role, and firing phase are separate concepts. Fighter, corvette, frigate, and battleship are the four hull classes. EMP, first strike, and main fire describe firing phases or weapon behavior; they are not additional ship classes.
+
+| Tier | Ship type  | Hull class | Firing behavior | Tactical identity                                                                  | Historical target-order baseline                                                                                |
+| ---- | ---------- | ---------- | --------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| 1    | Piranha    | Fighter    | First strike    | Cheap early direct-fire ship against frigates and other small or medium targets    | Taifun, Hurricane, Blizzard, Hai, Hackboot, Piranha, Qualle, Tsunami, Enterprise, Kitty Hawk, Bermuda, Atlantis |
+| 1    | Qualle     | Fighter    | EMP             | Cheap disruption concentrated on small targets                                     | Piranha, Hai, Hackboot, Taifun, Hurricane, Tsunami, Enterprise, Kitty Hawk, Atlantis                            |
+| 2    | Hai        | Corvette   | Main fire       | Escort and anti-Hackboot specialist with useful frigate performance                | Hai, Hackboot, Taifun, Blizzard, Hurricane, Tsunami, Enterprise, Kitty Hawk, Bermuda, Atlantis, Piranha, Qualle |
+| 2    | Hackboot   | Corvette   | No direct fire  | Economic raider that enables collector capture and depends on an escort            | Not applicable                                                                                                  |
+| 3    | Taifun     | Frigate    | Main fire       | General-purpose multi-cannon ship that clears fighters and corvettes first         | Piranha, Qualle, Hai, Hackboot, Taifun, Blizzard, Hurricane, Tsunami, Enterprise, Kitty Hawk, Bermuda, Atlantis |
+| 3    | Blizzard   | Frigate    | EMP             | Mid-scale disruption focused on frigates before smaller or heavy targets           | Taifun, Hurricane, Tsunami, Hai, Hackboot, Enterprise, Kitty Hawk, Piranha, Atlantis                            |
+| 4    | Tsunami    | Frigate    | Main fire       | Few exceptionally strong cannons for destroying the largest ships                  | Atlantis, Kitty Hawk, Enterprise, Bermuda, Tsunami, Hurricane, Taifun, Blizzard, Hai, Hackboot, Piranha, Qualle |
+| 4    | Hurricane  | Frigate    | First strike    | Longer-range counterpart to the Taifun with early pressure on escorts and frigates | Hai, Hackboot, Taifun, Hurricane, Blizzard, Tsunami, Piranha, Qualle, Enterprise, Kitty Hawk, Bermuda, Atlantis |
+| 5    | Enterprise | Battleship | Main fire       | Heavy generalist with concentrated effectiveness against frigates                  | Hurricane, Taifun, Blizzard, Tsunami, Hai, Hackboot, Enterprise, Kitty Hawk, Bermuda, Atlantis, Piranha, Qualle |
+| 5    | Bermuda    | Battleship | EMP             | Heavy disruption able to threaten the largest direct-fire ships                    | Atlantis, Kitty Hawk, Enterprise, Tsunami, Hurricane, Taifun, Hai, Hackboot, Piranha                            |
+| 6    | Atlantis   | Battleship | Main fire       | Extremely durable mass-cannon platform for clearing swarms                         | Piranha, Qualle, Hai, Hackboot, Taifun, Blizzard, Hurricane, Tsunami, Enterprise, Kitty Hawk, Bermuda, Atlantis |
+| 6    | Kitty Hawk | Battleship | First strike    | Heavy concentrated first-strike platform derived from the Enterprise role          | Enterprise, Tsunami, Hurricane, Taifun, Blizzard, Bermuda, Kitty Hawk, Hai, Hackboot, Atlantis, Piranha, Qualle |
+
+The tier pairings deliberately present a conventional or first-strike combat option beside a specialized EMP, escort, or economic option. Aluminium and Steel cost mixes should preserve meaningful production tradeoffs, but all exact recipes, build times, travel rates, fuel rates, hull points, cannon counts, firepower, hit chances, and damage factors remain versioned balancing values.
+
+The ordinary ship view should explain role, preferred targets, weaknesses, and firing phase without requiring the player to memorize a full matchup matrix. An expert view exposes every published target-specific hit chance, damage factor, and target order. Reports use those same versioned values and name every modifier that changed their effective result.
 
 ## Combat resolution
 
-Combat must be deterministic enough to test and explain, while retaining uncertainty before the battle through imperfect intelligence and human decisions.
+Combat resolution is deterministic. Its uncertainty exists before commitment through incomplete intelligence, concealed composition, future reinforcement and withdrawal decisions, and unknown opposing modifiers rather than random hit or damage rolls.
 
-An engagement resolves in up to three hourly combat steps and may end earlier when its mission state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second step, each fleet owner may order a withdrawal during the following command window. At the next hourly boundary that fleet withdraws before the next combat step, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving before that boundary affect the next step only if the operation still continues.
+Every combat step resolves the same three firing phases in order: **EMP, first strike, then simultaneous main fire**. EMP disables eligible weapons for the remainder of that combat step without damaging hull points. A regular EMP ship does not target another regular EMP ship. First-strike losses reduce the force able to participate in main fire. Main-fire losses are calculated without granting an advantage from internal iteration or participant order.
+
+Each direct-fire ship type combines its cannon count, firepower per cannon, published target-specific hit chance and damage factor, the target's hull points, visible modifiers, and fixed target order. One cannon cannot destroy more than one regular ship in one shot even when its damage exceeds the target's remaining hull points. The target order moves available fire to the next eligible ship type when an earlier target is absent or exhausted.
+
+Partial deterministic effect must not disappear merely because one attacker group falls below an integer casualty threshold. Resolution retains sufficient fixed-point remainder within the engagement to make combined and repeated damage continuous and auditable. The exact fixed-point scale, allocation procedure, remainder behavior when a target type is exhausted, and report presentation remain implementation and balancing decisions.
+
+Published ship data contains the final effective values. The remake does not reproduce the historical hidden heavy-ship hit-point and incoming-damage correction layer or encode a probability above one hundred percent so that later modifiers bring it back under the cap. A desired exception such as the Hai's unusually reliable tracking of the Hai and Hackboot ship types must instead appear as a named, visible rule with testable limits.
+
+An engagement resolves in up to three hourly combat steps and may end earlier when its state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second step, each fleet owner may order a withdrawal during the following command window. At the next hourly boundary that fleet withdraws before the next combat step, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving at that boundary affect the next step only if the engagement still continues.
 
 Defeating every current defender does not end the engagement automatically: while the attacker retains a fleet capable of continuing, they may remain for the unused steps and gain another station-access opportunity at each one. This can yield further collector theft and other enabled raid effects, but delays the return and exposes the attacker to later defensive reinforcement. If a combat step leaves no combat-capable attacking fleet, the engagement ends immediately after that result and its recovery returns begin. It also ends before a later step when every remaining attacker withdraws, and always ends after the third step.
 
@@ -149,7 +228,7 @@ Reports should distinguish:
 - experience and progression,
 - which pre-battle assumptions proved false.
 
-The exact damage formula and role of randomness are not yet product decisions.
+Exact numeric ship values, modifier curves, EMP resistance, and the final fixed-point damage-allocation formula remain balancing decisions within these rules.
 
 ## Combat points
 
@@ -195,9 +274,11 @@ Stolen resources and collectors are transfers from the defender rather than gene
 
 ## Return cargo and disabled fleets
 
-Müll, captured collectors, and any stolen resources remain attached to the operation as return cargo. They are not credited to the home station when a combat step resolves. After withdrawal or the final combat step, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
+Müll, captured collectors, and any stolen resources remain attached to the fleet as return cargo. They are not credited to the home station when a combat step resolves. After withdrawal or the final combat step, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
 
-If every ordinary ship is destroyed, the operation still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration, and whether an empty recovery return can ever be intercepted, remain open.
+Remaining onboard fuel travels home with the fleet but remains separate from return cargo. Actual movement consumes it, so an early withdrawal may leave more aboard than the originally planned full journey would have. Only the amount physically remaining when the fleet reaches home returns to the owner's station fuel stock.
+
+If every ordinary ship in a participating fleet is destroyed, that fleet still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration, and whether an empty recovery return can ever be intercepted, remain open.
 
 Müll may remain as an Aquata term if it fits the final tone and is clearly explained.
 
@@ -262,9 +343,9 @@ Choosing maximum income means accepting more exposure. This is a deliberate comp
 
 Alliance night watches are part of the intended social strategy.
 
-Historically, only a fleet's owner could compose and release it. One settlement General could recall released fleets from active missions, but had no further control. Settlement members could call an available released fleet only to defend their own station.
+Historically, only a fleet's owner could compose and release it. One settlement General could recall released fleets from active fleet orders, but had no further control. Settlement members could call an available released fleet only to defend their own station.
 
-The remake should preserve this narrow delegation without requiring settlements. An operation may appoint one commander who can recall explicitly released participating fleets. Separately released readiness fleets may be called by authorized players for self-defense. No delegate may change composition, launch an attack, or redirect a fleet beyond the granted defensive purpose.
+The remake should preserve this narrow delegation without requiring settlements. An operation may appoint one commander who can recall participating fleets whose owners granted that operation authority. Separately, an owner may enable alliance fleet release for all of their available fleets, allowing current alliance members to call one complete fleet at a time only for defense of the caller's own station. No delegate may change composition, launch an attack, or redirect a fleet beyond the granted defensive purpose.
 
 All delegated actions must be visible to the owner and recorded. The final trust scope and conflict rules are still open.
 
