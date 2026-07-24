@@ -135,7 +135,9 @@ At departure, the target receives an incoming-attack notification and the earlie
 
 Combat must be deterministic enough to test and explain, while retaining uncertainty before the battle through imperfect intelligence and human decisions.
 
-An engagement resolves in up to three hourly combat steps and may end earlier when its mission state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default, while valid withdrawals and fleets arriving before the next boundary affect the following step. Continuing after the opposition has weakened may yield further raid effects, including another collector-theft opportunity, but exposes the attacker to later defensive reinforcement.
+An engagement resolves in up to three hourly combat steps and may end earlier when its mission state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second step, each fleet owner may order a withdrawal during the following command window. At the next hourly boundary that fleet withdraws before the next combat step, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving before that boundary affect the next step only if the operation still continues.
+
+Defeating every current defender does not end the engagement automatically: while the attacker retains a fleet capable of continuing, they may remain for the unused steps and gain another station-access opportunity at each one. This can yield further collector theft and other enabled raid effects, but delays the return and exposes the attacker to later defensive reinforcement. If a combat step leaves no combat-capable attacking fleet, the engagement ends immediately after that result and its recovery returns begin. It also ends before a later step when every remaining attacker withdraws, and always ends after the third step.
 
 Reports should distinguish:
 
@@ -147,7 +149,7 @@ Reports should distinguish:
 - experience and progression,
 - which pre-battle assumptions proved false.
 
-The exact damage formula, withdrawal rules, early-ending conditions, and role of randomness are not yet product decisions.
+The exact damage formula and role of randomness are not yet product decisions.
 
 ## Combat points
 
@@ -190,6 +192,12 @@ The underlying principle is current:
 Salvage is governed by a strict conservation rule. Across all participants, the canonical resource value of Müll awarded by a combat step and by the complete engagement must remain lower than the canonical replacement value permanently destroyed in that combat. Own-loss recovery, rewards for damage to enemies, command-ship effects, modules, and every other bonus are claims against this one bounded loss pool; they are not independent sources that may add up beyond it. Bonuses may improve a participant's share or move total recovery toward the published ceiling, but may never raise that ceiling or create resources.
 
 Stolen resources and collectors are transfers from the defender rather than generated value. A disabled command ship that returns for repair is not a permanently destroyed replacement-value loss and therefore cannot produce full ship-value salvage in addition to returning home. Its economic loss comes from repair and unavailable time. Consequently, every resolved attack must leave at least one side economically worse off through permanent losses, transferred property, consumed fuel, or repair cost.
+
+## Return cargo and disabled fleets
+
+Müll, captured collectors, and any stolen resources remain attached to the operation as return cargo. They are not credited to the home station when a combat step resolves. After withdrawal or the final combat step, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
+
+If every ordinary ship is destroyed, the operation still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration, and whether an empty recovery return can ever be intercepted, remain open.
 
 Müll may remain as an Aquata term if it fits the final tone and is clearly explained.
 

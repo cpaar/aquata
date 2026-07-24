@@ -328,7 +328,9 @@ Module discovery must never become a premium or gacha system. Players cannot buy
 
 Its strongest tactical effects require the command ship to participate in the relevant operation. A fleet sent without it remains useful, but lacks the command profile that makes the player's main force distinctive. Because the command ship can accompany only selected commitments, its location creates a strategic choice about where the player's full strength and specialized capabilities are exposed.
 
-The exact experience curve, combat-experience values and multiplier curves, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and destruction consequences remain open.
+A command ship disabled in combat is not permanently destroyed and does not teleport home. It returns with its fleet or, if no ordinary ship survives, with the operation's empty recovery return. After arrival it must be repaired before it can participate in another operation. Modules remain unlocked during this state. Exact repair cost and duration remain balancing decisions.
+
+The exact experience curve, combat-experience values and multiplier curves, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and disabled-command-ship repair values remain open.
 
 ## Reset contract
 

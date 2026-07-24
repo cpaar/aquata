@@ -62,7 +62,7 @@ Collector theft happens only during a resolved attack on the owning station. It 
 
 Under optimal conditions, each combat resolution step may steal at most fifteen percent of the collector pool remaining at that step. Three optimal steps can therefore steal no more than `1 - 0.85³`, approximately 38.6 percent of the starting pool, rather than forty-five percent. Actual theft may be lower under the published combat conditions.
 
-Stolen collectors become captured economic value rather than being destroyed. The exact combat requirements, capture capacity, ownership transition during the return journey, repeated-attack protection, and interaction with recovery rules remain open.
+Stolen collectors become captured economic value rather than being destroyed. A resolved theft removes them from the defender's active pool immediately and places them in the attacker's operation cargo. They do not produce for either side during the return journey and join the attacker's aggregate collector pool only when that return reaches home, including when no combat ships survived and an empty recovery return is required. The exact combat requirements, capture capacity, repeated-attack protection, interaction with standings locks, and interaction with recovery rules remain open.
 
 ## Seasonal role
 

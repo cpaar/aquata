@@ -62,13 +62,13 @@ This file contains only unresolved questions that materially affect the product.
 ## Combat and recovery
 
 - Which combat aspects are deterministic, and where is uncertainty introduced?
-- Which withdrawal and early-ending rules govern the three-step engagement lifecycle?
 - Which exact value, force-ratio, bonus, contribution, and own-loss factors define combat points in the remake?
 - Which battles and targets qualify for combat points, and how are arranged sacrifice and repeated farming limited?
 - What are the target salvage rates for own losses and enemy kills?
 - How severe should a catastrophic defeat be, and what is the desired recovery time?
 - How do repeated attacks and farming interact with protection?
-- Which published battle conditions determine collector theft below the fifteen-percent-per-step cap, and when do captured collectors transfer to the attacker?
+- Which published battle conditions determine collector theft below the fifteen-percent-per-step cap?
+- Can an empty recovery return ever be intercepted, or is secured cargo guaranteed once its combat step resolves?
 - Which transparent measure defines attack eligibility and maximum commitment?
 - Which later decoy or misinformation mechanics add readable counterplay beyond the initial defense model of lower precision and concealed fields?
 
@@ -107,7 +107,7 @@ This file contains only unresolved questions that materially affect the product.
 - How much of the seasonal module catalog and its distribution changes between seasons?
 - When and at what cost may modules or specializations be changed?
 - What diminishing-returns curve and effect-category boundaries keep overlapping Support command ships useful without making mass stacking optimal?
-- What happens when a command ship is destroyed?
+- What repair cost and duration follow a disabled command ship's return?
 
 ## Community
 
