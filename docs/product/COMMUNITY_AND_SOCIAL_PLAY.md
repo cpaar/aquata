@@ -1,6 +1,6 @@
 # Community and social play
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Social premise
 
@@ -33,6 +33,8 @@ Messages should be able to contain game objects such as:
 - timing proposals.
 
 These objects should remain interactive and respect their sharing permissions.
+
+A shared scan remains one permission-bearing source object rather than copied text. Its observations may appear in the recipient's player intelligence profile and operation intelligence view, but they retain the original scanner, acquisition time, precision, and sharing scope. Sharing cannot raise precision, refresh an old observation, erase uncertainty, or authorize onward access that the source did not grant. Exact allied fleet and command-ship data may also feed an operation when the owning player deliberately grants that operational visibility.
 
 A battle report originates only from an engagement's authorized participant record. A player who did not participate cannot acquire that report by scanning the target before or after the battle. An eligible participant may explicitly share the report as a permission-bearing game object; that deliberate share, rather than reconnaissance or alliance membership by itself, grants access to its contents.
 
@@ -129,7 +131,7 @@ The **communications center** is the station's physical link to seasonal allianc
 
 These windows are balance targets rather than membership timers. A coordinated group may prioritize the facilities earlier by accepting the corresponding resource cost, while a solo player may postpone them without losing basic social access.
 
-A sensor array is required to produce personal scans; a communications center is required to distribute or receive them through the operational alliance network. A player without personal scanning capability may therefore still use intelligence deliberately shared by operationally linked allies. The sharing rule creates useful cooperation without turning one specialist into an all-seeing source of automatic live truth.
+A sensor array is required to produce personal scans; a communications center is required to distribute or receive them through the operational alliance network. A player without personal scanning capability may therefore still use intelligence deliberately shared by operationally linked allies. Several specialists may contribute observations about different participants to one operation, while every value retains its source and age. The sharing rule creates useful cooperation without turning one specialist into an all-seeing source of automatic live truth.
 
 Social membership remains visible while the operational alliance link is absent, disabled, or temporarily restricted. The interface must state clearly which member is socially present, which station is operationally linked, and which information or permissions are currently available. This distinction must never silently grant access to tactical data.
 

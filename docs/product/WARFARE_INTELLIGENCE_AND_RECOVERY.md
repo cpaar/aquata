@@ -1,6 +1,6 @@
 # Warfare, intelligence, and recovery
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Strategic premise
 
@@ -39,21 +39,29 @@ Information is a resource with:
 
 - acquisition cost,
 - age,
-- confidence,
+- precision and provenance,
 - scope,
 - ownership,
 - sharing permissions,
 - possible countermeasures.
 
-Reconnaissance observes **game-world state and game-world activity**, never the person behind an account. A scan may reveal eligible state such as resources or fleets and externally detectable events such as a fleet launch, arrival, return, reinforcement, or passage through observed space. It never exposes login or logout times, online presence, session rhythm, chat behavior, device data, or any other account-level or real-person activity. An activity label such as quiet, occasional, or high must be derived only from detected game-world events and must never be presented as a claim that a player is currently online or active.
+Reconnaissance observes **game-world state and game-world activity**, never the person behind an account. A scan may reveal eligible state such as resources or fleets and externally detectable events such as a fleet launch, arrival, return, reinforcement, or passage through observed space. It never exposes login or logout times, online presence, session rhythm, chat behavior, device data, or any other account-level or real-person activity.
 
-A scan never exposes or reconstructs the combat report of an engagement in which the scanning player did not participate. Battle reports are authoritative participant records. An eligible participant may deliberately share a report through its normal permission-bearing social object, but reconnaissance cannot create that access. A later scan may reveal the target's then-observable state or bounded movement traces from which losses can be inferred; it does not reveal the engagement's participants, combat steps, shots, casualties, rewards, or report contents merely because combat occurred there.
+A scan never exposes or reconstructs the combat report of an engagement in which the scanning player did not participate. Battle reports are authoritative participant records. An eligible participant may deliberately share a report through its normal permission-bearing social object, but reconnaissance cannot create that access. A later scan may reveal the target's then-observable state, while valid Observation Network coverage may have recorded eligible movement events. Neither reveals the engagement's participants, combat steps, shots, casualties, rewards, or report contents merely because combat occurred there.
 
-Reconnaissance begins with three layers rather than a global directory of targets.
+Reconnaissance has three player-facing interactions rather than a catalog of unrelated report types:
+
+- **search an area** to discover stations, movement contacts, and opportunities beyond the local picture,
+- **scan a player** to build one progressively richer intelligence record about that player,
+- **observe a player** later to keep supported future movement information under continuous coverage.
+
+Fleet, economy, command-ship, production, and movement information are sections earned inside the one player scan as Sensor Technology advances. They are not separate Fleet, Factory, Command Ship, or News Scan buttons. Passive sensing remains the automatic local source beneath those deliberate interactions.
+
+The historical game split reconnaissance across Base, Fleet, News, Factory, and Command Ship scans. The remake preserves their strategically useful questions—target resources and collectors, fleet strength and composition, movements from and to the target with useful travel timing, production, and command-ship danger—but collapses them into the interactions above. The historical News Scan's copy of a target's private recent news does not return.
 
 The station begins with a deliberately weak passive sensor baseline that can surface a few coarse local leads. A **sensor array** provides the physical capability for player-directed reconnaissance; sensor research expands the methods and reach available through that hardware. Facility capability and research may both be required, but their levels do not mirror one another one-for-one.
 
-Sensor Array I is a bootstrap facility that should complete within one operation-round interval. Its activation makes energy controls relevant and leaves the station with enough initial stored energy for one meaningful basic targeted scan. This initial charge belongs to the one seasonal station state, cannot be reclaimed by replaying guidance, and uses the same scan rule as later stored energy. Further scans depend on normal Plutonium conversion and energy management.
+Sensor Array I is a bootstrap facility that should complete within one operation-round interval. Its activation makes energy controls relevant and leaves the station with enough initial stored energy for one meaningful scan of a known target. This initial charge belongs to the one seasonal station state, cannot be reclaimed by replaying guidance, and uses the same scan rule as later stored energy. Further searches and scans depend on normal Plutonium conversion and energy management.
 
 ### Passive sensor field
 
@@ -63,46 +71,52 @@ Passive contact data creates leads rather than complete answers. The initial fle
 
 Continuous energy assigned to sensors improves observation quality or refresh behavior inside the researched field. It does not freely redefine the field's radius; this keeps the boundary understandable while research remains the main source of passive reach.
 
-### Sector scan
+### Area search
 
-A manual sector scan spends stored energy to investigate a selected area at or beyond passive sensor reach. It may reveal previously unknown stations, movement contacts, ruins, resource opportunities, anomalies, and possible module-related missions. Sector scans make distant discovery possible without restoring the historical ability to select every player from a fully exposed map or ranking.
+An area search spends stored energy to investigate a selected part of the map at or beyond passive sensor reach. It may reveal previously unknown stations, movement contacts, ruins, resource opportunities, anomalies, and possible module-related missions. It makes distant discovery possible without restoring the historical ability to select every player from a fully exposed map or ranking. Finding a player creates a contact that can receive the ordinary player scan; it does not automatically reveal that player's tactical or economic state.
 
-### Targeted deep scan
+### Player scan
 
-A detected contact can receive a manual deep scan. The player chooses an intelligence focus rather than invoking a separate unrelated subsystem for every report:
+A known player can receive one manual player scan. The scan automatically returns every section supported by the scanner's current Sensor Technology rather than asking the player to choose among several report types. Its result remains a time-stamped source record with explicit exact values, estimates, unknown fields, provenance, and sharing permissions.
 
-- economy and resources,
-- fleets,
-- command ship and production,
-- movement analysis.
+The report grows in a staged order:
 
-The result is a time-stamped report with a defined detail level, ranges, unknown fields, and confidence. Scans and discovered contacts may be shared through explicit alliance permissions when the participating seasonal stations have the required operational alliance link.
+- The opening baseline provides the target's identity and station plus coarse resource, collector, and total-force information suitable for an initial target decision.
+- Sensor Technology II adds rudimentary command-ship intelligence: whether the target command ship exists, whether it is present, away, or disabled, its Fight, Support, or Economy archetype, and its exact level or a level band according to scan quality.
+- Sensor Technology III adds the target's economy and fleet sections. Sufficient quality may reveal current raw-resource and collector values, the target's division of ships into persistent fleets, and increasingly precise ship-type counts. It also adds command-ship specialization, assigned fleet, basic combat mode where applicable, and a coarse capability profile.
+- Movement Analysis, the fourth Sensor Technology project, adds currently observable movements from and to the target. Depending on quality, an entry may reveal the other participant, known origin and destination, elapsed and remaining travel time or time bands, expected arrival round, total fleet size, and a broad hull signature.
+- Systems Intelligence, the fifth project, adds current production and the target command ship's exact combat-relevant statistics, modules, effects, and target priorities when the scan earns that precision.
 
-A sufficiently strong fleet-focused scan may reveal the target's current division of ships into fleets and, at higher detail, their compositions. It does not expose stable internal fleet identifiers, private fleet names, fleet orders, or a direct mapping from a scanned fleet to a movement contact or destination. Players may infer likely matches from ship counts, timing, speed, and subsequent observations, but the game does not confirm that correlation for them.
+The scan is authoritative only about what it actually observed at its acquisition time. A strong scan of player A may resolve A's own fleet partitions and command ship precisely. If it detects that player B is present at or approaching A, it provides only the earned external signature of B's force. Exact composition and command-ship detail for B require a scan of B, an authorized shared scan of B, or deliberate permission-bearing data from B as an ally. The same subject boundary applies to every foreign participant around A.
 
-Scan strength, distance, research, and the target's countermeasure allocation determine the information tier. An unchanged scan against unchanged defenses should not be repeatable until a random attempt succeeds. Strong defense degrades precision or conceals fields rather than making fabricated exact values the default. More elaborate decoys and deliberate misinformation may be added later only if their counterplay remains understandable.
+A player scan never exposes stable internal fleet identifiers, private fleet names, hidden orders, or an automatic mapping between a scanned fleet partition and a movement contact. Players may infer likely matches from ship counts, timing, speed, and several observations. A combined view may label such a match as probable, but never silently promote it to confirmed evidence.
 
-### Movement analysis
+Scan strength, distance, research, and the target's countermeasure allocation determine the precision earned for each available section. Unchanged inputs produce the same result tier rather than allowing retries until randomness yields a better report. Strong defense degrades exact values to published ranges or conceals fields; it does not fabricate exact numbers by default. More elaborate decoys and deliberate misinformation may be added later only if their evidence and counterplay remain understandable.
 
-Movement Analysis is the fourth Sensor Technology project and a focused deep-scan method. It combines the target's currently observable movement contacts with a bounded retrospective of externally detectable game-world movement. It answers “what appears to have happened here recently?” without copying a private news feed or exposing player activity.
+### Intelligence observations and views
 
-Depending on information tier, a result may contain:
+A scan report remains the durable source object, while its individual facts become intelligence observations that can be reused in context. Every observation retains:
 
-- current movement contacts,
-- recent detected launches, arrivals, returns, or reinforcements within a published lookback window,
-- approximate operation rounds or time bands, direction, and broad fleet-size bands,
-- an activity band derived solely from those detected game-world events,
-- at the strongest supported tier, the exact hourly operation round of an observed launch or arrival.
+- the player, fleet, movement, station, or other subject it describes,
+- its value, estimate, or explicitly unknown state,
+- acquisition time and precision,
+- original scanner and source type,
+- sharing permissions,
+- whether it was directly observed or derived from several sources.
 
-It does not expose login state, exact destination, ship composition, private fleet name, stable fleet identifier, hidden fleet order, private event history, or a foreign battle report. Missing detail remains explicitly unknown. A low event count may mean that little observable movement occurred, that events fell outside the lookback window, or that distance and countermeasures concealed them; it is not proof that the player was absent.
+The **player intelligence profile** assembles available observations about one player. The **operation intelligence view** assembles the observations relevant to one objective and planned operation round, including personal scans, authorized alliance scans, movement observations, and exact allied fleet or command-ship data deliberately shared for that operation. Both views distinguish confirmed, observed, probable, and unknown information.
+
+A credible battle estimate needs the best available information about every fleet expected to be present at the relevant combat step and every participating command ship. The operation view therefore exposes missing participant scans and uncertain reinforcements instead of treating one precise target scan as a complete forecast. For a raid decision, the same view can emphasize resource, collector, production, and likely return-value observations without creating a separate scanning workflow.
+
+Aggregation never upgrades evidence merely because several cards appear together. A newer coarse observation does not erase an older precise snapshot, and an older exact value remains exact only for its acquisition time. The interface shows precision, age, and provenance separately rather than collapsing them into an opaque percentage. Contradictory or stale sources remain inspectable behind the best current presentation.
 
 ### Observation network
 
-The Observation Network is the sixth Sensor Technology project and the future-facing counterpart to Movement Analysis. The player commits a time-limited observation to a known station, known contact, or bounded area and pays a visible continuous energy cost. Coverage begins when the observation is activated and is never retroactive.
+The Observation Network is the sixth Sensor Technology project. It adds **observe player** to a known player's intelligence profile rather than another scan-report type. The player commits a time-limited observation and pays a visible continuous energy cost. Coverage begins when the observation is activated and is never retroactive.
 
-While coverage is valid, it may record externally observable launches, arrivals, returns, reinforcements, and fleet passages through the watched area. Detail still depends on sensor strength, distance, energy commitment, and countermeasures. It does not automatically reveal exact destinations, compositions, private orders, production, research, resources, communication, account activity, or foreign battle reports. Players may correlate several observations and infer a plan, but the system does not confirm hidden links for them.
+While coverage is valid, it may record supported future launches, arrivals, returns, reinforcements, and other externally observable movement changes from or to that player. Detail still depends on sensor strength, distance, energy commitment, and countermeasures, and the same subject boundary continues to apply. Observing A does not grant the exact composition or command-ship build of B merely because B approaches A.
 
-Energy exhaustion, countermeasures, or other coverage loss creates a visible observation gap rather than a false statement that nothing happened. Observation results may be shared only through the same operational alliance link and explicit intelligence permissions as other scans. The network preserves the valuable historical practice of watching for launches and reinforcements while making the watched interval, cost, evidence, and uncertainty explicit.
+Energy exhaustion, countermeasures, expiration, or other coverage loss creates a visible observation gap rather than a false statement that nothing happened. Observation results feed the same player and operation views and may be shared only through the operational alliance link and explicit intelligence permissions. The network preserves the valuable historical practice of watching for launches and reinforcements while making the watched interval, cost, evidence, and uncertainty explicit.
 
 ### Reconnaissance energy
 

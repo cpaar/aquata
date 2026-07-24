@@ -1,6 +1,6 @@
 # Economy and growth
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Product purpose
 
@@ -88,7 +88,7 @@ The initial station catalog is intentionally compact. Aquata should feel like a 
 | ------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | **Station core**          | No upgrade levels | Collector control, one active research slot and its planning queue, basic fleet administration, weak passive sensing, and the included Energy Core I | Included at station placement                                                       |
 | **Shipyard**              | I–IV              | Production hardware for fighters, corvettes, frigates, and battleships respectively; individual designs still require ship engineering               | I included; II in opening; III from late opening into expansion; IV during conflict |
-| **Sensor array**          | I–II              | Hardware for manual scans, researched sector and deep-scan methods, movement observation, and countermeasures                                        | I as bootstrap; II from late opening into expansion                                 |
+| **Sensor array**          | I–II              | Hardware for area search, the growing player scan, future player observation, and countermeasures                                                    | I as bootstrap; II from late opening into expansion                                 |
 | **Communications center** | I–II              | Operational alliance link and contextual intelligence sharing, then operations, defense calls, and alliance fleet release                            | Both in opening under their established cost targets                                |
 | **Command dock**          | One level         | Command-ship selection, construction, module loadout, supported reconfiguration, and repair after combat disablement                                 | Early opening major goal                                                            |
 | **Energy core**           | I–III             | Plutonium conversion throughput and stored-energy capacity; it does not unlock sensor methods or change the normal conversion ratio                  | I included; II from late opening into expansion; III during conflict                |

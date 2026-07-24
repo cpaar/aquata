@@ -1,6 +1,6 @@
 # Aquata glossary
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 This glossary defines the canonical vocabulary used across product documents, rules, interface copy, code, reports, and tests. It names concepts; the owning product documents still define their complete mechanics.
 
@@ -31,11 +31,16 @@ English terms are canonical for the current documentation and implementation. Th
 
 ## Intelligence vocabulary
 
-| Canonical term          | German UI term       | Meaning                                                                                                                                                                                                                            |
-| ----------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Game-world activity** | **Spielaktivität**   | Externally observable actions and changes inside the game world, such as fleet launches, arrivals, returns, reinforcements, and movement through watched space. It excludes login state, session behavior, chat, and account data. |
-| **Movement Analysis**   | **Bewegungsanalyse** | A focused deep-scan method that combines current movement intelligence with a bounded retrospective of externally observable game-world movement. It is not a copy of a target's private event history.                            |
-| **Observation Network** | **Beobachtungsnetz** | A time-limited, continuously energy-consuming sensor observation of a known station, known contact, or bounded area that records supported future game-world events and explicit coverage gaps.                                    |
+| Canonical term                  | German UI term             | Meaning                                                                                                                                                                                                                                                                               |
+| ------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Game-world activity**         | **Spielaktivität**         | Externally observable actions and changes inside the game world, such as fleet launches, arrivals, returns, reinforcements, and movement through watched space. It excludes login state, session behavior, chat, and account data.                                                    |
+| **Area search**                 | **Gebiet durchsuchen**     | A directed reconnaissance action over a chosen map area that discovers players and other eligible contacts at the precision earned by the sensor state. It is not a detailed scan of every discovered subject.                                                                        |
+| **Player scan**                 | **Spielerscan**            | The one directed scan of a known player. Sensor Technology progressively adds sections and precision to this scan instead of unlocking separate fleet, economy, production, command-ship, or news scan actions.                                                                       |
+| **Intelligence observation**    | **Aufklärungsbeobachtung** | One provenance-bearing intelligence record with a subject, value or estimate, acquisition time, precision, source type, original observer, permissions, and direct or derived status. Combining observations never increases their evidence quality.                                  |
+| **Player intelligence profile** | **Spieler-Lagebild**       | The collected view of all intelligence currently available about one player, assembled from authorized personal, allied, and other sources while preserving age, precision, provenance, and uncertainty.                                                                              |
+| **Operation intelligence view** | **Operationslagebild**     | The operation-scoped view of all authorized intelligence relevant to its participants and targets. It reuses source observations and makes confirmed, observed, probable, and unknown claims distinguishable rather than presenting an invented authoritative whole.                  |
+| **Movement Analysis**           | **Bewegungsanalyse**       | The Sensor Technology capability that adds current movements from or to the scanned player to the player scan. It may expose endpoints, timing, size, and broad signatures at the earned precision, but does not resolve another player's exact composition or private event history. |
+| **Observation Network**         | **Beobachtungsnetz**       | A time-limited, continuously energy-consuming observation of a known player that records supported future game-world events and explicit coverage gaps in the same intelligence views. It never backfills time before activation.                                                     |
 
 ## Ship and combat vocabulary
 
@@ -88,7 +93,8 @@ English terms are canonical for the current documentation and implementation. Th
 - Use **operation** only for the shared planning context, never as a synonym for one fleet or one fleet order.
 - Use **movement contact** for observed travel and **incoming attack** for the target's direct warning; their information precision is intentionally different.
 - Use **game-world activity** only for observable events inside Aquata. Never use scan output to describe player activity, online presence, or behavior outside authoritative game actions.
-- Keep **Movement Analysis** retrospective and bounded, and the **Observation Network** future-facing from activation. Neither is a news-feed copy, and neither exposes a foreign **battle report**.
+- Keep one growing **player scan** instead of separate fleet, economy, production, command-ship, movement, or news scan actions. **Movement Analysis** adds current movements from and to its subject; the **Observation Network** is future-facing from activation. Neither exposes a foreign **battle report**.
+- Keep intelligence tied to its subject and provenance. Scanning player A may reveal that player B is approaching A, but exact composition or command-ship data about B requires an authorized source whose subject is B. Aggregated views may show a probable relationship but may not convert it into confirmed evidence.
 - Use **alliance fleet release** for the owner's persistent alliance-wide permission and **defense call** for an ally's concrete use of one fleet. Do not describe individual fleets as separately released.
 - Keep **onboard fuel** separate from **return cargo**: both travel with a fleet, but fuel powers movement and only its unconsumed remainder returns as Plutonium.
 - Use **return cargo** from the moment assets are secured until they arrive home; do not alternate between cargo, loot, and operation cargo when describing that authoritative state.

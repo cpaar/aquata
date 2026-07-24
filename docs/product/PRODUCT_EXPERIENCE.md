@@ -1,6 +1,6 @@
 # Product experience
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Experience thesis
 
@@ -64,7 +64,11 @@ The map separates visible economic geography from the uncertain tactical picture
 
 A player initially detects tactical contacts only within the passive sensor field around their station and sees few coarse facts about them. Research primarily expands this field. Persistent energy allocation improves passive observation or strengthens countermeasures, while stored energy powers manual scans.
 
-The map supports a clear intelligence ladder: passive contacts create local leads, a sector scan searches a selected area for distant contacts or opportunities, and a targeted deep scan produces more precise, time-stamped intelligence about a detected contact. A passive fleet contact begins with no more than a known origin where available, direction, and broad size class. Exact destination and composition require stronger information. Alliance discoveries and shared scans can extend the known operational picture beyond a player's personal reach.
+The map supports a clear intelligence ladder: passive contacts create local leads, an area search investigates a selected region for distant players or opportunities, and the one player scan produces progressively richer time-stamped intelligence about a known player as Sensor Technology advances. A passive fleet contact begins with no more than a known origin where available, direction, and broad size class. Stronger movement intelligence may identify who is moving from or to the scanned player, endpoints, travel timing, total size, and a broad signature, but exact foreign composition still requires intelligence about that force's owner. Alliance discoveries and shared scans can extend the known operational picture beyond a player's personal reach.
+
+Selecting a known player opens a player intelligence profile rather than a chronological pile of scan reports. It presents the best available economic, fleet, command-ship, production, and movement observations while keeping their exact acquisition time, precision, source, and permissions inspectable. Exact old information must not look current, and several matching estimates must not look authoritative merely because they agree.
+
+An operation intelligence view assembles the sources relevant to one objective and planned operation round. It should answer which forces are confirmed, which movements are directly observed, which fleet or command-ship matches are only probable, and where information remains unknown. Personal scans, authorized shared scans, future observation, and exact allied data appear together without losing their provenance. The operation view helps players reason about a battle; it does not silently decide the outcome or invent certainty.
 
 Exploration must create target-finding decisions without becoming manual grid sweeping. The command view and map should surface a manageable set of leads such as nearby contacts, game-world activity signals, resource-rich areas, neutral opportunities, and intelligence shared by allies. Such signals describe observed in-world events, never login recency or online presence. Rankings may provide strategic context and prestige, but must not replace reconnaissance with an exact, live target directory.
 

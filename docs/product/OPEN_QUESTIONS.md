@@ -1,6 +1,6 @@
 # Open product questions
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 This file contains only unresolved questions that materially affect the product. When a question is answered, update the owning product document and remove it here.
 
@@ -32,12 +32,12 @@ This file contains only unresolved questions that materially affect the product.
 - Which exact eligibility rules and cost make rare station relocation fair, using roughly forty-eight hours of resource production as the historical reference?
 - How do coordinated group placement and map capacity work without turning the opening into a fastest-click reservation race?
 - How does map size and available placement space adapt to the season's player population?
-- Which exact radii, refresh intervals, size bands, and confidence levels define passive sensor progression?
+- Which exact radii, refresh intervals, size bands, and precision levels define passive sensor progression?
 - How much do sensor-energy allocation and research improve passive observation without making their effects hard to predict?
-- What range, area, cost, duration, and result tiers govern a manual sector scan?
-- Which exact fields and information tiers belong to each deep-scan focus?
-- What exact retrospective window, event precision, size bands, confidence rules, and game-activity bands govern Movement Analysis?
-- Which target scopes, duration, continuous energy cost, detected event types, detail tiers, and coverage-gap rules govern the Observation Network, and can a watched target detect or counter the observation directly?
+- Which exact range, area, energy cost, and discovery tiers govern area search?
+- Which exact precision bands, energy cost, distance degradation, and countermeasure effects govern each Sensor Technology level of the growing player scan?
+- Which exact movement fields and size or signature bands does Movement Analysis add for movements from and to the scanned player without resolving foreign composition or fleet-contact identity?
+- Which duration, continuous energy cost, event detail, coverage-gap, detection, and countermeasure rules govern observing a known player?
 - How should travel scale so local targets remain the everyday choice while deliberate long-distance operations stay viable?
 - How are neutral targets, ruins, and new opportunities placed, discovered, depleted, and renewed?
 - How does the game keep exploration useful without turning it into repetitive map sweeping?

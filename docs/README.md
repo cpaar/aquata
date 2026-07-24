@@ -1,6 +1,6 @@
 # Aquata documentation
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 This directory contains the only active project documentation for the Aquata remake.
 
@@ -41,16 +41,19 @@ When documents and implementation disagree, do not silently preserve the impleme
 - Avoid duplicating the same rule across documents. Link to the owning document instead.
 - A substantial gameplay, product, architecture, or scope change is incomplete until its documentation is updated.
 
-## Current development posture
+## Current product-planning posture
 
-Do not expand the former legacy feature checklist by default. The next product milestone is a small playable prototype of the modern core loop:
+Before creating an implementation roadmap, close the product-level gaps that could still change what Aquata fundamentally is. The remaining planning should cover:
 
-- read the current situation,
-- acquire or share intelligence,
-- choose a target and an operation,
-- coordinate or deceive,
-- commit a fleet,
-- receive a meaningful outcome,
-- recover and adapt.
+- world, target, and discovery ecology,
+- time, safety, and the normal-life contract,
+- the complete player and seasonal journey,
+- the operation and intelligence decision flow,
+- conflict, protection, farming, and recovery,
+- representative command-ship builds and their content loop,
+- alliances, politics, awards, and the season ending,
+- launch scope, onboarding, community, monetization principles, and live operation.
 
-The prototype should validate this loop before broad systems such as rankings, a full alliance administration, or a complete command-ship progression tree are implemented.
+Product rediscovery is complete enough for a roadmap when the first session, first week, ordinary week, major operation, severe defeat, late entry, and season finale can each be narrated end to end; no unresolved question is likely to replace a primary surface or core entity; and the remaining questions are mainly balancing, content volume, interface detail, or implementation.
+
+The resulting roadmap should be a sequence of playable vertical outcomes that validate the modern core loop, not a revived legacy feature checklist. Each roadmap phase can then be planned in detail immediately before implementation. Exact curves, costs, radii, formulas, and full content catalogs do not need to be fixed before that roadmap exists.

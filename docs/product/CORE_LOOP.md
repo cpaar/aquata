@@ -1,6 +1,6 @@
 # Core loop
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Primary loop
 
@@ -48,7 +48,7 @@ The relationship between the station, the shared collector pool, raw resources, 
 
 Players use scans, observation, previous combat reports, map context, alliance knowledge, and opponent behavior to form a picture that is never perfectly certain.
 
-Passive station sensors surface nearby contacts and movement opportunities without requiring constant manual map sweeps. A manual sector scan searches beyond that local picture, while a targeted deep scan turns a detected lead into focused intelligence about economy, fleets, command-ship and production state, or Movement Analysis. The later Observation Network spends energy to watch a known station, contact, or bounded area for future game-world events. Reconnaissance never exposes player or account activity, and never produces a foreign battle report. These actions draw on energy produced from Plutonium and stored through the player's persistent balance between sensors, countermeasures, and scan reserve.
+Passive station sensors surface nearby contacts and movement opportunities without requiring constant manual map sweeps. An area search looks beyond that local picture. Once a player is known, one player scan gains richer economic, fleet, command-ship, production, and movement sections through Sensor Technology instead of splitting those questions across several scan types. The later Observation Network keeps supported future movements from and to a known player under continuous energy-consuming coverage. Reconnaissance never exposes player or account activity and never produces a foreign battle report. These actions draw on energy produced from Plutonium and stored through the player's persistent balance between sensors, countermeasures, and scan reserve.
 
 Useful intelligence includes:
 
@@ -58,9 +58,9 @@ Useful intelligence includes:
 - command-ship capabilities,
 - nearby possible defenders,
 - incoming and outgoing movements,
-- confidence and age of each fact.
+- precision, age, and provenance of each fact.
 
-Sharing intelligence must be a first-class interaction, not manual copying into chat.
+Sharing intelligence must be a first-class interaction, not manual copying into chat. Each source retains its acquisition time, precision, provenance, and permissions. Available sources assemble into a player intelligence profile and, when relevant, an operation intelligence view without silently converting estimates or likely correlations into confirmed facts.
 
 ## Choose an operation
 

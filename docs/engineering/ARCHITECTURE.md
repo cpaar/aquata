@@ -1,6 +1,6 @@
 # Engineering baseline
 
-Stand: 2026-07-24
+Stand: 2026-07-25
 
 ## Purpose
 
@@ -106,11 +106,13 @@ Do not treat the current 30-minute round setting, exact scans, travel bands, shi
 - Put deterministic calculations in packages/domain before using them in API or UI code.
 - Model the seasonal world as a connected two-dimensional coordinate space; do not encode oceans, settlements, or regional labels as hidden travel or attack boundaries.
 - Keep authoritative world state separate from each player or alliance's detected contacts and time-stamped intelligence. A map query must not reveal entities merely because they exist in the database.
-- Represent passive contacts, sector-scan discoveries, and targeted deep-scan reports as distinct intelligence records with source, observation time, confidence, expiry or staleness behavior, owner, and sharing permissions.
+- Represent passive contacts, area-search discoveries, player-scan reports, and Observation Network events as distinct source records. Persist their subject, acquisition time, precision, original observer, source type, direct or derived status, expiry or staleness behavior, owner, and sharing permissions.
+- Derive reusable intelligence observations from those sources and project them into player intelligence profiles and operation intelligence views without mutating the source evidence. Aggregation may rank or label confirmed, observed, probable, and unknown claims, but must never refresh stale evidence, increase its precision, widen authorization, or turn a derived correlation into authoritative state.
 - Derive passive contacts from versioned sensor radius, observation quality, station events, and fleet paths. A contact projection must expose only the information tier earned by the observer, not the authoritative destination, fleet order, or composition behind it.
 - Persist each fleet as an owner-controlled group of concrete ships with stable internal identity across docked, traveling, engaged, withdrawn, and returning states. Allow composition changes only through explicit owner commands while the affected ships are available at the home station. Keep fleet templates as separate desired-composition data with no ships, ownership transfer, movement state, or delegated authority.
 - Make every fleet order reference one complete fleet and never a per-order subset of its members. Derive travel pace from the slowest surviving ship in that fleet. Keep separately launched fleets as separate authoritative movements, orders, withdrawal states, cargo states, and returns even when they share an owner, route, target, or engagement.
-- Do not expose a fleet's internal identifier or private name through intelligence projections. A fleet-focused deep scan may project observed fleet partitions and compositions without creating a direct foreign-key-like correlation to a movement contact, fleet order, or destination. The target's incoming-attack projection may reveal attacker, exact ship count, and earliest combat hour without leaking that hidden correlation.
+- Enforce subject boundaries in intelligence projections. A player scan may project the subject's observed fleet partitions and compositions, but a foreign participant seen moving to or from that subject remains limited to the movement precision earned about it. Exact foreign composition or command-ship data requires an authorized source whose subject is that foreign player.
+- Do not expose a fleet's internal identifier or private name through intelligence projections, and do not create a direct foreign-key-like correlation between a scanned fleet partition and a movement contact, fleet order, or destination. The target's incoming-attack projection may reveal attacker, exact ship count, and earliest combat hour without leaking that hidden correlation.
 - Resolve scan quality deterministically from committed energy, distance, research, and authoritative countermeasures so identical retries cannot fish for a successful random result.
 - Represent research as versioned fields and projects with exactly one progressing project per seasonal player and an ordered non-progressing queue. Starting, completing, cancelling, or advancing the queue must remain transactional and idempotent, and retries must never progress two projects concurrently or grant one unlock twice.
 - Calculate the personal research catch-up multiplier from authoritative season age, the project's published catch-up eligibility, and the player's current research baseline. Do not persist spendable research-point currency, let unused acceleration accumulate, transfer it between players, or apply it to projects at or ahead of the current season-age baseline.

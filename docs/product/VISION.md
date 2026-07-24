@@ -1,6 +1,6 @@
 # Product vision
 
-Stand: 2026-07-22
+Stand: 2026-07-25
 
 ## Product statement
 
@@ -42,7 +42,7 @@ The contrast between early scarcity and late-game scale is essential. Small earl
 
 ### Strategic uncertainty
 
-Targets are not simple power comparisons. Information has age, confidence, cost, and counterplay. Geography, possible reinforcements, scan defense, and deception matter.
+Targets are not simple power comparisons. Information has age, precision, provenance, cost, and counterplay. Geography, possible reinforcements, scan defense, and deception matter.
 
 ### Coordinated operations
 
