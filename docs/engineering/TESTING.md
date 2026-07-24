@@ -1,6 +1,6 @@
 # Testing and verification
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 ## Quality model
 
@@ -79,6 +79,15 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Test authorization, validation, transactionality, idempotency, and persisted outcomes.
 - Apply migrations from an empty database and from the supported previous schema.
 
+### Economy and growth
+
+- Verify collector percentages conserve the one aggregate pool, use one selected node per raw resource, and derive production deterministically from allocation, node attributes, distance, and published modifiers without individual route entities.
+- Prove collector construction has no hard ownership cap, remains monotonic at normal and Havoc-scale counts, and gives identical total cost for one batch and the equivalent safely serialized sequence of ordinary or concurrent orders; retries must be idempotent.
+- Test that losing collectors reduces the total pool and future marginal construction price without changing the defender's allocation percentages or node choices.
+- Verify collectors cannot be intercepted or stolen away from station combat. Under optimal station-combat fixtures, each resolution step steals at most fifteen percent of the remaining pool and three steps steal approximately 38.6 percent of the starting total; retries cannot duplicate captured collectors.
+- Prove Aluminium, Steel, Plutonium, derived energy, fuel reservations, construction commitments, and captured collectors remain conserved across parallel commands and ownership transitions.
+- Verify supported construction and research jobs may progress in parallel without double-spending resources or implying an undocumented universal capacity limit.
+
 ### Web and interaction
 
 - Add or update Playwright coverage for the player flow.
@@ -138,17 +147,20 @@ The development setup waits for PostgreSQL, applies migrations, and seeds the ac
 - Verify each command-ship archetype receives its defined core progression without spending choices on mandatory capabilities, while specialization choices and module loadouts remain distinct.
 - Verify every level grants its versioned automatic core reward and archetype-bound development entitlement exactly once, and that no archetype can spend development points on another archetype's axes.
 - Test the experience curve is monotonic, increasingly expensive across its published ranges, and has no unintended reachable hard stop or overflow during a full simulated season.
-- Verify credible victories and defeats can both grant combat experience from published stakes and opposition rules, while absent command ships, passive time, production ticks, recurring training actions, trivial orders, duplicate outcomes, and arranged repeats grant none.
-- Verify qualifying Fight, Support, and Economy operations use comparable authoritative progression rules without allocating Support experience solely by escort fleet value or forcing Economy progression through combat.
+- Verify combat-experience fixtures expose combat significance, the locked deployment-value ratio, challenge multiplier, personal deployment and role contribution, qualification or repeat adjustment, and final award without relying on a hidden effective-power score.
+- Test the published challenge curve for even deployments, bounded underdog bonuses, sharply reduced overwhelming-force rewards, monotonic transitions, and both multiplier caps. The pre-commit expectation category and final report must use the same locked deployment values and rule version.
+- Verify credible victories and defeats can both grant combat experience from published stakes and opposition rules, and that a credible defeat with comparable stakes and material interaction retains more than half the experience of the comparable victory. Absent command ships, passive time, production ticks, recurring training actions, trivial orders, duplicate outcomes, unilateral sacrifice, and arranged repeats grant none.
+- Verify qualifying combat uses the same authoritative experience model for Fight, Support, and Economy command ships without allocating Support experience solely by escort fleet value. A meaningful additional participant must not dilute allies merely by joining, a token participant must not receive a full operation reward, and the participant's added force must still affect the challenge ratio.
 - Prove achievements and command-ship ranking recognition cannot increase later command-ship experience rates or mint development points.
 - Verify Fight command ships retain the published target-class effectiveness and target-priority behavior in both normal and EMP modes, with no specialization respec or duplicated progression created by switching modes.
 - Test Assault and Disruption excellence without making the alternate cannon mode useless; cover both few-strong and many-weak cannon distributions, overkill behavior, target ordering, and every permitted reconfiguration stage.
 - Prove AoE modules respect their target and total-effect bounds in small and endgame-scale battles and do not multiply output without limit as the opposing fleet grows.
 - Verify offensive and defensive Support effects apply only while the command ship participates in the relevant operation, combine independently across different effect categories, and use the published deterministic diminishing-returns curve within the same category.
 - Prove every additional overlapping Support command ship still contributes positive value while identical-effect mass stacking remains bounded and cannot bypass modifier caps through ordering, join timing, or operation composition.
+- Verify Support experience role credit uses the published share of relevant allied deployment under active Support effects, remains visible in the report, and applies overlap adjustments without attempting to infer counterfactual kills, hits, or survival.
 - Verify Production and Recovery modify only their published Economy capabilities, while logistics modules adapt either build without silently creating a third progression branch.
-- Prove passive production ticks never grant Economy command-ship experience; qualifying routes, expeditions, salvage, and risky deliveries grant it at most once under the published participation rules.
-- Test arranged battles, repeated recovery, duplicate reports, and deliberately wasteful losses cannot produce net-positive resources or farm Economy progression.
+- Prove passive production ticks, routes, expeditions, salvage, deliveries, and other non-combat Economy activity never grant command-ship experience in the initial model.
+- Test arranged battles, duplicate reports, and deliberately wasteful losses cannot farm Economy command-ship progression; separate economic recovery rules must also prevent net-positive self-destruction even though recovery grants no initial command-ship experience.
 - Prove modules cannot reproduce another archetype's defining role and that supported combinations of similar command ships contribute according to the published overlap rules.
 - Prove a seasonal module unlock is granted at most once per qualifying event, cannot duplicate an existing unlock, remains available after loadout changes or command-ship destruction, and disappears from competitive state at season reset.
 - Verify retries, concurrent claims, repeated logins, or repeated fleet commands cannot duplicate an unlock or activity credit beyond the published acquisition rule.

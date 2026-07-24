@@ -1,6 +1,6 @@
 # Seasons and progression
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 ## Why seasons exist
 
@@ -124,13 +124,13 @@ The alliance points award aggregates the authoritative point totals of eligible 
 
 ### Economy award
 
-The economy award is determined by the current collector stock at the official standings lock, not by cumulative resources produced during the season.
+The economy award is determined by the current total collector pool at the official standings lock, not by cumulative resources produced during the season.
 
 Collectors represent economic capacity that can still be built, stolen, lost, and defended. This keeps the economy race dynamic until the end instead of permanently rewarding whoever established the earliest production lead.
 
-The player award compares collectors currently owned by each seasonal player. The alliance award aggregates the eligible collector stock of its members under the final roster rules. Collectors must have one unambiguous owner at the snapshot; unfinished construction and unresolved transfers cannot count for two positions.
+The player award compares the one aggregate collector pool currently owned by each seasonal player. Allocation percentages and selected resource nodes do not create separate collector types or additional award components. The alliance award aggregates the eligible collector totals of its members under the final roster rules. Collectors must have one unambiguous owner at the snapshot; unfinished construction and unresolved transfers cannot count for two positions.
 
-If all collector types have equivalent economic value, the standing uses their simple total as in the old game. If the remake introduces materially different collector output or cost, an equally transparent normalized capacity measure must be published before the season.
+Every collector has the same award value regardless of its current resource allocation, node, origin, or production modifier. The standing therefore uses the simple authoritative total.
 
 ### Achievement award
 
@@ -249,9 +249,25 @@ Command-ship progression combines automatic strength with controlled personal al
 
 The experience curve starts quickly and becomes increasingly steep, creating a practical soft cap rather than a normally reachable hard stop. The command ship can remain a source of advancement and seasonal comparison throughout the round, while increasingly expensive levels slow runaway power. After a short period of core growth, major progression milestones introduce the ship's specialization and a small number of further consequential choices. Regular development points provide continuous authorship between those milestones; modules remain the reconfigurable tactical layer.
 
-Experience comes from resolved, meaningful operations in which the physical command ship participates. Combat rewards reflect real stakes and relative opposition rather than a binary victory flag, and a credible defeat may still grant experience so risk-taking is not reserved for players already ahead. Fight and Support ships primarily grow through qualifying combat operations; Economy ships may also grow through qualifying routes, expeditions, salvage, and risky deliveries. Passive production, elapsed time, repetitive trivial orders, and a recurring training button do not grant command-ship experience or development points.
+Experience initially comes only from resolved, meaningful combat in which the physical command ship participates. Combat rewards reflect real stakes and relative opposition rather than a binary victory flag, and a credible defeat may still grant experience so risk-taking is not reserved for players already ahead. This single combat model applies to Fight, Support, and Economy command ships. Passive production, elapsed time, routes, expeditions, salvage, deliveries, repetitive trivial orders, and a recurring training button do not grant command-ship experience or development points in the initial model.
+
+Active Economy operations may become an additional progression source in a later expansion, but only after routes, expeditions, recovery, and deliveries form a coherent risk-based play loop with equally predictable qualification and reporting. They are not part of the initial command-ship experience system.
 
 The initial model has no parallel time-generated command-ship skill tree, universal-point drip, decaying training value, or bonus that compounds future command-ship experience merely because the player already has more experience. Achievements and the command-ship award may recognize exceptional development without feeding that recognition back into faster command-ship progression.
+
+### Combat experience model
+
+Players must be able to estimate before committing whether a battle is likely to provide meaningful command-ship experience and reconstruct the exact award afterward. Combat experience therefore follows one published player-facing model: **combat significance × challenge × personal contribution**. Exact weights and curves are balancing parameters, but the inputs may not be replaced by an opaque effective-power or activity score.
+
+- **Combat significance** comes from published values for material effects resolved in the battle. Enemy fleet value destroyed is the primary source. Temporary disabling and credible own losses may contribute at lower published weights, but own-loss credit is capped by genuine opposition and material interaction so unilateral sacrifice is not useful.
+- **Challenge** comes primarily from the ratio of the two sides' committed deployment values at the authoritative battle lock. Normalized ship replacement values and a transparent command-ship value define that deployment value; the game does not secretly simulate the fleets' expected combat performance to choose the experience multiplier. A roughly even battle gives the normal rate, facing a stronger deployment gives a bounded bonus, and bringing overwhelming force sharply reduces the rate. The curve is softened and capped in both directions.
+- **Personal contribution** starts with the player's own committed deployment value and adds a bounded, archetype-appropriate role contribution. Token participation cannot receive the full operation reward, but a meaningful additional participant must not merely transfer experience away from allies because the participant count increased. Additional allied force may still change the shared challenge ratio by making the battle less dangerous.
+
+A credible defeat should normally retain more than half the experience of a comparable victory when both involved similar stakes and material interaction. This emerges mainly from reduced credit for credible own losses and any enemy value still destroyed or disabled, rather than from an opaque consolation bonus. Victory remains more rewarding without making safe victories the only rational progression route.
+
+Support contribution is not measured solely by the Support player's escort fleet and is not reconstructed from a speculative simulation of which individual ships would otherwise have missed or died. It includes a visible, bounded share of the relevant allied deployment value that was actually under the command ship's active Support effects. Published overlap rules reduce redundant role credit consistently with Support diminishing returns, while a useful weaker or complementary Support ship still receives positive credit.
+
+Before commitment, the operation view should show the known deployment-value ratio and an experience expectation band; the unresolved battle result prevents an exact preview. The final report shows the combat-significance components, challenge multiplier, personal deployment and role contribution, and any repeat or qualification adjustment. A reduced or rejected award must name the applicable published reason instead of silently applying an unexplained penalty.
 
 ### Fight core and specializations
 
@@ -312,7 +328,7 @@ Module discovery must never become a premium or gacha system. Players cannot buy
 
 Its strongest tactical effects require the command ship to participate in the relevant operation. A fleet sent without it remains useful, but lacks the command profile that makes the player's main force distinctive. Because the command ship can accompany only selected commitments, its location creates a strategic choice about where the player's full strength and specialized capabilities are exposed.
 
-The exact experience curve, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and destruction consequences remain open.
+The exact experience curve, combat-experience values and multiplier curves, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and destruction consequences remain open.
 
 ## Reset contract
 

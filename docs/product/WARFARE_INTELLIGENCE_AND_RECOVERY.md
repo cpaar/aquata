@@ -125,9 +125,17 @@ Historically, several simultaneous fleets and scan defense made it difficult for
 
 The operation system should help allies coordinate timing and roles without automatically executing the strategy for them. The players should still make and commit the decisions.
 
+### Hourly operation rounds
+
+Fleet launches, arrivals, and combat resolution use shared hourly boundaries. During the preceding hour, a fleet owner may confirm an offensive order for the next boundary. Operations may hold plans, roles, intelligence, and prepared fleet drafts further in advance, but the initial model does not turn those drafts into automatic future attacks. The owner must make the final launch decision during the immediately preceding command window.
+
+At departure, the target receives an incoming-attack notification and the earliest combat hour. Entering the order near the end of the command window does not create a movement or warning advantage: all confirmed orders in that window depart together. Offensive travel requires one additional operation round relative to defensive reinforcement under equivalent conditions. This preserves the historical commitment disadvantage of attacking and gives the notified defender a complete round in which to organize help. Exact fleet composition and other concealed facts remain subject to reconnaissance.
+
 ## Combat resolution
 
 Combat must be deterministic enough to test and explain, while retaining uncertainty before the battle through imperfect intelligence and human decisions.
+
+An engagement resolves in up to three hourly combat steps and may end earlier when its mission state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default, while valid withdrawals and fleets arriving before the next boundary affect the following step. Continuing after the opposition has weakened may yield further raid effects, including another collector-theft opportunity, but exposes the attacker to later defensive reinforcement.
 
 Reports should distinguish:
 
@@ -139,7 +147,7 @@ Reports should distinguish:
 - experience and progression,
 - which pre-battle assumptions proved false.
 
-The exact damage formula, number of combat rounds, and role of randomness are not yet product decisions.
+The exact damage formula, withdrawal rules, early-ending conditions, and role of randomness are not yet product decisions.
 
 ## Combat points
 
@@ -178,6 +186,10 @@ The underlying principle is current:
 - destroying enemy ships should provide some value even when the final result is unfavorable,
 - part of a lost fleet should return as rebuilding capacity,
 - salvage should soften a defeat without making it irrelevant.
+
+Salvage is governed by a strict conservation rule. Across all participants, the canonical resource value of Müll awarded by a combat step and by the complete engagement must remain lower than the canonical replacement value permanently destroyed in that combat. Own-loss recovery, rewards for damage to enemies, command-ship effects, modules, and every other bonus are claims against this one bounded loss pool; they are not independent sources that may add up beyond it. Bonuses may improve a participant's share or move total recovery toward the published ceiling, but may never raise that ceiling or create resources.
+
+Stolen resources and collectors are transfers from the defender rather than generated value. A disabled command ship that returns for repair is not a permanently destroyed replacement-value loss and therefore cannot produce full ship-value salvage in addition to returning home. Its economic loss comes from repair and unavailable time. Consequently, every resolved attack must leave at least one side economically worse off through permanent losses, transferred property, consumed fuel, or repair cost.
 
 Müll may remain as an Aquata term if it fits the final tone and is clearly explained.
 

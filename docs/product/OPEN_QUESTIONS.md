@@ -1,6 +1,6 @@
 # Open product questions
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 This file contains only unresolved questions that materially affect the product. When a question is answered, update the owning product document and remove it here.
 
@@ -26,7 +26,7 @@ This file contains only unresolved questions that materially affect the product.
 
 ## World and exploration
 
-- Which resource-node attributes and collector-route model make distance economically meaningful without creating repetitive collector micromanagement?
+- Which resource-node attributes and distance curve make collector allocation economically meaningful without creating a dominant station position?
 - What provisional or guided placement experience teaches a newcomer enough to choose a permanent station position?
 - Which commitment locks the initial station coordinate?
 - Which exact eligibility rules and cost make rare station relocation fair, using roughly forty-eight hours of resource production as the historical reference?
@@ -42,9 +42,7 @@ This file contains only unresolved questions that materially affect the product.
 
 ## Time and availability
 
-- Does the game retain a global tick, use operation-resolution windows, or move to event-based timing?
-- What is the normal real-time duration of scouting, travel, response, combat, and return?
-- Which orders may be queued or scheduled?
+- How many hourly operation rounds should ordinary scouting, travel, and return take at representative distances?
 - How long may the voluntary safety posture last, and when may it be activated or changed?
 - How much income does it cost, and exactly how does it reduce an attacker's incentive?
 - What amount of advantage from additional check-ins remains healthy before normal play becomes futile?
@@ -52,8 +50,11 @@ This file contains only unresolved questions that materially affect the product.
 ## Progression and economy
 
 - Which early decisions create different viable openings?
-- What is the relationship between station, collectors, resources, research, and command ship?
-- Which Plutonium conversion rate, energy storage curve, and persistent allocation controls make reconnaissance energy consequential without requiring constant adjustment?
+- Which exact station baseline, collector-output curve, and initial collector pool produce scarcity without making recovery impossible?
+- Which marginal collector-price curve and Aluminium/Steel cost mix slow reinvestment without creating a hard cap?
+- How long does changing collector percentages or selected resource nodes take, and when does the new output become authoritative?
+- Which Plutonium fuel rule, conversion rate, energy storage curve, and persistent allocation controls make fleet activity and reconnaissance consequential without requiring constant adjustment?
+- Does unrestricted parallel construction remain the final model, or does playable validation justify a narrow capacity constraint?
 - Which capabilities unlock through research, command-ship development, achievements, or seasonal choices?
 - How do neutral targets and PvP targets divide early growth and recovery?
 - How is repetitive early-round execution reduced without removing the competitive opening race?
@@ -61,12 +62,13 @@ This file contains only unresolved questions that materially affect the product.
 ## Combat and recovery
 
 - Which combat aspects are deterministic, and where is uncertainty introduced?
-- How many resolution steps should a battle have?
+- Which withdrawal and early-ending rules govern the three-step engagement lifecycle?
 - Which exact value, force-ratio, bonus, contribution, and own-loss factors define combat points in the remake?
 - Which battles and targets qualify for combat points, and how are arranged sacrifice and repeated farming limited?
 - What are the target salvage rates for own losses and enemy kills?
 - How severe should a catastrophic defeat be, and what is the desired recovery time?
 - How do repeated attacks and farming interact with protection?
+- Which published battle conditions determine collector theft below the fifteen-percent-per-step cap, and when do captured collectors transfer to the attacker?
 - Which transparent measure defines attack eligibility and maximum commitment?
 - Which later decoy or misinformation mechanics add readable counterplay beyond the initial defense model of lower precision and concealed fields?
 
@@ -92,7 +94,9 @@ This file contains only unresolved questions that materially affect the product.
 - Which experience curve, development-point cadence, and specialization milestone levels produce fast early growth and a durable seasonal soft cap?
 - Which archetype-specific point allocations preserve personal authorship without recreating mandatory stats or off-role leftovers?
 - Which modules give each of the three established archetype specializations multiple consequential builds without eroding their roles?
-- Which operation-value, opposition, contribution, and repeat-participant rules define meaningful command-ship progression and reject arranged farming?
+- Which exact resolved-effect values, own-loss caps, deployment-ratio curve, contribution weights, and repeat-participant thresholds implement the published combat-experience model?
+- Which transparent deployment value represents each command-ship level and loadout without becoming a hidden effective-power simulation?
+- Which bounded share of actively supported allied deployment and which overlap adjustment produce a fair, understandable Support contribution?
 - At which operation stages may a Fight command ship change target priorities or switch normal and EMP modes, and when does the change take effect?
 - How freely may a Fight command ship redistribute between fewer strong and more weak cannons, and how are AoE target and total-effect limits bounded?
 - Which exact milestones distinguish the Economy ship's Production and Recovery specializations?

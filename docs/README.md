@@ -1,6 +1,6 @@
 # Aquata documentation
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 This directory contains the only active project documentation for the Aquata remake.
 
@@ -10,14 +10,15 @@ Aquata is currently in product rediscovery. The existing code proves technical m
 
 1. product/VISION.md
 2. product/CORE_LOOP.md
-3. product/SEASONS_AND_PROGRESSION.md
-4. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
-5. product/COMMUNITY_AND_SOCIAL_PLAY.md
-6. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
-7. product/PRODUCT_EXPERIENCE.md
-8. product/OPEN_QUESTIONS.md
-9. engineering/ARCHITECTURE.md
-10. engineering/TESTING.md
+3. product/ECONOMY_AND_GROWTH.md
+4. product/SEASONS_AND_PROGRESSION.md
+5. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
+6. product/COMMUNITY_AND_SOCIAL_PLAY.md
+7. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
+8. product/PRODUCT_EXPERIENCE.md
+9. product/OPEN_QUESTIONS.md
+10. engineering/ARCHITECTURE.md
+11. engineering/TESTING.md
 
 ## Authority
 

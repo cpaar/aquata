@@ -49,6 +49,8 @@ Every coordinated operation should have:
 
 The tool should reduce organizational friction without replacing human planning. It should make coordination possible on mobile without requiring spreadsheets or copying data into an external chat.
 
+An operation may be planned several hourly rounds in advance, but planning does not authorize an offensive launch. For a planned launch at the next round boundary, each participating owner must confirm their own fleet during the immediately preceding hour. The operation should show who has confirmed and who is still missing without letting a commander launch on their behalf.
+
 ## Delegated fleets without settlements
 
 The historical settlement system provided two valuable cooperation mechanics:

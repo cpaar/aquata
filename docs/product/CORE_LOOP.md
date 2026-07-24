@@ -1,6 +1,6 @@
 # Core loop
 
-Stand: 2026-07-22
+Stand: 2026-07-24
 
 ## Primary loop
 
@@ -38,9 +38,11 @@ Growth creates the season's power curve, but repetitive collection is not the ma
 - whether to invest in economy, intelligence, mobility, defense, or military power,
 - how much capacity to keep liquid for an unexpected opportunity,
 - whether to specialize or remain flexible,
-- how to distribute limited production and command attention.
+- how to distribute limited resources, production time, and command attention.
 
 Routine production should be understandable and largely automatic after a decision has been made.
+
+The relationship between the station, the shared collector pool, raw resources, energy, and parallel investment paths is defined in ECONOMY_AND_GROWTH.md.
 
 ## Acquire and share intelligence
 
@@ -88,6 +90,14 @@ Detailed composition remains available for expert play, but ordinary fleet use m
 
 Committing a fleet should feel consequential. Recalling or changing an order may be possible, but with clear timing and costs.
 
+## Fleet-operation cadence
+
+Fleet operations use shared hourly rounds so launches, arrivals, and combat steps happen at round clock times that are easy to communicate. The hour before a planned launch is its command window. A fleet owner may prepare a draft earlier, but must personally review and confirm an offensive launch during that final window. Confirmed fleets launch together at the next round boundary; unconfirmed fleets remain home. The initial model does not automatically execute offensive launches scheduled several rounds in advance.
+
+The target is notified when the attack actually launches and receives the earliest possible combat hour, but exact composition and other concealed facts still depend on intelligence. An attack cannot resolve at its departure boundary. Under equivalent movement conditions, offensive travel takes one operation round longer than defensive reinforcement, preserving a complete response round without rewarding a command entered in the final minute of an hour.
+
+Combat remains multi-step. An engagement may resolve at up to three successive hourly boundaries. Between steps, players can interpret the new report, reinforce, or withdraw according to the mission rules. Remaining for another step can produce further station effects and collector theft, but also gives the defender's allies another opportunity to arrive.
+
 ## Resolve and learn
 
 Reports should explain:
@@ -109,7 +119,7 @@ Aquata should support:
 - optional longer planning and social sessions,
 - asynchronous commitments that continue while the player is away,
 - targeted notifications for genuinely important decisions,
-- no default requirement to be online at an exact global tick boundary.
+- no default requirement to be online at an exact global tick boundary; a required offensive confirmation uses the full preceding command window.
 
 An established target rhythm for an ordinary day is:
 

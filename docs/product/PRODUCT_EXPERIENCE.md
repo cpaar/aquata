@@ -99,6 +99,7 @@ The product should be designed so notifications can eventually report events suc
 
 - a relevant incoming operation,
 - a requested alliance decision,
+- the opening of the final confirmation window for a planned offensive launch,
 - completion of a meaningful order,
 - arrival or resolution of a committed fleet.
 
@@ -108,10 +109,12 @@ Notifications must be configurable and sparse. They should protect the player's 
 
 Timing remains strategically important, but the interface should support planning instead of clock watching.
 
+Fleet operations use hourly round boundaries that are easy to communicate. The interface should distinguish a non-binding plan or prepared fleet from a launch confirmed for the next boundary. Offensive confirmation remains a deliberate owner action during the immediately preceding hour; the player should not have to return at the final minute of that hour.
+
 Desired tools may include:
 
-- queued or scheduled orders,
-- explicit response windows,
+- operation drafts and prepared fleet compositions,
+- explicit hourly command and response windows,
 - a voluntary lower-income safety posture,
 - fleet templates,
 - night-watch and delegated alliance roles,
