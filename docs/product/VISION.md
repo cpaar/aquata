@@ -1,6 +1,6 @@
 # Product vision
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Product statement
 
@@ -44,6 +44,10 @@ The contrast between early scarcity and late-game scale is essential. Small earl
 
 Targets are not simple power comparisons. Information has age, precision, provenance, cost, and counterplay. Geography, possible reinforcements, scan defense, and deception matter.
 
+### Strategic world
+
+The generated map is a primary game system rather than a station directory. Uneven resource geography creates consequential placement, dense and quiet neighborhoods, local opportunity, and room for new points of interest across later seasons. The first version should prove this foundation with few complete world interactions instead of filling the map with shallow content.
+
 ### Coordinated operations
 
 The deepest play comes from players acting together: supporting attacks, defending allies, pressuring several targets, withholding reserves, and launching decoys.
@@ -61,6 +65,8 @@ Losses must matter, but a single defeat should not normally end a player's seaso
 Aquata must support a satisfying and strategically meaningful game while sleeping normally. Competitive mastery should come primarily from planning, judgment, coordination, and prioritization.
 
 Players who voluntarily check more often, cover unusual hours, or organize a night watch may gain a slight to moderate advantage through fresher information and additional reaction opportunities. That edge may matter at the top of the competition, but it must not make normal play futile or turn trivial alarm-clock clicks into the main path to power.
+
+Aquata does not create a global night or make every station disappear into routine nightly protection. Healthy sleep comes from long minimum warning times, alliance members with complementary schedules, bounded losses, and recovery. A late response may save a fleet without preventing economic damage; remaining continuously awake should not be necessary to preserve a viable season.
 
 ## What resets and what persists
 

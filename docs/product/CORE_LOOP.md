@@ -1,6 +1,6 @@
 # Core loop
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Primary loop
 
@@ -92,11 +92,13 @@ Each fleet order commits one complete preconfigured fleet rather than an arbitra
 
 ## Fleet-operation cadence
 
-Fleet operations use shared hourly rounds so launches, arrivals, and combat steps happen at round clock times that are easy to communicate. The hour before a planned launch is its command window. A fleet owner may prepare a draft earlier, but must personally review and confirm an offensive launch during that final window. Confirmed fleets launch together at the next round boundary; unconfirmed fleets remain home. The initial model does not automatically execute offensive launches scheduled several rounds in advance.
+Fleet operations use shared hourly **ticks** so launches, arrivals, and combat ticks happen at clock times that are easy to communicate. The hour before a planned launch is its command window. A fleet owner may prepare a draft earlier, but must personally review and confirm an offensive launch during that final window. Confirmed fleets launch together at the next tick; unconfirmed fleets remain home. The initial model does not automatically execute offensive launches scheduled several ticks in advance.
 
-The target is notified when the attack actually launches and receives the attacker, exact ship count, and earliest possible combat hour, but exact composition and correlation with other fleet contacts still depend on intelligence and inference. An attack cannot resolve at its departure boundary. Under equivalent movement conditions, offensive travel takes one operation round longer than defensive reinforcement, preserving a complete response round without rewarding a command entered in the final minute of an hour.
+The target is notified when the attack actually launches and receives the attacker, exact ship count, and earliest possible combat tick, but exact composition and correlation with other fleet contacts still depend on intelligence and inference. The first combat tick of an attack occurs no fewer than five ticks after launch, regardless of proximity or later drive technology. Equivalent defensive reinforcement takes one tick less and therefore no fewer than four ticks. A defender who confirms reinforcement during the first command window after the warning can still arrive for the same first combat tick.
 
-Combat remains multi-step. An engagement may resolve at up to three successive hourly boundaries. Between steps, players can interpret the new report, reinforce, or withdraw according to the engagement rules. Remaining for another step can produce further station effects and collector theft, but also gives the defender's allies another opportunity to arrive.
+Complete travel from home to a target and the normal return from that target use the same locked number of travel ticks. Drive research or losses after departure do not shorten that already committed return. An early recall before reaching the target instead retraces only the distance already traveled.
+
+Combat remains multi-tick. An engagement may resolve at up to three successive ticks. Between combat ticks, players can interpret the new report, reinforce, or withdraw according to the engagement rules. Remaining for another combat tick can produce further station effects and collector theft, but also gives the defender's allies another opportunity to arrive.
 
 ## Resolve and learn
 
@@ -119,7 +121,7 @@ Aquata should support:
 - optional longer planning and social sessions,
 - asynchronous commitments that continue while the player is away,
 - targeted notifications for genuinely important decisions,
-- no default requirement to be online at an exact global tick boundary; a required offensive confirmation uses the full preceding command window.
+- no default requirement to be online at an exact tick; a required offensive confirmation uses the full preceding command window.
 
 An established target rhythm for an ordinary day is:
 
@@ -131,7 +133,9 @@ An established target rhythm for an ordinary day is:
 6. In the evening, plan or join a larger alliance operation.
 7. Launch so that the fleet can normally return by the next morning.
 
-Large operations may create optional night-watch roles. Players with night shifts, different time zones, or different sleep rhythms can monitor new scans and changing defense. This should create a social advantage without requiring every participant to remain awake.
+Large operations may create optional night-watch roles. Players with night shifts, different time zones, or different sleep rhythms can monitor new scans and changing defense. Complementary schedules should let an alliance cover most of a night without asking one participant to remain awake throughout it.
+
+There is no automatic nightly safety posture in the initial model. If an attack launches late enough, a player who wakes near the end of its five-tick approach may have time only to send docked fleets away before the first combat tick. A valid departure confirmed for that tick resolves before combat at the station: those fleets survive, but the undefended station may still lose resources and collectors. This is an intended consequence of a late response rather than a reason to require continuous attendance.
 
 The game may still resolve rules in deterministic windows or ticks. The player experience must not be dominated by watching that clock, but additional well-timed attention may provide a bounded competitive edge.
 
@@ -150,7 +154,7 @@ The first playable slice should teach the core loop with minimal scope:
 7. Recover material and return cargo, inspect the surviving persistent fleet, and introduce templates as a convenience for future preparation.
 8. Share or discuss the result in a contextual social surface without requiring the player to leave the command flow.
 
-Sensor Array I and the first small batch of Piranha and Qualle should complete within one operation-round interval. The player can therefore confirm the first fleet during the first session, launch at the next hourly boundary, and receive both the result and returning fleet later the same day from a nearby controlled or neutral opportunity. The tutorial uses the normal authoritative construction, travel, fuel, and combat rules rather than a faster private ruleset.
+Sensor Array I and the first small batch of Piranha and Qualle should complete within one tick interval. The player can therefore confirm the first fleet during the first session, launch at the next tick, and receive both the result and returning fleet later the same day from a nearby controlled or neutral opportunity. The tutorial uses the normal authoritative construction, travel, fuel, and combat rules rather than a faster private ruleset.
 
 The guided opening continues the same learning arc rather than ending after one battle. Ship engineering and suitable shipyard capability introduce Hai and Hackboot through a collector-capture operation. The command dock then introduces the early seasonal command-ship choice. A communications center connects the station operationally to its alliance, after which an incoming threat, scan, operation, defense call, and alliance fleet release teach coordinated defense. A solo player may receive a controlled training opportunity for this cooperation lesson, but it should not replace joining real players as the normal social path.
 

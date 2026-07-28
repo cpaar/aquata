@@ -1,6 +1,6 @@
 # Aquata documentation
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 This directory contains the only active project documentation for the Aquata remake.
 
@@ -11,15 +11,16 @@ Aquata is currently in product rediscovery. The existing code proves technical m
 1. product/VISION.md
 2. GLOSSARY.md
 3. product/CORE_LOOP.md
-4. product/ECONOMY_AND_GROWTH.md
-5. product/SEASONS_AND_PROGRESSION.md
-6. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
-7. product/COMMUNITY_AND_SOCIAL_PLAY.md
-8. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
-9. product/PRODUCT_EXPERIENCE.md
-10. product/OPEN_QUESTIONS.md
-11. engineering/ARCHITECTURE.md
-12. engineering/TESTING.md
+4. product/WORLD_AND_DISCOVERY.md
+5. product/ECONOMY_AND_GROWTH.md
+6. product/SEASONS_AND_PROGRESSION.md
+7. product/WARFARE_INTELLIGENCE_AND_RECOVERY.md
+8. product/COMMUNITY_AND_SOCIAL_PLAY.md
+9. product/IDENTITY_SAFETY_AND_ACCOUNT_LIFECYCLE.md
+10. product/PRODUCT_EXPERIENCE.md
+11. product/OPEN_QUESTIONS.md
+12. engineering/ARCHITECTURE.md
+13. engineering/TESTING.md
 
 ## Authority
 
@@ -45,7 +46,6 @@ When documents and implementation disagree, do not silently preserve the impleme
 
 Before creating an implementation roadmap, close the product-level gaps that could still change what Aquata fundamentally is. The remaining planning should cover:
 
-- world, target, and discovery ecology,
 - time, safety, and the normal-life contract,
 - the complete player and seasonal journey,
 - the operation and intelligence decision flow,
@@ -53,6 +53,8 @@ Before creating an implementation roadmap, close the product-level gaps that cou
 - representative command-ship builds and their content loop,
 - alliances, politics, awards, and the season ending,
 - launch scope, onboarding, community, monetization principles, and live operation.
+
+The initial world contract is now defined in product/WORLD_AND_DISCOVERY.md: deliberately uneven generated resource geography creates the placement game and emergent player density; the first world scope stays bounded to resource nodes, station placement, neutral facilities, and a simple ruin path before later POI expansions.
 
 Product rediscovery is complete enough for a roadmap when the first session, first week, ordinary week, major operation, severe defeat, late entry, and season finale can each be narrated end to end; no unresolved question is likely to replace a primary surface or core entity; and the remaining questions are mainly balancing, content volume, interface detail, or implementation.
 

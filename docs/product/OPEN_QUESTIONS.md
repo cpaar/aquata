@@ -1,6 +1,6 @@
 # Open product questions
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 This file contains only unresolved questions that materially affect the product. When a question is answered, update the owning product document and remove it here.
 
@@ -26,12 +26,12 @@ This file contains only unresolved questions that materially affect the product.
 
 ## World and exploration
 
-- Which resource-node attributes and distance curve make collector allocation economically meaningful without creating a dominant station position?
-- What provisional or guided placement experience teaches a newcomer enough to choose a permanent station position?
+- Which seeded generation constraints, node densities, world footprint, and reserved capacity create enough viable station areas for the intended population while preserving genuinely uneven geography?
+- Which resource-node distance curve makes collector allocation economically meaningful without requiring variable node quality in the initial model?
+- Which placement comparisons and guidance teach a newcomer enough to choose a permanent station position without selecting one authoritative best coordinate?
+- What exact minimum station distance prevents extreme stacking while still allowing dense emergent neighborhoods?
 - Which commitment locks the initial station coordinate?
 - Which exact eligibility rules and cost make rare station relocation fair, using roughly forty-eight hours of resource production as the historical reference?
-- How do coordinated group placement and map capacity work without turning the opening into a fastest-click reservation race?
-- How does map size and available placement space adapt to the season's player population?
 - Which exact radii, refresh intervals, size bands, and precision levels define passive sensor progression?
 - How much do sensor-energy allocation and research improve passive observation without making their effects hard to predict?
 - Which exact range, area, energy cost, and discovery tiers govern area search?
@@ -39,14 +39,12 @@ This file contains only unresolved questions that materially affect the product.
 - Which exact movement fields and size or signature bands does Movement Analysis add for movements from and to the scanned player without resolving foreign composition or fleet-contact identity?
 - Which duration, continuous energy cost, event detail, coverage-gap, detection, and countermeasure rules govern observing a known player?
 - How should travel scale so local targets remain the everyday choice while deliberate long-distance operations stay viable?
-- How are neutral targets, ruins, and new opportunities placed, discovered, depleted, and renewed?
-- How does the game keep exploration useful without turning it into repetitive map sweeping?
+- Which neutral-facility strength bands, world target budget, depletion rule, refresh cadence, and concurrent-arrival treatment sustain opening, farming, and recovery play without private per-player targets?
+- Which smallest ruin expedition and module-opportunity rule makes the second initial world-site type complete without introducing a broad exploration subsystem?
 
 ## Time and availability
 
-- How many hourly operation rounds should ordinary scouting, travel, and return take at representative distances?
-- How long may the voluntary safety posture last, and when may it be activated or changed?
-- How much income does it cost, and exactly how does it reduce an attacker's incentive?
+- Which distance and drive curves scale travel above the four-tick defensive and five-tick offensive minimums while keeping the complete outbound and return commitment readable?
 - What amount of advantage from additional check-ins remains healthy before normal play becomes futile?
 
 ## Progression and economy
@@ -74,10 +72,10 @@ This file contains only unresolved questions that materially affect the product.
 - Which exact value, force-ratio, bonus, contribution, and own-loss factors define combat points in the remake?
 - Which battles and targets qualify for combat points, and how are arranged sacrifice and repeated farming limited?
 - What are the target salvage rates for own losses and enemy kills?
-- How severe should a catastrophic defeat be, and what is the desired recovery time?
+- Which published net-recovery-gap threshold and duration curve determine whether the role-neutral recovery flag appears and how long it lasts?
 - How do repeated attacks and farming interact with protection?
-- Which published battle conditions determine collector theft below the fifteen-percent-per-step cap?
-- Can an empty recovery return ever be intercepted, or is secured cargo guaranteed once its combat step resolves?
+- Which deterministic remainder rule distributes captured collectors and stolen resources among several eligible attackers, and which base station-access condition enables resource theft before any later command-ship or module modifiers?
+- Can an empty recovery return ever be intercepted, or is secured cargo guaranteed once its combat tick resolves?
 - Which transparent measure defines attack eligibility and maximum commitment?
 - Which later decoy or misinformation mechanics add readable counterplay beyond the initial defense model of lower precision and concealed fields?
 

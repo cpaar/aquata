@@ -1,6 +1,6 @@
 # Seasons and progression
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Why seasons exist
 
@@ -31,7 +31,7 @@ Approximately weeks one and two.
 - Very few affordable ships.
 - Long-feeling first journeys and consequential small decisions.
 - A competitive race to train the command ship, acquire collectors, and unlock key technologies.
-- Local targets and early relationships matter immediately.
+- Generated resource geography, nearby neutral facilities, local player targets, and early relationships matter immediately.
 
 ### Expansion
 
@@ -39,7 +39,7 @@ Approximately weeks three through eight.
 
 - Economic and technological paths begin to diverge.
 - Players gain enough capacity to specialize.
-- Scouting and map position reveal promising regions and opponents.
+- Scouting and map position reveal promising regions, ruins, stronger neutral facilities, and opponents.
 - Alliances become strategically meaningful rather than merely social labels.
 
 ### Conflict
@@ -58,6 +58,8 @@ Approximately the final eight weeks.
 - Alliances pursue shared season objectives rather than only farming.
 - The map and political situation move toward a visible conclusion.
 - The season should culminate, not merely stop on an arbitrary date.
+
+WORLD_AND_DISCOVERY.md defines the small initial world-site catalog and separates it from later anomaly, event, and endgame-map expansions. Global season stages may change the mix of opportunities only when those content systems exist; they do not require speculative POI types in the first playable world.
 
 ### Aftermath
 
@@ -106,19 +108,23 @@ Points measure a seasonal player's current total power and owned progress at the
 
 The total should include normalized value from:
 
-- collectors and economic infrastructure,
-- stored resources and salvage,
+- active collectors at one fixed published value per collector and paid collectors under construction,
+- stored resources, salvage, derived energy, reserved or onboard fuel, and secured return cargo,
 - ships and fleets wherever they are currently deployed,
-- paid assets in construction,
+- paid assets and resources committed to construction or research,
 - station expansion and other seasonal infrastructure,
 - research and seasonal capability unlocks,
 - command-ship progression and equipment.
 
-Every unit of value must be counted exactly once. Spending resources on a queued ship transfers value from stored resources into construction; it must not duplicate or accidentally erase the same investment. Destroyed, stolen, consumed, forfeited, or neutralized assets stop contributing to the former owner's total when ownership or state changes authoritatively.
+This authoritative total is the one **player-points** value used for the points standing, attack eligibility and commitment boundaries, and the target-player term in collector-theft resolution. There is no second rules-facing conflict score. A fleet's **deployment value** remains a separate value for the concrete ships and command ship physically committed to an engagement; supporting players' unrelated player points do not enter that fleet term.
+
+Every unit of value must be counted exactly once. Spending resources on a queued ship transfers value from stored resources into construction; completion transfers it into the finished asset without an unexplained score loss or multiplier. Collector construction must likewise move paid value into construction even though only active owned collectors count toward the separate economy standing. Plutonium conversion, fuel reservation, launch consumption, return cargo, salvage, theft, and every other ownership or state transition require the same explicit treatment. Destroyed, stolen, consumed, forfeited, or neutralized assets stop contributing to the former owner's total when ownership or state changes authoritatively.
+
+The historical fixed value per collector is retained as a structural principle, but not automatically at its historical one-thousand-point coefficient. A collector's player-points value does not depend on its owner's current marginal construction cost, allocation, node, or origin, so theft transfers the same value between owners rather than creating or destroying points. Finished and under-construction ships use one canonical normalized replacement value instead of the historical completion jump. Command-ship value derives from published progression and equipment rather than raw experience passed through an opaque level formula. Exact normalized weights remain balance work.
 
 Combat points and achievement progress do not feed back into the point total merely because they are separate award categories. Previous-season prestige, cosmetics, community activity, and other persistent identity also grant no seasonal points.
 
-The award always uses the authoritative total. Scan uncertainty, score-obscuring mechanics, delayed public information, or deception may change what opponents can infer, but may not manipulate the official standings calculation.
+The award and every rules-facing use always read the authoritative total. Scan uncertainty, score-obscuring mechanics, delayed public information, or deception may change what opponents can infer, but may not manipulate the standings calculation, attack boundary, maximum commitment, collector-theft ratio, or another authoritative rule. A progression effect may falsify or reduce an observation of player points, never the value itself.
 
 The alliance points award aggregates the authoritative point totals of eligible members under the final roster rules. Exact component weights and the public visibility of live point totals remain open and must be published before the season where appropriate.
 
@@ -204,7 +210,7 @@ It should limit compounding advantages gained mainly through:
 - keeping the client open continuously,
 - using automation to perform otherwise trivial inputs.
 
-Candidate tools include queued training, scheduled orders, bounded planning windows, a voluntary lower-income safety posture, and clear completion notifications. Their exact form remains open.
+The initial tools are queued training, bounded planning and command windows, long minimum attack approaches, alliance coverage across different schedules, and clear completion notifications. A routine nightly safety posture is not part of the initial model.
 
 ## Progression principles
 
@@ -281,21 +287,21 @@ These bands are internal targets rather than necessarily player-facing cost labe
 
 ### Opening capability matrix
 
-| Target window               | Prerequisite                                                         | Capability or presentation unlocked                                                                                                                                                              | Cost direction                                                                 | Decision introduced                                                                       |
-| --------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| Station founding            | Join the season                                                      | Guided placement using visible resource geography                                                                                                                                                | Included                                                                       | Where should the station produce, raid, and support allies from?                          |
-| First session               | Place the station                                                    | Initial collector pool and allocation, weak passive sensor baseline, fighter-capable Shipyard I with Piranha and Qualle, Energy Core I, one active research slot, and basic social communication | Included                                                                       | Which resource, local opportunity, ship mix, and foundational research should come first? |
-| By the next operation round | Initial station                                                      | Sensor Array I, basic targeted scanning, energy controls, and enough initial stored energy for the first meaningful scan                                                                         | Bootstrap; Aluminium and Steel construction with Plutonium operation           | How much information is worth acquiring before committing?                                |
-| Next operation round        | Produce a small fleet and scan a nearby controlled or neutral target | First persistent fleet order with exact travel time, launch overhead, and onboard fuel                                                                                                           | Bootstrap to low; primarily Aluminium and Plutonium                            | Take the safer target, accept more risk for reward, or wait?                              |
-| Later the same day          | Resolve and return the first operation                               | Combat report, return cargo, material recovery, persistent-fleet result, and contextual introduction to templates and battle forecasting                                                         | No separate unlock price                                                       | What succeeded, what should be replaced, and is another commitment justified?             |
-| Days zero to one            | Build Communications Center I                                        | Operational alliance link plus permission-bound sharing and receipt of scans and battle reports                                                                                                  | Low; primarily Aluminium and Steel                                             | Invest early in cooperation or first strengthen personal capability?                      |
-| Days one to three           | Complete Ship Engineering tier two and build Shipyard II             | Hai, Hackboot, escorted collector capture, and economic warfare                                                                                                                                  | Medium; the project occupies the research slot and the shipyard is Steel-heavy | Prioritize economic raiding over sensor or drive progress?                                |
-| Days one to four            | Accumulate the required resources and build the Command Dock         | Command-ship archetype choice and combat-driven seasonal identity                                                                                                                                | Major; broad cost with strong Steel commitment                                 | Which seasonal role is worth delaying other growth for?                                   |
-| Days two to five            | Upgrade Communications Center I                                      | Communications Center II, operation rooms, defense calls, and alliance fleet release                                                                                                             | Medium                                                                         | How much infrastructure, fleet readiness, and fuel should support the alliance?           |
-| Days three to seven         | Complete the applicable sensor or drive project                      | Area search, broader passive reach, rudimentary command-ship intelligence, or improved travel time and variable fuel efficiency                                                                  | Medium; Plutonium and the single research slot are important tradeoffs         | Discover more opportunities or reach known opportunities more efficiently?                |
-| Days seven to fourteen      | Follow the selected development direction                            | Sensor Array II and deeper methods, Energy Core II, further drive progress, or the beginning of Shipyard III and Ship Engineering tier three                                                     | Major                                                                          | Which strength should define entry into expansion?                                        |
+| Target window          | Prerequisite                                                         | Capability or presentation unlocked                                                                                                                                                              | Cost direction                                                                 | Decision introduced                                                                       |
+| ---------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Station founding       | Join the season                                                      | Guided placement using visible resource geography                                                                                                                                                | Included                                                                       | Where should the station produce, raid, and support allies from?                          |
+| First session          | Place the station                                                    | Initial collector pool and allocation, weak passive sensor baseline, fighter-capable Shipyard I with Piranha and Qualle, Energy Core I, one active research slot, and basic social communication | Included                                                                       | Which resource, local opportunity, ship mix, and foundational research should come first? |
+| By the next tick       | Initial station                                                      | Sensor Array I, basic targeted scanning, energy controls, and enough initial stored energy for the first meaningful scan                                                                         | Bootstrap; Aluminium and Steel construction with Plutonium operation           | How much information is worth acquiring before committing?                                |
+| Next tick              | Produce a small fleet and scan a nearby controlled or neutral target | First persistent fleet order with exact travel time, launch overhead, and onboard fuel                                                                                                           | Bootstrap to low; primarily Aluminium and Plutonium                            | Take the safer target, accept more risk for reward, or wait?                              |
+| Later the same day     | Resolve and return the first operation                               | Combat report, return cargo, material recovery, persistent-fleet result, and contextual introduction to templates and battle forecasting                                                         | No separate unlock price                                                       | What succeeded, what should be replaced, and is another commitment justified?             |
+| Days zero to one       | Build Communications Center I                                        | Operational alliance link plus permission-bound sharing and receipt of scans and battle reports                                                                                                  | Low; primarily Aluminium and Steel                                             | Invest early in cooperation or first strengthen personal capability?                      |
+| Days one to three      | Complete Ship Engineering tier two and build Shipyard II             | Hai, Hackboot, escorted collector capture, and economic warfare                                                                                                                                  | Medium; the project occupies the research slot and the shipyard is Steel-heavy | Prioritize economic raiding over sensor or drive progress?                                |
+| Days one to four       | Accumulate the required resources and build the Command Dock         | Command-ship archetype choice and combat-driven seasonal identity                                                                                                                                | Major; broad cost with strong Steel commitment                                 | Which seasonal role is worth delaying other growth for?                                   |
+| Days two to five       | Upgrade Communications Center I                                      | Communications Center II, operation rooms, defense calls, and alliance fleet release                                                                                                             | Medium                                                                         | How much infrastructure, fleet readiness, and fuel should support the alliance?           |
+| Days three to seven    | Complete the applicable sensor or drive project                      | Area search, broader passive reach, rudimentary command-ship intelligence, or improved travel time and variable fuel efficiency                                                                  | Medium; Plutonium and the single research slot are important tradeoffs         | Discover more opportunities or reach known opportunities more efficiently?                |
+| Days seven to fourteen | Follow the selected development direction                            | Sensor Array II and deeper methods, Energy Core II, further drive progress, or the beginning of Shipyard III and Ship Engineering tier three                                                     | Major                                                                          | Which strength should define entry into expansion?                                        |
 
-Sensor Array I and the first small batch of fighters should be able to complete within one operation-round interval. The first fleet should therefore be confirmable during the first session and depart at the next shared boundary. A nearby controlled or neutral opportunity should allow combat resolution and return later the same day without using a special weaker combat or travel ruleset.
+Sensor Array I and the first small batch of fighters should be able to complete within one tick interval. The first fleet should therefore be confirmable during the first session and depart at the next tick. A nearby controlled or neutral opportunity should allow combat resolution and return later the same day without using a special weaker combat or travel ruleset.
 
 Shipyard III and the first frigates are ambitious late-opening specialist goals rather than the normal state of every player before expansion. The ordinary frigate progression still belongs to the expansion stage.
 

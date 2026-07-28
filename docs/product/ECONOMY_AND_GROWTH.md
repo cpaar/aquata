@@ -1,6 +1,6 @@
 # Economy and growth
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Product purpose
 
@@ -36,7 +36,7 @@ Every launched fleet consumes one fixed Plutonium launch overhead in addition to
 
 A fleet without a selected target should not advertise a misleading minimum, maximum, or average total. Its docked fleet view shows the exact launch overhead and the current fleet's exact travel fuel rate per published distance unit. After the player selects an order, target, and route, the commitment view shows the exact total fuel requirement, split into launch overhead and onboard fuel for the complete planned travel including the intended return.
 
-Confirming a fleet order reserves that complete amount at the owner's station so it cannot be spent before the launch boundary. If the order is cancelled before launch, the reservation is released. At launch, the fixed overhead is consumed and the complete travel amount is transferred onto the fleet as onboard fuel. Movement consumes fuel from the fleet. An early recall shortens the traveled route, so after paying for its actual outward and return movement the fleet may arrive with fuel remaining; that exact remainder transfers back to the owner's station only on arrival.
+Confirming a fleet order reserves that complete amount at the owner's station so it cannot be spent before the launch tick. If the order is cancelled before launch, the reservation is released. At launch, the fixed overhead is consumed and the complete travel amount is transferred onto the fleet as onboard fuel. Movement consumes fuel from the fleet. The planned complete return uses the same travel-tick count as the outbound leg. An early recall shortens the traveled route, so after paying for its actual outward and return movement the fleet may arrive with fuel remaining; that exact remainder transfers back to the owner's station only on arrival.
 
 The same rule applies to an allied defense call: the fleet owner supplies both the launch overhead and onboard fuel. Enabling alliance fleet release therefore grants alliance members bounded authority to commit the owner's Plutonium for a valid defense call. A fleet without sufficient owner fuel is not available for that call.
 
@@ -48,7 +48,7 @@ The same raw-resource stocks fund collectors, station growth, research, ships, a
 
 Collectors are one aggregate seasonal pool, not individually simulated units. A player may own ten, one thousand, or far more collectors without creating a separate entity, route, or order for each one.
 
-The player distributes the pool by percentage across Aluminium, Steel, and Plutonium. For each raw resource, the player selects one resource node. Production for that resource derives from:
+The player distributes the pool by percentage across Aluminium, Steel, and Plutonium. Each raw resource has its own irregularly distributed resource-node type, and the player selects one node for each resource. Production for that resource derives from:
 
 - the total collector pool,
 - the assigned percentage,
@@ -56,9 +56,9 @@ The player distributes the pool by percentage across Aluminium, Steel, and Pluto
 - the distance between node and station,
 - applicable progression modifiers.
 
-Collector work proceeds automatically after the allocation and node choices are made. Different node distances and qualities make equal resource income require unequal collector shares, while changing strategic needs may justify an intentionally uneven output mix. Exact node attributes, distance curve, and the delay or cost for changing allocation remain open.
+Collector work proceeds automatically after the allocation and node choices are made. Different node distances make equal resource income require unequal collector shares, while changing strategic needs may justify an intentionally uneven output mix. The first node model needs no variable quality beyond resource type and position; additional node attributes may be added only after the placement and allocation game works. The exact distance curve and the delay or cost for changing allocation remain open.
 
-Resource nodes are visible economic geography rather than exclusive permanent holdings. Several players may use the same surrounding geography; station placement must not become a fastest-click claim on a unique indispensable node.
+Resource nodes are stable, non-depleting, visible economic geography rather than exclusive permanent holdings. They are generated unevenly from the season seed, so viable combinations naturally attract different station densities. Several players may use the same nodes; station placement must not become a fastest-click claim on a unique indispensable node. WORLD_AND_DISCOVERY.md owns generation, placement, and world-content scope.
 
 Collectors are not intercepted, escorted, attacked, or stolen along an individually simulated route or at a resource node. Their exposure is resolved only through attacks on their owning station.
 
@@ -110,9 +110,29 @@ The initial catalog deliberately excludes separate research-lab levels, resource
 
 Collector theft happens only during a resolved attack on the owning station. It reduces the defender's one total collector pool; the defender's allocation percentages and selected nodes remain unchanged.
 
-Under optimal conditions, each combat resolution step may steal at most fifteen percent of the collector pool remaining at that step. Three optimal steps can therefore steal no more than `1 - 0.85³`, approximately 38.6 percent of the starting pool, rather than forty-five percent. Actual theft may be lower under the published combat conditions.
+Under optimal conditions, each combat tick may steal at most fifteen percent of the collector pool remaining at that tick. Three optimal combat ticks can therefore steal no more than `1 - 0.85³`, approximately 38.6 percent of the starting pool, rather than forty-five percent. Actual theft may be lower under the published combat conditions.
 
-Stolen collectors become captured economic value rather than being destroyed. A resolved theft removes them from the defender's active pool immediately and places them in the attacker's return cargo. They do not produce for either side during the return journey and join the attacker's aggregate collector pool only when that return reaches home, including when no combat ships survived and an empty recovery return is required. The exact combat requirements, capture capacity, repeated-attack protection, interaction with standings locks, and interaction with recovery rules remain open.
+The percentage for one combat tick uses the forces physically committed to that tick. After departures, withdrawals, and arrivals have resolved but before combat, the game snapshots:
+
+- the target player's current authoritative player-points value,
+- the published deployment value of every defending fleet present whose owner is not the target player,
+- the published deployment value of every attacking fleet present, including fleets without Hackboats and physically present command ships.
+
+The target player's own fleets are not added as a separate defending term because their owned value is already represented in that player's player-points value regardless of location. A supporting player's unrelated ships, resources, collectors, or progression elsewhere in the world do not count; only their fleet actually present does. The **effective target value** is the target player's authoritative points plus the present deployment value of those outside defenders. The **attacking deployment value** is the value of all present attacking fleets. Before later modifiers and rounding, the tick's collector-theft percentage is `10% × effective target value / attacking deployment value`, capped at fifteen percent.
+
+Combat then resolves from the same pre-combat snapshot. Every attacking fleet counted in the ratio remains counted for that combat tick even if some or all of its ships are destroyed during resolution; its losses affect only a later combat tick. After combat, each surviving and operational Hackboot can capture at most one collector. Actual capture is therefore the lower of the percentage limit and the attackers' combined eligible Hackboot count. If no combat-capable attacking force remains, there is no station access and no collector capture. Captured collectors are divided among participating attackers according to their eligible Hackboot contribution; exact remainder distribution must be deterministic.
+
+The commitment view does not reveal or forecast collector-theft efficiency. Unknown reinforcement, additional attackers, withdrawals, and combat results make a precise promise misleading, and learning how to compose an efficient raid is intended player knowledge. The battle report instead exposes the authoritative target player points used at that tick, outside defensive deployment, total attacking deployment, resulting percentage, remaining collector pool, eligible Hackboot capacity, actual capture, and participant distribution for each combat tick.
+
+Stolen collectors become captured economic value rather than being destroyed. A resolved theft removes them from the defender's active pool immediately and places them in the attacker's return cargo. They do not produce for either side during the return journey and join the attacker's aggregate collector pool only when that return reaches home, including when no ordinary combat ships survived and an empty recovery return is required. Repeated-attack protection, interaction with standings locks, and interaction with recovery rules remain open.
+
+## Resource theft
+
+Successful station access may also transfer stored Aluminium, Steel, and Plutonium. Each resource keeps a protected reserve so one engagement cannot remove the station's complete ability to act. The initial balance target for that reserve is approximately twenty-four ticks of the station's ordinary production of that resource; the exact production basis, treatment of temporary modifiers, and rounding remain balance work.
+
+At each combat tick with successful station access, the attackers may secure twenty-five percent of that resource's **currently remaining surplus** above its protected reserve. The result is recalculated independently for each raw resource and each combat tick. With an unchanged reserve and no production, spending, or other stock movement between ticks, three combat ticks can therefore transfer at most `1 - 0.75³`, approximately 57.8 percent of the surplus present before the first theft. The shrinking base is intentional: continuing the engagement yields additional resources but progressively less while exposing the attackers to further reinforcement.
+
+Stolen resources enter return cargo under the same ownership and arrival rules as captured collectors. The required station-access condition, deterministic distribution among several attackers, and any later command-ship or module modifiers remain open; no modifier may turn the protected reserve itself into ordinary loot or apply a separate twenty-five-percent allowance per attacker.
 
 ## Seasonal role
 

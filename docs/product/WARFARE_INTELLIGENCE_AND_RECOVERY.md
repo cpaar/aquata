@@ -1,6 +1,6 @@
 # Warfare, intelligence, and recovery
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Strategic premise
 
@@ -47,7 +47,7 @@ Information is a resource with:
 
 Reconnaissance observes **game-world state and game-world activity**, never the person behind an account. A scan may reveal eligible state such as resources or fleets and externally detectable events such as a fleet launch, arrival, return, reinforcement, or passage through observed space. It never exposes login or logout times, online presence, session rhythm, chat behavior, device data, or any other account-level or real-person activity.
 
-A scan never exposes or reconstructs the combat report of an engagement in which the scanning player did not participate. Battle reports are authoritative participant records. An eligible participant may deliberately share a report through its normal permission-bearing social object, but reconnaissance cannot create that access. A later scan may reveal the target's then-observable state, while valid Observation Network coverage may have recorded eligible movement events. Neither reveals the engagement's participants, combat steps, shots, casualties, rewards, or report contents merely because combat occurred there.
+A scan never exposes or reconstructs the combat report of an engagement in which the scanning player did not participate. Battle reports are authoritative participant records. An eligible participant may deliberately share a report through its normal permission-bearing social object, but reconnaissance cannot create that access. A later scan may reveal the target's then-observable state, while valid Observation Network coverage may have recorded eligible movement events. Neither reveals the engagement's participants, combat ticks, shots, casualties, rewards, or report contents merely because combat occurred there.
 
 Reconnaissance has three player-facing interactions rather than a catalog of unrelated report types:
 
@@ -61,7 +61,7 @@ The historical game split reconnaissance across Base, Fleet, News, Factory, and 
 
 The station begins with a deliberately weak passive sensor baseline that can surface a few coarse local leads. A **sensor array** provides the physical capability for player-directed reconnaissance; sensor research expands the methods and reach available through that hardware. Facility capability and research may both be required, but their levels do not mirror one another one-for-one.
 
-Sensor Array I is a bootstrap facility that should complete within one operation-round interval. Its activation makes energy controls relevant and leaves the station with enough initial stored energy for one meaningful scan of a known target. This initial charge belongs to the one seasonal station state, cannot be reclaimed by replaying guidance, and uses the same scan rule as later stored energy. Further searches and scans depend on normal Plutonium conversion and energy management.
+Sensor Array I is a bootstrap facility that should complete within one tick interval. Its activation makes energy controls relevant and leaves the station with enough initial stored energy for one meaningful scan of a known target. This initial charge belongs to the one seasonal station state, cannot be reclaimed by replaying guidance, and uses the same scan rule as later stored energy. Further searches and scans depend on normal Plutonium conversion and energy management.
 
 ### Passive sensor field
 
@@ -104,9 +104,9 @@ A scan report remains the durable source object, while its individual facts beco
 - sharing permissions,
 - whether it was directly observed or derived from several sources.
 
-The **player intelligence profile** assembles available observations about one player. The **operation intelligence view** assembles the observations relevant to one objective and planned operation round, including personal scans, authorized alliance scans, movement observations, and exact allied fleet or command-ship data deliberately shared for that operation. Both views distinguish confirmed, observed, probable, and unknown information.
+The **player intelligence profile** assembles available observations about one player. The **operation intelligence view** assembles the observations relevant to one objective and planned tick, including personal scans, authorized alliance scans, movement observations, and exact allied fleet or command-ship data deliberately shared for that operation. Both views distinguish confirmed, observed, probable, and unknown information.
 
-A credible battle estimate needs the best available information about every fleet expected to be present at the relevant combat step and every participating command ship. The operation view therefore exposes missing participant scans and uncertain reinforcements instead of treating one precise target scan as a complete forecast. For a raid decision, the same view can emphasize resource, collector, production, and likely return-value observations without creating a separate scanning workflow.
+A credible battle estimate needs the best available information about every fleet expected to be present at the relevant combat tick and every participating command ship. The operation view therefore exposes missing participant scans and uncertain reinforcements instead of treating one precise target scan as a complete forecast. For a raid decision, the same view can emphasize resource, collector, production, and likely return-value observations without creating a separate scanning workflow.
 
 Aggregation never upgrades evidence merely because several cards appear together. A newer coarse observation does not erase an older precise snapshot, and an older exact value remains exact only for its acquisition time. The interface shows precision, age, and provenance separately rather than collapsing them into an opaque percentage. Contradictory or stale sources remain inspectable behind the best current presentation.
 
@@ -163,7 +163,7 @@ A fleet is a persistent, owner-configured group of concrete ships rather than a 
 
 Persistent configuration lets a player prepare several forces for different jobs and launch quickly during a command window. It also makes every fleet visible through alliance fleet release a real pre-bundled defense contribution rather than permission to assemble an arbitrary force from another player's reserve. Only the owner may change that composition.
 
-Fleet partitioning is itself a tactical choice. A fleet travels at the pace of its slowest surviving ship. A player may therefore group ships by travel speed so slow ships depart first and faster ships remain available for a later reinforcement, or divide ships by count and composition to create ambiguous incoming signatures. Every launched fleet travels independently; it is not automatically merged with the owner's other fleets on the same route or at the same target. Several fleets may participate in the same engagement while retaining separate orders, contacts, withdrawal decisions, return cargo, and return journeys.
+Fleet partitioning is itself a tactical choice. A fleet's outbound travel quote follows the slowest ship committed at confirmation, and the same tick count is locked for its complete normal return leg. A player may therefore group ships by travel speed so slow ships depart first and faster ships remain available for a later reinforcement, or divide ships by count and composition to create ambiguous incoming signatures. Every launched fleet travels independently; it is not automatically merged with the owner's other fleets on the same route or at the same target. Several fleets may participate in the same engagement while retaining separate orders, contacts, withdrawal decisions, return cargo, and return journeys.
 
 This deception uses real commitment rather than fabricated contacts. An incoming fleet's ship count and travel timing may fit several materially different compositions, such as one heavy ship escorted by many light ships or the reverse. Scanning the owner may reveal possible fleet compositions, but does not reveal which scanned fleet received which order. The opponent can reason from evidence without receiving a system-confirmed answer.
 
@@ -185,11 +185,23 @@ Historically, several simultaneous fleets and scan defense made it difficult for
 
 The operation system should help allies coordinate timing and roles without automatically executing the strategy for them. The players should still make and commit the decisions.
 
-### Hourly operation rounds
+### Hourly ticks
 
-Fleet launches, arrivals, and combat resolution use shared hourly boundaries. During the preceding hour, a fleet owner may confirm an offensive order for the next boundary. Operations may hold plans, roles, intelligence, and prepared fleet drafts further in advance, but the initial model does not turn those drafts into automatic future attacks. The owner must make the final launch decision during the immediately preceding command window.
+Fleet launches, movement, arrivals, and combat resolution use shared hourly ticks. During the preceding command window, a fleet owner may confirm an offensive order for the next tick. Operations may hold plans, roles, intelligence, and prepared fleet drafts further in advance, but the initial model does not turn those drafts into automatic future attacks. The owner must make the final launch decision during the immediately preceding command window.
 
-At departure, the target receives an incoming-attack notification with the attacker, the exact number of ships in that fleet, and the earliest combat hour. Together with known geography, this exposes the fleet's travel timing but not its ship composition, private name, internal identity, or relationship to other contacts. Entering the order near the end of the command window does not create a movement or warning advantage: all confirmed orders in that window depart together. Offensive travel requires one additional operation round relative to defensive reinforcement under equivalent conditions. This preserves the historical commitment disadvantage of attacking and gives the notified defender a complete round in which to organize help.
+At departure, the target receives an incoming-attack notification with the attacker, the exact number of ships in that fleet, and the earliest combat tick. Together with known geography, this exposes the fleet's travel timing but not its ship composition, private name, internal identity, or relationship to other contacts. Entering the order near the end of the command window does not create a movement or warning advantage: all confirmed orders in that window depart together.
+
+No attack can reach its first combat tick fewer than five ticks after launch, regardless of proximity or later drive technology. Equivalent defensive reinforcement takes one tick less and cannot fall below four ticks. A defender therefore has the complete first command window after the warning to launch reinforcement that can arrive for the same first combat tick. Greater distance and slower fleet composition may increase both values while preserving the attacker's one-tick commitment disadvantage.
+
+For a fleet that reaches its target, the normal target-to-home return uses the same locked travel-tick count as its outbound home-to-target leg. Later research completion, combat losses, or a changed surviving composition do not shorten that committed return. An empty recovery return uses the same duration. A fleet recalled before reaching the target instead retraces the distance already traveled.
+
+At every tick, valid docked-fleet departures confirmed during the preceding command window resolve before combat at that station. A warned player may therefore send fleets away at the last available tick and preserve them, but those fleets do not defend the station and the arriving attacker may still take resources or collectors. Defensive reinforcement arriving for that tick participates in its combat.
+
+### Scheduled engagement windows and public attacks
+
+Attacking arrivals against one station are grouped into target-side engagement windows spanning at most three consecutive combat ticks. The earliest unresolved attacking arrival establishes the first combat tick of a window; every attacking fleet scheduled to arrive at that station during that tick or either of the following two ticks belongs to the same engagement. An attacker arriving during the second or third tick joins the current state and can participate only in the combat ticks that remain. The fleet retains its own order, owner, withdrawal decision, cargo, and return journey. An arrival after the third combat tick belongs to a later engagement window.
+
+Public-attack classification is evaluated only when an offensive fleet actually launches. That evaluation includes the newly launched fleet and every attacking fleet already traveling to the same station whose scheduled arrival belongs to the same engagement window. If the launch makes the grouped attack meet an applicable public-attack criterion, every fleet in that window becomes public together. Fleets are not periodically reclassified merely because target points, defensive participation, recovery state, or another world value changes while they travel. A later launch into their window creates a new evaluation and may therefore make the entire grouped attack public at that moment.
 
 ## Regular ship catalog
 
@@ -220,7 +232,7 @@ The ordinary ship view should explain role, preferred targets, weaknesses, and f
 
 Combat resolution is deterministic. Its uncertainty exists before commitment through incomplete intelligence, concealed composition, future reinforcement and withdrawal decisions, and unknown opposing modifiers rather than random hit or damage rolls.
 
-Every combat step resolves the same three firing phases in order: **EMP, first strike, then simultaneous main fire**. EMP disables eligible weapons for the remainder of that combat step without damaging hull points. A regular EMP ship does not target another regular EMP ship. First-strike losses reduce the force able to participate in main fire. Main-fire losses are calculated without granting an advantage from internal iteration or participant order.
+Every combat tick resolves the same three firing phases in order: **EMP, first strike, then simultaneous main fire**. EMP disables eligible weapons for the remainder of that combat tick without damaging hull points. A regular EMP ship does not target another regular EMP ship. First-strike losses reduce the force able to participate in main fire. Main-fire losses are calculated without granting an advantage from internal iteration or participant order.
 
 Each direct-fire ship type combines its cannon count, firepower per cannon, published target-specific hit chance and damage factor, the target's hull points, visible modifiers, and fixed target order. One cannon cannot destroy more than one regular ship in one shot even when its damage exceeds the target's remaining hull points. The target order moves available fire to the next eligible ship type when an earlier target is absent or exhausted.
 
@@ -228,9 +240,13 @@ Partial deterministic effect must not disappear merely because one attacker grou
 
 Published ship data contains the final effective values. The remake does not reproduce the historical hidden heavy-ship hit-point and incoming-damage correction layer or encode a probability above one hundred percent so that later modifiers bring it back under the cap. A desired exception such as the Hai's unusually reliable tracking of the Hai and Hackboot ship types must instead appear as a named, visible rule with testable limits.
 
-An engagement resolves in up to three hourly combat steps and may end earlier when its state no longer supports another step. Each step produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second step, each fleet owner may order a withdrawal during the following command window. At the next hourly boundary that fleet withdraws before the next combat step, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving at that boundary affect the next step only if the engagement still continues.
+An engagement resolves in up to three combat ticks and may end earlier when its state no longer supports another one. Each combat tick produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second combat tick, each fleet owner may order a withdrawal during the following command window. At the next tick that fleet withdraws before the next combat tick, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving at that tick affect the next combat tick only if the engagement still continues.
 
-Defeating every current defender does not end the engagement automatically: while the attacker retains a fleet capable of continuing, they may remain for the unused steps and gain another station-access opportunity at each one. This can yield further collector theft and other enabled raid effects, but delays the return and exposes the attacker to later defensive reinforcement. If a combat step leaves no combat-capable attacking fleet, the engagement ends immediately after that result and its recovery returns begin. It also ends before a later step when every remaining attacker withdraws, and always ends after the third step.
+Defeating every current defender does not end the engagement automatically: while the attacker retains a fleet capable of continuing, they may remain for the unused combat ticks and gain another station-access opportunity at each one. This can yield further collector theft and other enabled raid effects, but delays the return and exposes the attacker to later defensive reinforcement. An engagement ends early only when no combat-capable attacking fleet remains and no already-launched attacker is scheduled to arrive during one of its remaining combat ticks, or when every present and scheduled attacker has withdrawn or been recalled. It always ends after the third combat tick.
+
+Collector-theft efficiency is resolved separately for each combat tick from the force state after that tick's departures, withdrawals, and arrivals but before combat. Its effective target value combines the target player's authoritative player points with the deployment value of every present defending fleet owned by another player. Its attacking value includes every present attacking fleet, even one without Hackboats; splitting escorts from raiders cannot remove real committed force from the ratio. Combat then determines whether a combat-capable attack remains and how many Hackboats are still operational. ECONOMY_AND_GROWTH.md owns the formula, capture cap, resource-surplus rule, and return ownership.
+
+This efficiency is not shown or predicted before commitment. It is player knowledge learned through operation results under uncertain reinforcement and participation. Each combat-tick report must instead show every authoritative input and intermediate result: target player points used for that tick, outside defensive deployment, attacking deployment, ratio and cap, remaining collectors, operational Hackboats, protected resource reserve, remaining resource surplus, captured amounts, and participant distribution. A report may reveal exact post-commitment information that was not available in the pre-battle intelligence picture; it must not rewrite what the player knew before launch.
 
 Reports should distinguish:
 
@@ -282,19 +298,25 @@ The underlying principle is current:
 - part of a lost fleet should return as rebuilding capacity,
 - salvage should soften a defeat without making it irrelevant.
 
-Salvage is governed by a strict conservation rule. Across all participants, the canonical resource value of Müll awarded by a combat step and by the complete engagement must remain lower than the canonical replacement value permanently destroyed in that combat. Own-loss recovery, rewards for damage to enemies, command-ship effects, modules, and every other bonus are claims against this one bounded loss pool; they are not independent sources that may add up beyond it. Bonuses may improve a participant's share or move total recovery toward the published ceiling, but may never raise that ceiling or create resources.
+Salvage is governed by a strict conservation rule. Across all participants, the canonical resource value of Müll awarded by a combat tick and by the complete engagement must remain lower than the canonical replacement value permanently destroyed in that combat. Own-loss recovery, rewards for damage to enemies, command-ship effects, modules, and every other bonus are claims against this one bounded loss pool; they are not independent sources that may add up beyond it. Bonuses may improve a participant's share or move total recovery toward the published ceiling, but may never raise that ceiling or create resources.
 
 Stolen resources and collectors are transfers from the defender rather than generated value. A disabled command ship that returns for repair is not a permanently destroyed replacement-value loss and therefore cannot produce full ship-value salvage in addition to returning home. Its economic loss comes from repair and unavailable time. Consequently, every resolved attack must leave at least one side economically worse off through permanent losses, transferred property, consumed fuel, or repair cost.
 
 ## Return cargo and disabled fleets
 
-Müll, captured collectors, and any stolen resources remain attached to the fleet as return cargo. They are not credited to the home station when a combat step resolves. After withdrawal or the final combat step, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
+Müll, captured collectors, and any stolen resources remain attached to the fleet as return cargo. They are not credited to the home station when a combat tick resolves. After withdrawal or the final combat tick, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
+
+All returned Müll follows one rule regardless of whether it arose from the participant's own destroyed ships or from enemy losses. On arrival it is recycled automatically into ordinary Aluminium and Steel and enters the player's normal resource balances. It can immediately fund any ordinary valid use, including ships, collectors, research, station construction, fuel-related spending, or transfers. There is no separate permanent Müll balance, manual collection action, processing queue, interest, decay, origin split, or mandatory recycling facility in the initial model.
+
+For the five ticks following that arrival, the returned Aluminium and Steel amounts also form a temporary theft-protection allowance. This allowance is added to the station's ordinary protected reserve only when resource theft is resolved; the resources otherwise remain ordinary, count toward authoritative player points, and stay fully spendable. Spending or sending a resource consumes its temporarily protected portion first, and transferred resources do not carry protection to another station. Cancellation or refund preserves the original protection expiry rather than creating a new five-tick period. Separate returning batches retain their own expiry internally, while the interface presents the owner with the aggregate protected amount and its next relevant expiry.
+
+When the five-tick allowance expires, no resources are removed or converted: any amount still present simply becomes part of the ordinary lootable stock. The allowance protects returned Müll from every engagement during its lifetime, including an attack launched before the return. Its duration matches the minimum offensive travel time, so an opponent reacting only after observing the return cannot reach the station before one complete warning window has passed.
 
 Remaining onboard fuel travels home with the fleet but remains separate from return cargo. Actual movement consumes it, so an early withdrawal may leave more aboard than the originally planned full journey would have. Only the amount physically remaining when the fleet reaches home returns to the owner's station fuel stock.
 
 If every ordinary ship in a participating fleet is destroyed, that fleet still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration, and whether an empty recovery return can ever be intercepted, remain open.
 
-Müll may remain as an Aquata term if it fits the final tone and is clearly explained.
+Müll remains the player-facing Aquata term for this recovered combat material. The interface must explain its return, automatic recycling, immediately usable resource value, and temporary theft protection without presenting it as another managed currency.
 
 ## Recovery after defeat
 
@@ -310,6 +332,14 @@ Recovery can come from:
 - neutral or systemic recovery opportunities,
 - temporary protection after extreme losses.
 
+### Recovery flag
+
+The recovery flag responds to severe PvP loss rather than to whether the player entered the engagement as attacker or defender. A player who suffers the same material recovery burden receives the same consideration in either role; winning, losing, attacking, or defending is not itself the trigger.
+
+Qualification and duration use the player's **net recovery gap** after a combat tick. The calculation begins with the published replacement and repair burden created by destroyed ships, captured collectors, and a disabled command ship, then credits recovery value that is genuinely available or already secured: applicable ordinary reserves above the station's operational floor, all secured returning Müll, and reconstruction already paid for. Reliable production determines how long the uncovered remainder is expected to take. Large usable reserves can therefore shorten the flag or prevent it entirely because the loss has not removed the player's practical ability to rebuild.
+
+Every credited input and the resulting estimated recovery time must be visible to the player. The exact qualifying threshold, duration curve, minimum and maximum duration, and effect of later losses remain balance decisions. Players must not be able to lengthen protection by temporarily hiding resources or changing an allocation immediately before evaluation. Secured Müll counts as recovery value while still returning and retains that treatment after its automatic conversion, regardless of its temporary theft-protection allowance.
+
 Historically, weakened players could rebuild by farming smaller or inactive players. Inactive stations were especially valuable for new players learning their first successful attacks and for defeated players rebuilding with a small fleet.
 
 The remake should preserve this ladder of understandable, lower-risk targets. Accounts should not disappear from the world immediately after becoming inactive.
@@ -321,6 +351,8 @@ A returning player starts a fresh seasonal state from zero and does not reclaim 
 ## Attack boundaries
 
 Attack boundaries are a core fairness mechanism. They protect small players from overwhelming powers and give recovering players a viable field of opponents.
+
+They use the same authoritative current player-points total that underlies the seasonal points standing; Aquata does not maintain a separately optimizable conflict score. The deployment value used to limit a concrete fleet commitment is distinct and includes only the ships and command ship assigned to that commitment. Publicly delayed, banded, scanned, estimated, or falsified points never replace the authoritative total in rule evaluation.
 
 The historical principle should remain, but the experience must become legible.
 
@@ -335,25 +367,25 @@ Before launching, the player should see:
 
 The system must avoid hidden formulas and unexplained rejection messages.
 
+Collector-theft efficiency is deliberately not one of these pre-launch values. Attack eligibility and maximum permitted commitment are authoritative rules the player must be able to obey; economic raid efficiency depends on the forces that actually meet at each combat tick and is taught by the resulting battle report rather than supplied as an outcome forecast.
+
 Attack boundaries should prevent predation by vastly stronger players without removing target judgment, bluffing, or the possibility of taking a calculated risk.
 
-## Sleep, safety, and income
+## Sleep, alliance coverage, and absence
 
-Players should be able to choose between maximum economic output and a safer rest period.
+Aquata has no global night and no routine nightly safety posture in the initial model. A world with players on different schedules should remain active around the clock, and players who work nights, sleep early, or stay awake later should provide real value to their alliance rather than find that every useful target has disappeared into protection.
 
-A voluntary safety posture should:
+Healthy sleep instead relies on several layers:
 
-- be selected before danger is already known,
-- reduce resource income or otherwise impose a meaningful economic cost,
-- make attacks less attractive rather than impossible,
-- preserve strategic reasons to attack despite reduced immediate loot,
-- last for a bounded rest period,
-- be understandable to both the protected player and potential attackers,
-- avoid becoming a permanent default state with no real tradeoff.
+- every attack has at least five ticks of approach before its first combat tick,
+- equivalent defensive reinforcement can arrive in at least four ticks after using the first response window,
+- alliance members with complementary schedules may scan, organize help, call released defense fleets, or use granted operation recall authority,
+- a player who reacts late may send docked fleets away before combat while leaving the station economically exposed,
+- attack boundaries, per-engagement theft limits, repeated-target rules, and recovery prevent one unattended period from normally ending a season.
 
-The exact deterrent may combine reduced lootable resources, redirected production, defensive preparation, or lower attacker rewards. The final mechanism is open.
+The design does not promise that sleep prevents loss. An attack launched after a player's alliance coverage ends may leave only enough morning response time to preserve fleets while accepting stolen resources or collectors. The promise is that constant personal watch is unnecessary and that one such loss remains recoverable.
 
-Choosing maximum income means accepting more exposure. This is a deliberate competitive tradeoff: relaxed players can sleep with a modest penalty, while top competitors may remain exposed and organize active coverage to preserve maximum growth.
+Turning station power down to reduce scan quality is reserved as a possible later counterintelligence posture. It would need to disable meaningful capabilities of the same station and remain useful at any time rather than becoming a nightly protection button. A bunker that makes fleets and collectors unavailable while leaving only baseline production is also deferred: it may empty the world of targets or become mandatory fleet preservation and should be reconsidered only if the initial timing and recovery rules prove insufficient.
 
 Alliance night watches are part of the intended social strategy.
 
@@ -365,4 +397,4 @@ All delegated actions must be visible to the owner and recorded. The final trust
 
 ## Unresolved balance goals
 
-Exact salvage rates, attack-band formulas, safety-posture duration and penalty, raid rewards, experience distribution, and repeated-target limits remain open. They should be decided through simulations and playable tests rather than copied directly from historical values.
+Exact salvage rates, attack-band formulas, raid rewards, experience distribution, and repeated-target limits remain open. They should be decided through simulations and playable tests rather than copied directly from historical values.

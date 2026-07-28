@@ -1,6 +1,6 @@
 # Product experience
 
-Stand: 2026-07-25
+Stand: 2026-07-28
 
 ## Experience thesis
 
@@ -50,9 +50,9 @@ The map is a strategic workspace, not decoration. It should reveal:
 
 The map must communicate uncertainty. A stale scan should not look like live truth.
 
-Aquata uses one continuous two-dimensional world rather than hard-divided oceans and settlements. Players occupy coordinates in the same connected space. Unevenly distributed resource nodes and other valuable geography create organic clusters of stations, so a neighborhood emerges through player placement and economic interest instead of being assigned as a formal social unit.
+Aquata uses one continuous two-dimensional world rather than hard-divided oceans and settlements. WORLD_AND_DISCOVERY.md defines its generated geography, station placement, world sites, and bounded initial content scope.
 
-A player's final station coordinate is a deliberate strategic choice with consequences for the whole season. Resource access, travel relationships, likely neighbors, support range, and plans made with friends or a future alliance may all influence the decision. Coordinated placement is legitimate social strategy rather than an exceptional exploit.
+A player's final station coordinate is a deliberate strategic choice with consequences for the whole season. The placement surface must make the irregular distribution of Aluminium, Steel, and Plutonium nodes legible, compare expected resource access, show invalid positions created by the small published station-separation distance, and support plans made with friends without presenting one system-selected best coordinate.
 
 The placement experience must preserve that agency without asking a first-time player to understand the entire strategic map before learning the game. New players should receive a guided, viable path toward their final position, while experienced players may skip the tutorial and use the full strategic placement view immediately. Both paths must ultimately use the same placement rules and offer the same competitive possibilities; onboarding guidance must not assign newcomers an inferior permanent position merely because they accepted help.
 
@@ -60,7 +60,7 @@ Anchoring a station makes its position consequential, but it does not trap a pla
 
 Most routine activity should still be local because shorter commitments, nearby support, and fresher knowledge make neighboring targets attractive. Distance must matter without recreating the historical feeling that another ocean is effectively a separate world. Distant targets remain reachable for deliberate raids, alliance operations, or unusual opportunities; crossing an invisible boundary never adds a special penalty.
 
-The map separates visible economic geography from the uncertain tactical picture. Resource nodes and the basic geography needed for strategic station placement are visible enough to compare locations. Foreign stations, fleets, movements, and game-world activity are not automatically exposed by that geographic layer.
+The map separates visible economic geography from the uncertain tactical picture. Resource nodes and the basic geography needed for strategic station placement are visible enough to compare locations. Foreign stations, world sites, fleets, movements, and game-world activity are not automatically exposed by that geographic layer.
 
 A player initially detects tactical contacts only within the passive sensor field around their station and sees few coarse facts about them. Research primarily expands this field. Persistent energy allocation improves passive observation or strengthens countermeasures, while stored energy powers manual scans.
 
@@ -68,7 +68,7 @@ The map supports a clear intelligence ladder: passive contacts create local lead
 
 Selecting a known player opens a player intelligence profile rather than a chronological pile of scan reports. It presents the best available economic, fleet, command-ship, production, and movement observations while keeping their exact acquisition time, precision, source, and permissions inspectable. Exact old information must not look current, and several matching estimates must not look authoritative merely because they agree.
 
-An operation intelligence view assembles the sources relevant to one objective and planned operation round. It should answer which forces are confirmed, which movements are directly observed, which fleet or command-ship matches are only probable, and where information remains unknown. Personal scans, authorized shared scans, future observation, and exact allied data appear together without losing their provenance. The operation view helps players reason about a battle; it does not silently decide the outcome or invent certainty.
+An operation intelligence view assembles the sources relevant to one objective and planned tick. It should answer which forces are confirmed, which movements are directly observed, which fleet or command-ship matches are only probable, and where information remains unknown. Personal scans, authorized shared scans, future observation, and exact allied data appear together without losing their provenance. The operation view helps players reason about a battle; it does not silently decide the outcome or invent certainty.
 
 Exploration must create target-finding decisions without becoming manual grid sweeping. The command view and map should surface a manageable set of leads such as nearby contacts, game-world activity signals, resource-rich areas, neutral opportunities, and intelligence shared by allies. Such signals describe observed in-world events, never login recency or online presence. Rankings may provide strategic context and prestige, but must not replace reconnaissance with an exact, live target directory.
 
@@ -130,18 +130,17 @@ Notifications must be configurable and sparse. They should protect the player's 
 
 Timing remains strategically important, but the interface should support planning instead of clock watching.
 
-Fleet operations use hourly round boundaries that are easy to communicate. The interface should distinguish a non-binding plan or prepared fleet from a launch confirmed for the next boundary. Offensive confirmation remains a deliberate owner action during the immediately preceding hour; the player should not have to return at the final minute of that hour.
+Fleet operations use hourly ticks that are easy to communicate. The interface should distinguish a non-binding plan or prepared fleet from a launch confirmed for the next tick. Offensive confirmation remains a deliberate owner action during the immediately preceding command window; the player should not have to return at the final minute of that hour.
 
 Desired tools may include:
 
 - operation drafts and proposed fleet orders,
 - explicit hourly command and response windows,
-- a voluntary lower-income safety posture,
 - fleet templates,
 - night-watch and delegated alliance roles,
 - summaries of what will happen while away.
 
-The final model must preserve anticipation and counterplay. Normal play must work with healthy sleep, while additional attention and organized coverage may provide a bounded advantage for top competition.
+The final model must preserve anticipation and counterplay. Normal play must work with healthy sleep through five-tick minimum attack approaches, complementary alliance coverage, bounded losses, and recovery rather than a universal nightly safety posture. Additional attention and organized coverage may provide a bounded advantage for top competition.
 
 ## Visual identity
 
