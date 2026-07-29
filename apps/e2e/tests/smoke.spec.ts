@@ -54,7 +54,7 @@ test("plays the MVP flow from registration to combat report", async ({ page, req
 
   await expect(page.getByRole("heading", { name: /Station bei/ })).toBeVisible();
   await expect(page.getByTestId("ship-piranha")).toHaveText("4");
-  expect(await hasHorizontalOverflow(page)).toBe(false);
+  await expectNoHorizontalOverflow(page);
 
   await page.getByRole("link", { name: "Bau" }).click();
   await page.getByRole("button", { name: "Bauen" }).first().click();
@@ -91,8 +91,8 @@ test("plays the Phase 4 scan defense attack and recall flow", async ({ browser }
   await defenderPage.setViewportSize({ width: 390, height: 844 });
   await attackerPage.setViewportSize({ width: 390, height: 844 });
 
-  await register(defenderPage, "defender");
-  await register(attackerPage, "attacker");
+  await register(defenderPage, "defender-with-a-deliberately-long-name");
+  await register(attackerPage, "attacker-with-a-deliberately-long-name");
 
   await attackerPage.getByRole("link", { name: "Flotten" }).click();
   await attackerPage.getByRole("button", { name: "Station scannen" }).click();
@@ -124,7 +124,7 @@ test("plays the Phase 4 scan defense attack and recall flow", async ({ browser }
   await defenderPage.getByRole("button", { name: "Rueckruf" }).click();
   await expect(defenderPage.getByText(/returning/)).toBeVisible();
 
-  expect(await hasHorizontalOverflow(attackerPage)).toBe(false);
+  await expectNoHorizontalOverflow(attackerPage);
   await defenderPage.close();
   await attackerPage.close();
 });
@@ -138,8 +138,38 @@ async function register(page: Page, username: string): Promise<void> {
   await expect(page.getByRole("heading", { name: /Station bei/ })).toBeVisible();
 }
 
-async function hasHorizontalOverflow(page: Page): Promise<boolean> {
-  return page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+async function expectNoHorizontalOverflow(page: Page): Promise<void> {
+  const overflow = await page.evaluate(() => {
+    const viewportWidth = document.documentElement.clientWidth;
+    const offenders = Array.from(document.querySelectorAll<HTMLElement>("body *"))
+      .map((element) => {
+        const bounds = element.getBoundingClientRect();
+        return {
+          element: [
+            element.tagName.toLowerCase(),
+            element.id ? `#${element.id}` : "",
+            typeof element.className === "string" && element.className
+              ? `.${element.className.trim().replaceAll(/\s+/g, ".")}`
+              : "",
+          ].join(""),
+          left: Math.round(bounds.left * 100) / 100,
+          right: Math.round(bounds.right * 100) / 100,
+        };
+      })
+      .filter(({ left, right }) => left < -0.5 || right > viewportWidth + 0.5)
+      .slice(0, 8);
+
+    return {
+      offenders,
+      scrollWidth: document.documentElement.scrollWidth,
+      viewportWidth,
+    };
+  });
+
+  expect(
+    overflow.scrollWidth,
+    `Horizontal overflow at ${overflow.viewportWidth}px: ${JSON.stringify(overflow.offenders)}`,
+  ).toBeLessThanOrEqual(overflow.viewportWidth);
 }
 
 async function resetDatabase(url: string): Promise<void> {
