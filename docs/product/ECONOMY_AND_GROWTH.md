@@ -1,6 +1,6 @@
 # Economy and growth
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Product purpose
 
@@ -10,9 +10,11 @@ The station provides a small reliable foundation from which a damaged player can
 
 ## Opening budget posture
 
-The initial station includes its collector pool, fighter-capable Shipyard I, Piranha and Qualle designs, one active research slot, and the weak passive sensor baseline. These included capabilities do not consume the player's discretionary starting stock.
+Every player receives the same starting stocks of Aluminium, Steel, and Plutonium plus a small initial energy charge, independent of the chosen coordinate. The initial station includes its fixed collector pool, Station Core, Energy Core I, fighter-capable Shipyard I, Piranha and Qualle designs, one active research slot, and the weak passive sensor baseline. These included capabilities do not consume the player's discretionary starting stock. No ship, completed research project, or additional facility is granted for free.
 
-The starting stock should make each individual bootstrap action affordable, including Sensor Array I, Communications Center I, and a small first fleet, but should not fund every bootstrap facility, substantial collector expansion, and a large fleet simultaneously. The player can complete the core loop immediately while still choosing whether personal military capability, information, cooperation, or economic growth receives the remaining opening resources.
+Before waiting for production, the starting stock must fund one small operational Piranha-and-Qualle fleet plus exactly one major opening priority: a meaningful first collector batch, Sensor Array I, Communications Center I, or the start of any available tier-two research project. It must not fund the fleet plus two of those priorities. These are balance constraints rather than separate grants or reserved currencies: a player may omit the fleet and commit more of the same ordinary stock to infrastructure or growth instead.
+
+The position-independent station baseline ensures that a weak opening choice delays rather than permanently traps the player. Exact starting amounts, initial collector count, first-fleet composition, collector-batch size, recipes, and durations remain simulation inputs. The accepted budget inequalities must hold for every balanced value set.
 
 Opening cost targets use relative bands until exact recipes are balanced: bootstrap from starting stock, low at several hours of ordinary production, medium at approximately half to one day of production or one useful small return, and major at approximately one to three days of production or several returns. These values describe intended opportunity cost rather than a promise that all players generate identical hourly income.
 
@@ -44,6 +46,8 @@ Exact construction recipes, the base Plutonium-to-energy conversion ratio, Energ
 
 The same raw-resource stocks fund collectors, station growth, research, ships, and reserves. These paths should not receive unrelated private currencies that remove their opportunity costs.
 
+The first proper playable version has no voluntary resource or collector transfer between players. Ownership initially changes only through authoritative combat, return cargo, construction, or ordinary production. This keeps feeder-account rules and alliance subsidy flows outside the version while preserving cooperation through intelligence, operations, and defensive fleets.
+
 ## Collector pool and allocation
 
 Collectors are one aggregate seasonal pool, not individually simulated units. A player may own ten, one thousand, or far more collectors without creating a separate entity, route, or order for each one.
@@ -56,7 +60,13 @@ The player distributes the pool by percentage across Aluminium, Steel, and Pluto
 - the distance between node and station,
 - applicable progression modifiers.
 
-Collector work proceeds automatically after the allocation and node choices are made. Different node distances make equal resource income require unequal collector shares, while changing strategic needs may justify an intentionally uneven output mix. The first node model needs no variable quality beyond resource type and position; additional node attributes may be added only after the placement and allocation game works. The exact distance curve and the delay or cost for changing allocation remain open.
+Collector work proceeds automatically after the allocation and node choices are made. For each raw resource, production is the small position-independent station baseline plus the fixed-point product of total collectors, that resource's whole-number percentage, its published base yield, and a public monotonically decreasing distance factor. Zero percent is valid and stops only collector-derived output; the station baseline remains. Fractional effective collectors are preserved in fixed-point arithmetic rather than rounded into individual units or silently lost.
+
+Different node distances make equal resource income require unequal collector shares, while changing strategic needs may justify an intentionally uneven output mix. The first node model needs no variable quality beyond resource type and position; additional node attributes may be added only after the placement and allocation game works. The exact base yields and distance curve remain balancing work.
+
+The three percentages and three node selections form one coherent production plan. After founding, submitting a valid replacement plan leaves the previous plan fully authoritative until the next economy tick, when the complete new plan takes effect atomically. The interface shows the exact current and next-tick output side by side; no within-tick partial allocation or node change exists. The founding command applies its initial plan immediately so the new station does not begin in an undefined transition state.
+
+Within each economy tick, the server first activates any valid pending production plan, then credits station-baseline and collector production from the collectors already eligible for that tick, and finally completes any collector due at that boundary and advances the collector stream automatically. A newly completed collector therefore joins the owned pool immediately but becomes production-eligible only on the following economy tick. A founded station activates at the shared season start and first produces after one complete interval; there is no partial-interval accrual or backdated production.
 
 Resource nodes are stable, non-depleting, visible economic geography rather than exclusive permanent holdings. They are generated unevenly from the season seed, so viable combinations naturally attract different station densities. Several players may use the same nodes; station placement must not become a fastest-click claim on a unique indispensable node. WORLD_AND_DISCOVERY.md owns generation, placement, and world-content scope.
 
@@ -70,15 +80,19 @@ Instead, the marginal price of additional collectors rises smoothly with the pla
 
 The published curve should remain simple enough to show the price of the next collector and any requested batch directly. The historical model is a useful structural reference: its marginal price rose linearly with the shared collector count, making cumulative investment quadratic and turning high-count reinvestment from exponential toward approximately linear growth. Its exact coefficients are not inherited automatically.
 
+The Station Core owns one collector-specific serial construction stream. A player may order a batch, but it is authoritatively expanded into a sequence of individual collector completions at one published interval. Each completed collector joins the aggregate pool immediately and first contributes production on the following economy tick. The cost of every unit is quoted and committed from the projected total of owned plus already committed collectors when the order is confirmed, so a batch has the same cost and completion schedule as the equivalent queued single orders and splitting an order provides no advantage.
+
+The stream advances automatically without exact-time attendance. A player may cancel queued collectors that have not started and receives their originally committed cost back in full; the collector currently in progress completes normally. This narrow queue is independent of facility construction, ship production, and research and does not imply a universal station build-capacity system.
+
 Losing collectors lowers the current pool and therefore the price of rebuilding. Captured collectors remain especially valuable because they increase the new owner's productive pool without first constructing those units. Abuse protection must not remove this recovery property merely to close arranged-transfer exploits.
 
 Havoc uses the same unbounded economic rule under its accelerated rhythm rather than replacing it with a special collector ceiling. Numeric types and simulations must support counts far beyond a normal season without overflow or loss of determinism.
 
 ## Construction posture
 
-Different construction projects may initially proceed in parallel as they did historically. Research is separate: a player may have exactly one active research project while maintaining a non-progressing queue of planned projects. Construction and the one active research project may proceed at the same time. Shared resources, committed costs, construction and research time, and the choice to retain liquid reserves provide the primary constraints.
+Different supported construction systems may initially proceed in parallel as they did historically. Collector construction alone uses its own serial stream. Research is separate: a player may have exactly one active research project while maintaining a non-progressing queue of planned projects. Construction and the one active research project may proceed at the same time. Shared resources, committed costs, construction and research time, and the choice to retain liquid reserves provide the primary constraints.
 
-A universal build-capacity system is not a confirmed core mechanic. Narrow capacity limits may be introduced only if playable validation shows that unrestricted parallel construction removes meaningful decisions. Resources committed to a project must move authoritatively into construction so parallel orders cannot duplicate value or spend the same stock twice.
+A universal build-capacity system is not a core mechanic in the first proper version. Resources committed to any project must move authoritatively into construction so parallel orders cannot duplicate value or spend the same stock twice.
 
 ## Station facility catalog
 
@@ -92,6 +106,12 @@ The initial station catalog is intentionally compact. Aquata should feel like a 
 | **Communications center** | I–II              | Operational alliance link and contextual intelligence sharing, then operations, defense calls, and alliance fleet release                            | Both in opening under their established cost targets                                |
 | **Command dock**          | One level         | Command-ship selection, construction, module loadout, supported reconfiguration, and repair after combat disablement                                 | Early opening major goal                                                            |
 | **Energy core**           | I–III             | Plutonium conversion throughput and stored-energy capacity; it does not unlock sensor methods or change the normal conversion ratio                  | I included; II from late opening into expansion; III during conflict                |
+
+### First proper playable-version facility scope
+
+The first proper version includes Station Core, Shipyard I, and Energy Core I at founding. Shipyard II, Sensor Array I, Communications Center I and II, and the one-level Command Dock are buildable. Shipyard III and IV, Sensor Array II, Energy Core II and III, and every additional facility family are deferred.
+
+This subset supports the complete accepted journey: four regular ship types, basic and area reconnaissance, operational alliance defense, and the first command-ship levels. The larger table remains the intended full-season facility catalog rather than an implementation requirement for the first test season.
 
 The endgame does not add another mandatory facility family or level merely to mark its date. Its growth comes from late ship designs, command-ship development, modules, fleet scale, intelligence, operations, and politics.
 
@@ -110,7 +130,7 @@ The initial catalog deliberately excludes separate research-lab levels, resource
 
 Collector theft happens only during a resolved attack on the owning station. It reduces the defender's one total collector pool; the defender's allocation percentages and selected nodes remain unchanged.
 
-Under optimal conditions, each combat tick may steal at most fifteen percent of the collector pool remaining at that tick. Three optimal combat ticks can therefore steal no more than `1 - 0.85³`, approximately 38.6 percent of the starting pool, rather than forty-five percent. Actual theft may be lower under the published combat conditions.
+Under optimal conditions, each combat tick may steal at most fifteen percent of the collector pool remaining at that tick. Exposure on exactly three optimal combat ticks can therefore steal no more than `1 - 0.85³`, approximately 38.6 percent of the starting pool, rather than forty-five percent. One attacking fleet cannot create more than those three ticks by itself. Overlapping or staggered fleets can keep combat active on additional ticks, so cumulative pressure from pre-launched waves is a mandatory repeated-target simulation case rather than silently inheriting the three-tick bound.
 
 The percentage for one combat tick uses the forces physically committed to that tick. After departures, withdrawals, and arrivals have resolved but before combat, the game snapshots:
 
@@ -130,7 +150,7 @@ Stolen collectors become captured economic value rather than being destroyed. A 
 
 Successful station access may also transfer stored Aluminium, Steel, and Plutonium. Each resource keeps a protected reserve so one engagement cannot remove the station's complete ability to act. The initial balance target for that reserve is approximately twenty-four ticks of the station's ordinary production of that resource; the exact production basis, treatment of temporary modifiers, and rounding remain balance work.
 
-At each combat tick with successful station access, the attackers may secure twenty-five percent of that resource's **currently remaining surplus** above its protected reserve. The result is recalculated independently for each raw resource and each combat tick. With an unchanged reserve and no production, spending, or other stock movement between ticks, three combat ticks can therefore transfer at most `1 - 0.75³`, approximately 57.8 percent of the surplus present before the first theft. The shrinking base is intentional: continuing the engagement yields additional resources but progressively less while exposing the attackers to further reinforcement.
+At each combat tick with successful station access, the attackers may secure twenty-five percent of that resource's **currently remaining surplus** above its protected reserve. The result is recalculated independently for each raw resource and each combat tick. With an unchanged reserve and no production, spending, or other stock movement between ticks, exposure on exactly three combat ticks can therefore transfer at most `1 - 0.75³`, approximately 57.8 percent of the surplus present before the first theft. The shrinking base is intentional: continuing pressure yields additional resources but progressively less while exposing the attackers to further reinforcement. Staggered fleets may create additional combat ticks and therefore belong in the same repeated-target simulations as collector theft.
 
 Stolen resources enter return cargo under the same ownership and arrival rules as captured collectors. The required station-access condition, deterministic distribution among several attackers, and any later command-ship or module modifiers remain open; no modifier may turn the protected reserve itself into ordinary loot or apply a separate twenty-five-percent allowance per attacker.
 

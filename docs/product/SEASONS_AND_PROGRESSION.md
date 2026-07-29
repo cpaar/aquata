@@ -1,6 +1,6 @@
 # Seasons and progression
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Why seasons exist
 
@@ -18,6 +18,21 @@ The reset:
 - allows maps, rules, and strategic conditions to vary.
 
 The desired contrast is strong: the first affordable ships and slow raids should feel materially different from the huge coordinated battles near the end.
+
+## First proper test season
+
+The first proper playable version runs as a time-bounded real multiplayer test season rather than attempting the complete arc below. It has:
+
+- one seeded shared world,
+- a published start and end,
+- a limited founding window for one cohort,
+- the same seasonal starting state for every participant,
+- one authoritative player-points value and simple current player and alliance standings,
+- a complete competitive-state reset and an administrative result snapshot at the end.
+
+Its founding window closes before the shared active-season start. During that window, players may inspect the generated world, reserve and confirm a coordinate, and submit the founding production plan, but production, construction, research, fleets, and standings do not progress. Every successfully founded station receives and activates its equal seasonal starting state on the same published start tick. Its first production occurs one complete economy tick later, so confirming earlier within the founding window gives no production-tick advantage.
+
+Open late entry, personal catch-up, global Opening, Expansion, Conflict, and Endgame state changes, official awards, achievements, Final Battle, Havoc, Hall of Fame, and persistent season history are deferred. The stages and result model below remain the intended complete seasonal arc, not requirements for the first test season.
 
 ## Seasonal arc
 
@@ -327,6 +342,16 @@ These are not exclusive classes. Research, supported construction jobs, ship pro
 
 No station facility depends on completing a tutorial checklist. It depends only on its authoritative physical, research, resource, and timing prerequisites. Guidance recognizes actions already completed before their explanation. Skipping guidance grants no alternate starting stock, reward, cost, build speed, research speed, travel rule, or placement advantage. A required cooperation lesson may use a controlled example for a solo player, but a scripted valuable fleet loss is never mandatory.
 
+### First proper playable-version progression scope
+
+The first proper version exposes only the three level-II opening projects:
+
+- Ship Engineering II unlocks Hai and Hackboot through Shipyard II.
+- Sensor Technology II unlocks area search, modest passive-reach improvement, and rudimentary command-ship intelligence through Sensor Array I.
+- Drive Technology II improves travel time and variable travel-fuel efficiency.
+
+Exactly one project progresses at a time, and later projects may be placed in the ordinary queue. These fields are not exclusive; their order creates the opening strategy. Every higher research project and every additional regular ship is deferred from this version.
+
 ## Research and capability unlocking
 
 Research is the universal seasonal capability progression between economic growth and command-ship identity. It introduces new operational choices rather than serving mainly as an accumulating list of percentage bonuses. Research choices determine when a player gains access to broader fleet, intelligence, and movement options; the command ship remains the separate source of hard personal specialization.
@@ -493,6 +518,19 @@ Module discovery must never become a premium or gacha system. Players cannot buy
 Its strongest tactical effects require the command ship to participate in the relevant operation. A fleet sent without it remains useful, but lacks the command profile that makes the player's main force distinctive. Because the command ship can accompany only selected commitments, its location creates a strategic choice about where the player's full strength and specialized capabilities are exposed.
 
 A command ship disabled in combat is not permanently destroyed and does not teleport home. It returns with its fleet or, if no ordinary ship in that fleet survives, with the fleet's empty recovery return. After arrival it must be repaired before it can receive another fleet order. Modules remain unlocked during this state. Exact repair cost and duration remain balancing decisions.
+
+### First proper playable-version command ship
+
+The command ship is a later roadmap outcome but remains required for the first proper version. That version includes:
+
+- one physical command ship assigned to one persistent fleet,
+- the Fight, Support, and Economy archetype choice,
+- each archetype's defining automatic core mechanics,
+- meaningful-combat experience with transparent report inputs,
+- an initial level target of one through five with automatic core growth,
+- disablement, normal or empty recovery return, and repair.
+
+Development-point allocation, Assault or Disruption, Offensive or Defensive, Production or Recovery, every module and acquisition path, deeper level curves, and non-combat experience sources are deferred. Development points would create false choice before real build axes exist.
 
 The exact experience curve, combat-experience values and multiplier curves, operation qualification and anti-abuse thresholds, archetype-specific development-point cadence and options, milestone levels, module catalog, acquisition thresholds and probabilities, progression comparison metric, reconfiguration rules, reset details beyond seasonal modules, and disabled-command-ship repair values remain open.
 

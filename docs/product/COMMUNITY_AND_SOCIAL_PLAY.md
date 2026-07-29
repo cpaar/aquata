@@ -1,6 +1,6 @@
 # Community and social play
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Social premise
 
@@ -119,6 +119,14 @@ The remake should use a fixed alliance cap independent of total player populatio
 The cap must not be so scarce that alliances routinely exclude temporarily inactive friends simply to reserve every seat for highly active players. A dormant-membership state that preserves social history without consuming permanent active capacity is a candidate solution; the exact roster model remains open.
 
 Larger power blocs should emerge through treaties and coalitions between alliances instead of increasing the alliance cap.
+
+### First proper playable-version alliance scope
+
+The first proper version includes alliance creation, invitations, joining, leaving, and the social-versus-operational membership distinction. Its Macbox scopes are global, alliance, direct, and operation conversation.
+
+Communications Center I enables permission-bearing scan and battle-report sharing. Communications Center II enables the minimal operation room, defense calls, and owner-level all-or-none alliance fleet release. One minimal operation contains a target, planned tick, invited participants, roles, shared intelligence, focused conversation, and each owner's confirmation state. Every offensive owner still confirms their own launch; no commander receives launch or composition authority.
+
+Configurable role systems, treaties, coalitions, cross-alliance fleet release, persistent forums, and extensive political administration are deferred from this version.
 
 ## Social membership and operational alliance link
 

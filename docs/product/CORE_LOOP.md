@@ -1,6 +1,6 @@
 # Core loop
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Primary loop
 
@@ -98,7 +98,7 @@ The target is notified when the attack actually launches and receives the attack
 
 Complete travel from home to a target and the normal return from that target use the same locked number of travel ticks. Drive research or losses after departure do not shorten that already committed return. An early recall before reaching the target instead retraces only the distance already traveled.
 
-Combat remains multi-tick. An engagement may resolve at up to three successive ticks. Between combat ticks, players can interpret the new report, reinforce, or withdraw according to the engagement rules. Remaining for another combat tick can produce further station effects and collector theft, but also gives the defender's allies another opportunity to arrive.
+Combat remains multi-tick. Each attacking fleet receives at most three successive attack ticks beginning with its arrival. Several fleet schedules may overlap at one target, and every eligible fleet present fights together on the shared combat tick without losing or extending its own three-tick allowance. Between ticks, players can interpret the new report, reinforce, or withdraw. Remaining for another personal attack tick can produce further station effects and collector theft, but also gives the defender's allies another opportunity to arrive.
 
 ## Resolve and learn
 
@@ -163,3 +163,5 @@ The onboarding should explain defeat and recovery through an organic result or c
 No tutorial checklist is an authoritative prerequisite. If a player builds, researches, scans, communicates, or fights before its explanation appears, the guidance recognizes that state and continues without repeating the action or paying an extra reward. Skipping all explanations changes presentation only.
 
 This slice should be validated before implementing the full legacy catalog or broad meta systems.
+
+FIRST_PROPER_VERSION.md owns the exact acceptance boundary for the first end-to-end multiplayer version. Its included journey extends this onboarding arc through PvP, alliance defense, recovery, and the first command-ship levels without requiring a complete seasonal endgame.

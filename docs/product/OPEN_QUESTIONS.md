@@ -1,6 +1,6 @@
 # Open product questions
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 This file contains only unresolved questions that materially affect the product. When a question is answered, update the owning product document and remove it here.
 
@@ -30,7 +30,6 @@ This file contains only unresolved questions that materially affect the product.
 - Which resource-node distance curve makes collector allocation economically meaningful without requiring variable node quality in the initial model?
 - Which placement comparisons and guidance teach a newcomer enough to choose a permanent station position without selecting one authoritative best coordinate?
 - What exact minimum station distance prevents extreme stacking while still allowing dense emergent neighborhoods?
-- Which commitment locks the initial station coordinate?
 - Which exact eligibility rules and cost make rare station relocation fair, using roughly forty-eight hours of resource production as the historical reference?
 - Which exact radii, refresh intervals, size bands, and precision levels define passive sensor progression?
 - How much do sensor-energy allocation and research improve passive observation without making their effects hard to predict?
@@ -49,16 +48,12 @@ This file contains only unresolved questions that materially affect the product.
 
 ## Progression and economy
 
-- Which early decisions create different viable openings?
 - Which construction costs, durations, and prerequisite relationships pace the two Sensor Array levels, two Communications Center levels, one Command Dock, four Shipyard capabilities, and Energy Core II and III without turning every opening into identical compulsory chores?
 - Which controlled targets and contextual tasks teach each discovery chapter while keeping repeat-season openings strategically variable?
 - At what exact duration or voluntary action does initial PvP protection end, and how is protected accumulation bounded without preventing the first same-day neutral operation?
 - Which exact station baseline, collector-output curve, and initial collector pool produce scarcity without making recovery impossible?
 - Which marginal collector-price curve and Aluminium/Steel cost mix slow reinvestment without creating a hard cap?
-- How long does changing collector percentages or selected resource nodes take, and when does the new output become authoritative?
 - Which exact launch overhead, fleet travel-rate formula and rounding, in-flight rerouting or refueling rules, treatment of onboard fuel when no ordinary ship returns, base Plutonium-to-energy ratio, Energy Core II and III throughput and storage curves, and persistent allocation controls make fleet activity and reconnaissance consequential without requiring constant adjustment?
-- Does unrestricted parallel construction remain the final model, or does playable validation justify a narrow capacity constraint?
-- Which additional research fields and projects complement the confirmed ship-engineering, sensor-technology, and drive-technology foundation without duplicating station or command-ship progression?
 - Which project prerequisites, resource costs, durations, queue-change rules, and cancellation treatment make the single active research project strategically meaningful without requiring exact-minute attendance?
 - Which drive generations and travel-time and variable-fuel curves create the intended soft expansion from local opening play to long-distance endgame operations without erasing ship-speed differences?
 - Which season-age baseline, eligibility rules, speed multiplier, and taper implement personal research catch-up without accelerating leading-edge research or enabling feeder accounts?
@@ -75,13 +70,11 @@ This file contains only unresolved questions that materially affect the product.
 - Which published net-recovery-gap threshold and duration curve determine whether the role-neutral recovery flag appears and how long it lasts?
 - How do repeated attacks and farming interact with protection?
 - Which deterministic remainder rule distributes captured collectors and stolen resources among several eligible attackers, and which base station-access condition enables resource theft before any later command-ship or module modifiers?
-- Can an empty recovery return ever be intercepted, or is secured cargo guaranteed once its combat tick resolves?
 - Which transparent measure defines attack eligibility and maximum commitment?
 - Which later decoy or misinformation mechanics add readable counterplay beyond the initial defense model of lower precision and concealed fields?
 
 ## Operations and alliances
 
-- What is the smallest useful operation-planning system?
 - Which docked refit, split, combine, refill, and rebuild interactions make persistent fleets convenient without hiding where concrete ships are committed?
 - What happens when several alliance members issue a defense call for the same available fleet at nearly the same time?
 - When may an owner disable alliance fleet release, and when does an already locked defense call take precedence?
@@ -117,7 +110,6 @@ This file contains only unresolved questions that materially affect the product.
 
 ## Community
 
-- Which Macbox rooms exist at launch?
 - Which forum functions require persistent in-product threads?
 - How are player-created guides, feedback, and bug reports handled?
 

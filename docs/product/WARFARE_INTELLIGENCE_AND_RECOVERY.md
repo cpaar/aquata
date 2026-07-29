@@ -1,6 +1,6 @@
 # Warfare, intelligence, and recovery
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Strategic premise
 
@@ -197,15 +197,19 @@ For a fleet that reaches its target, the normal target-to-home return uses the s
 
 At every tick, valid docked-fleet departures confirmed during the preceding command window resolve before combat at that station. A warned player may therefore send fleets away at the last available tick and preserve them, but those fleets do not defend the station and the arriving attacker may still take resources or collectors. Defensive reinforcement arriving for that tick participates in its combat.
 
-### Scheduled engagement windows and public attacks
+### Fleet-bound attack ticks and public overlap
 
-Attacking arrivals against one station are grouped into target-side engagement windows spanning at most three consecutive combat ticks. The earliest unresolved attacking arrival establishes the first combat tick of a window; every attacking fleet scheduled to arrive at that station during that tick or either of the following two ticks belongs to the same engagement. An attacker arriving during the second or third tick joins the current state and can participate only in the combat ticks that remain. The fleet retains its own order, owner, withdrawal decision, cargo, and return journey. An arrival after the third combat tick belongs to a later engagement window.
+Each attacking fleet receives its own sequence of at most three consecutive attack ticks beginning with its arrival at the target. A fleet that arrives later receives its own complete sequence rather than inheriting the ticks remaining in a target-side window. Every fleet retains its own order, owner, withdrawal decision, return cargo, and return journey.
 
-Public-attack classification is evaluated only when an offensive fleet actually launches. That evaluation includes the newly launched fleet and every attacking fleet already traveling to the same station whose scheduled arrival belongs to the same engagement window. If the launch makes the grouped attack meet an applicable public-attack criterion, every fleet in that window becomes public together. Fleets are not periodically reclassified merely because target points, defensive participation, recovery state, or another world value changes while they travel. A later launch into their window creates a new evaluation and may therefore make the entire grouped attack public at that moment.
+At one combat tick, all attacking fleets whose personal attack sequence includes that tick and all eligible defending fleets present at the station fight together. The shared resolution consumes one attack tick from each participating attacking fleet. Overlapping or staggered schedules may therefore keep a confrontation active for more than three world ticks, but no individual attacking fleet receives more than three attack ticks.
+
+Public-attack classification is evaluated only when an offensive fleet actually launches. For each tick in the new fleet's planned attack sequence, the game groups that fleet with every already-traveling attacker to the same station whose own planned sequence includes that tick. Public criteria are evaluated against the forces scheduled to fight together on that shared tick. If a group meets an applicable criterion, every attacking fleet in that group becomes public. A later launch may therefore make previously traveling, overlapping fleets public. Fleets are not periodically reclassified merely because target points, defensive participation, recovery state, withdrawal, or another world value changes while they travel.
 
 ## Regular ship catalog
 
-The initial regular-ship catalog retains the twelve historical ship types and their established tactical identities. This is a product commitment to the roster, role relationships, firing behavior, and target-order baseline, not to every historical cost or numeric balance value. The command ship remains a separate player-developed unit rather than a thirteenth fixed regular ship type.
+The intended full-season regular-ship catalog retains the twelve historical ship types and their established tactical identities. This is a product commitment to the roster, role relationships, firing behavior, and target-order baseline, not to every historical cost or numeric balance value. The command ship remains a separate player-developed unit rather than a thirteenth fixed regular ship type.
+
+The first proper playable version exposes only Piranha, Qualle, Hai, and Hackboot. Together they cover first strike, EMP, main fire and escort, and unarmed economic raiding. Taifun, Blizzard, and every later regular ship remain in the intended catalog below but are not buildable content or balance prerequisites for that version.
 
 Hull class, technology tier, combat role, and firing phase are separate concepts. Fighter, corvette, frigate, and battleship are the four hull classes. EMP, first strike, and main fire describe firing phases or weapon behavior; they are not additional ship classes.
 
@@ -240,9 +244,11 @@ Partial deterministic effect must not disappear merely because one attacker grou
 
 Published ship data contains the final effective values. The remake does not reproduce the historical hidden heavy-ship hit-point and incoming-damage correction layer or encode a probability above one hundred percent so that later modifiers bring it back under the cap. A desired exception such as the Hai's unusually reliable tracking of the Hai and Hackboot ship types must instead appear as a named, visible rule with testable limits.
 
-An engagement resolves in up to three combat ticks and may end earlier when its state no longer supports another one. Each combat tick produces an immediate authoritative result. Surviving fleets remain committed by default. After the first or second combat tick, each fleet owner may order a withdrawal during the following command window. At the next tick that fleet withdraws before the next combat tick, keeps its already secured return cargo, and begins its journey home. Without such an order it remains in the engagement. The same rule applies to attacking fleets and allied defensive fleets; withdrawing defenders leave the station itself exposed. Fleets arriving at that tick affect the next combat tick only if the engagement still continues.
+Each combat tick produces an immediate authoritative result. Departures and withdrawals ordered for that tick resolve first, then arrivals, then every attacking fleet with an active personal attack tick and every eligible defender present resolve combat together.
 
-Defeating every current defender does not end the engagement automatically: while the attacker retains a fleet capable of continuing, they may remain for the unused combat ticks and gain another station-access opportunity at each one. This can yield further collector theft and other enabled raid effects, but delays the return and exposes the attacker to later defensive reinforcement. An engagement ends early only when no combat-capable attacking fleet remains and no already-launched attacker is scheduled to arrive during one of its remaining combat ticks, or when every present and scheduled attacker has withdrawn or been recalled. It always ends after the third combat tick.
+An attacking fleet that remains capable continues by default into its next personal attack tick. After its first or second attack tick, its owner may order withdrawal during the following command window. At the next tick it withdraws before combat, keeps its already secured return cargo, and begins its journey home. Without that order it remains until its third attack tick or an earlier forced end. A defending fleet may likewise withdraw before a later combat tick and leave the station exposed.
+
+Defeating every current defender does not end an attacking fleet's sequence automatically. While that fleet remains combat-capable, it may use its unused personal attack ticks for further station access, but each extra tick delays the return and allows later defensive reinforcement. A fleet's sequence ends after its third attack tick, withdrawal, destruction, or loss of every combat-capable attacking ship. The confrontation at the station ends when no attacking fleet has an active attack tick there; another fleet arriving after a gap begins a new confrontation.
 
 Collector-theft efficiency is resolved separately for each combat tick from the force state after that tick's departures, withdrawals, and arrivals but before combat. Its effective target value combines the target player's authoritative player points with the deployment value of every present defending fleet owned by another player. Its attacking value includes every present attacking fleet, even one without Hackboats; splitting escorts from raiders cannot remove real committed force from the ratio. Combat then determines whether a combat-capable attack remains and how many Hackboats are still operational. ECONOMY_AND_GROWTH.md owns the formula, capture cap, resource-surplus rule, and return ownership.
 
@@ -304,9 +310,9 @@ Stolen resources and collectors are transfers from the defender rather than gene
 
 ## Return cargo and disabled fleets
 
-Müll, captured collectors, and any stolen resources remain attached to the fleet as return cargo. They are not credited to the home station when a combat tick resolves. After withdrawal or the final combat tick, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
+Müll, captured collectors, and any stolen resources remain attached to the fleet as return cargo. They are not credited to the home station when a combat tick resolves. After a fleet withdraws, completes its own final attack tick, or otherwise ends its defensive commitment, the surviving fleet carries that cargo home, and the assets become available only when the return arrives.
 
-All returned Müll follows one rule regardless of whether it arose from the participant's own destroyed ships or from enemy losses. On arrival it is recycled automatically into ordinary Aluminium and Steel and enters the player's normal resource balances. It can immediately fund any ordinary valid use, including ships, collectors, research, station construction, fuel-related spending, or transfers. There is no separate permanent Müll balance, manual collection action, processing queue, interest, decay, origin split, or mandatory recycling facility in the initial model.
+All returned Müll follows one rule regardless of whether it arose from the participant's own destroyed ships or from enemy losses. On arrival it is recycled automatically into ordinary Aluminium and Steel and enters the player's normal resource balances. It can immediately fund any ordinary valid use, including ships, collectors, research, station construction, fuel-related spending, or later transfers where those exist. There is no separate permanent Müll balance, manual collection action, processing queue, interest, decay, origin split, or mandatory recycling facility in the initial model.
 
 For the five ticks following that arrival, the returned Aluminium and Steel amounts also form a temporary theft-protection allowance. This allowance is added to the station's ordinary protected reserve only when resource theft is resolved; the resources otherwise remain ordinary, count toward authoritative player points, and stay fully spendable. Spending or sending a resource consumes its temporarily protected portion first, and transferred resources do not carry protection to another station. Cancellation or refund preserves the original protection expiry rather than creating a new five-tick period. Separate returning batches retain their own expiry internally, while the interface presents the owner with the aggregate protected amount and its next relevant expiry.
 
@@ -314,7 +320,9 @@ When the five-tick allowance expires, no resources are removed or converted: any
 
 Remaining onboard fuel travels home with the fleet but remains separate from return cargo. Actual movement consumes it, so an early withdrawal may leave more aboard than the originally planned full journey would have. Only the amount physically remaining when the fleet reaches home returns to the owner's station fuel stock.
 
-If every ordinary ship in a participating fleet is destroyed, that fleet still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration, and whether an empty recovery return can ever be intercepted, remain open.
+If every ordinary ship in a participating fleet is destroyed, that fleet still creates an empty recovery return carrying its already secured cargo. A command ship disabled in combat returns with that recovery state rather than being permanently lost or recreated at home. Only after arrival may it enter repair, and it remains unavailable until that repair completes. The exact repair cost and duration remain open.
+
+The first proper version has no route interception. Once return cargo has been secured by a resolved combat tick, its normal or empty recovery return is guaranteed to reach the owning station after the authoritative return duration. Any future interception system would be a separate reviewed expansion rather than an implied exception.
 
 Müll remains the player-facing Aquata term for this recovered combat material. The interface must explain its return, automatic recycling, immediately usable resource value, and temporary theft protection without presenting it as another managed currency.
 
@@ -339,6 +347,8 @@ The recovery flag responds to severe PvP loss rather than to whether the player 
 Qualification and duration use the player's **net recovery gap** after a combat tick. The calculation begins with the published replacement and repair burden created by destroyed ships, captured collectors, and a disabled command ship, then credits recovery value that is genuinely available or already secured: applicable ordinary reserves above the station's operational floor, all secured returning Müll, and reconstruction already paid for. Reliable production determines how long the uncovered remainder is expected to take. Large usable reserves can therefore shorten the flag or prevent it entirely because the loss has not removed the player's practical ability to rebuild.
 
 Every credited input and the resulting estimated recovery time must be visible to the player. The exact qualifying threshold, duration curve, minimum and maximum duration, and effect of later losses remain balance decisions. Players must not be able to lengthen protection by temporarily hiding resources or changing an allocation immediately before evaluation. Secured Müll counts as recovery value while still returning and retains that treatment after its automatic conversion, regardless of its temporary theft-protection allowance.
+
+An existing attack is unchanged when the target gains the flag. Every offensive fleet launched afterward against that flagged player becomes public and receives one additional travel tick. The station remains attackable and its ordinary surplus remains lootable. Launching a new offensive fleet removes the owner's own recovery flag immediately; neutral attacks do not remove it.
 
 Historically, weakened players could rebuild by farming smaller or inactive players. Inactive stations were especially valuable for new players learning their first successful attacks and for defeated players rebuilding with a small fleet.
 
@@ -381,7 +391,7 @@ Healthy sleep instead relies on several layers:
 - equivalent defensive reinforcement can arrive in at least four ticks after using the first response window,
 - alliance members with complementary schedules may scan, organize help, call released defense fleets, or use granted operation recall authority,
 - a player who reacts late may send docked fleets away before combat while leaving the station economically exposed,
-- attack boundaries, per-engagement theft limits, repeated-target rules, and recovery prevent one unattended period from normally ending a season.
+- attack boundaries, shrinking-base theft limits, repeated-target rules, and recovery prevent one unattended period from normally ending a season.
 
 The design does not promise that sleep prevents loss. An attack launched after a player's alliance coverage ends may leave only enough morning response time to preserve fleets while accepting stolen resources or collectors. The promise is that constant personal watch is unnecessary and that one such loss remains recoverable.
 

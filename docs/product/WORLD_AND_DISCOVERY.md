@@ -1,6 +1,6 @@
 # World, placement, and discovery
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Product purpose
 
@@ -10,11 +10,11 @@ The first playable world must remain deliberately small in system count. It need
 
 ## Generated world foundation
 
-Each season uses one connected two-dimensional coordinate space. Its resource nodes are generated from a reproducible season seed with controlled randomness. Distribution is intentionally uneven rather than a uniform grid: dense groups, gaps, favorable combinations, and awkward tradeoffs are all part of the geography.
+Each season uses one bounded rectangular two-dimensional coordinate space with integer coordinates and Euclidean distance. The world does not wrap and contains no sectors, regions, or hidden travel boundaries. Its resource nodes are generated from a reproducible season seed with controlled randomness. Distribution is intentionally uneven rather than a uniform grid: dense groups, gaps, favorable combinations, and awkward tradeoffs are all part of the geography.
 
 The generator must produce enough economically viable placement areas for the intended population, but it must not make every area equally strong or interchangeable. Uneven geography should naturally create regions with many stations and quieter regions with fewer stations. These are emergent neighborhoods, not named sectors, settlements, teams, travel boundaries, or special rule zones.
 
-The first implementation may choose the generated world's footprint from the expected season population plus reserved capacity. It does not need seamless live world expansion, an adaptive ecology director, or a simulation that continuously reshapes geography. Exact sizing, reserve, and late-entry placement rules remain balancing and implementation work.
+The first implementation chooses the generated world's footprint from a versioned configuration based on the expected founding cohort plus reserved capacity. The season persists both its seed and generator version so its geography can be reproduced exactly. Each raw-resource distribution is clustered independently, and generation rejects worlds that fail published hard viability constraints; it does not create private three-node bundles or equal starting positions. Exact footprint, density, reserve, and viability thresholds remain simulation work. Seamless live expansion, an adaptive ecology director, and continuously reshaped geography are outside the first proper version.
 
 ## Resource nodes
 
@@ -38,9 +38,13 @@ The player chooses one final station coordinate after inspecting the generated r
 
 Stations require a published minimum distance from one another. The distance prevents overlapping coordinates and extreme stacking but remains deliberately small enough for dense neighborhoods to form. It does not create a large private territory around every station.
 
-Nodes never become unavailable because another player used them. Only a concrete valid station coordinate needs a short reservation while its placement is being confirmed. Founding must not become a race to claim a unique node or an entire resource-rich region.
+Joining the season creates the seasonal player before it creates a station. Browsing the founding map reserves nothing. Selecting a concrete valid coordinate creates at most one short-lived coordinate reservation for that player while confirmation is prepared; replacing the selection releases the prior reservation. Nodes are never reserved, claimed, or made unavailable because another player used them.
+
+Final confirmation commits the coordinate, one selected node for each raw resource, initial collector percentages, and the exact first production preview as one atomic founding command. A successful command creates the station and its included starting state exactly once. An expired or invalid reservation creates no partial station, economy, or resource commitment. The coordinate is final for the first proper test season; relocation is deferred from that version.
 
 New players receive a guided placement view that compares several viable positions and makes access to all three resources understandable. Experienced players may open the full placement map immediately. Both use the same world, placement validity, minimum distance, economic rules, and competitive possibilities.
+
+During founding, that map exposes the complete resource-node geography, coarse founded-station density, one merged invalid-position mask, and voluntary friend or alliance planning markers. It does not identify foreign stations, names, alliances, exact economies, fleets, neutral targets, or other tactical state. The invalid mask may reveal approximate occupied geometry as an unavoidable consequence of placement validity, but it is not an identified station directory; ordinary sensors and scans remain necessary to learn actual contacts.
 
 Friends may coordinate intended coordinates with shared markers or links in the first complete version. A dedicated group-reservation or automatic alliance-placement system is an optional convenience after ordinary placement has proven that it needs one; it is not part of the initial world foundation.
 
@@ -61,6 +65,17 @@ The earliest world slice needs only:
 3. one neutral-facility interaction that can support the first scan, fleet order, combat, return, and recovery loop.
 
 The controlled first target may be reserved for onboarding, but it uses the normal scan, travel, fuel, combat, theft, cargo, and return rules. No separate tutorial world is required.
+
+### First proper playable version
+
+The first proper multiplayer version keeps this foundation and exposes exactly two neutral-facility strength bands:
+
+- an accessible Piranha-and-Qualle target for the first complete operation,
+- a stronger Hai-and-Hackboot target for escorted economic raiding and recovery play.
+
+Both are shared rather than private, contain finite resources or collectors, and use a simple world target budget that replaces consumed opportunities. Players discover nearby facilities through passive sensing and more distant ones through area search. Player stations provide the PvP side of the same target ecology.
+
+Ruins, modules, abandoned stations, anomalies, hazards, variable node quality, station relocation, and dynamic world expansion are not generated or exposed in this version. FIRST_PROPER_VERSION.md owns the complete cross-system version boundary.
 
 ### First complete seasonal version
 

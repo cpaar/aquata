@@ -1,6 +1,6 @@
 # Product experience
 
-Stand: 2026-07-28
+Stand: 2026-07-29
 
 ## Experience thesis
 
@@ -125,6 +125,12 @@ The product should be designed so notifications can eventually report events suc
 - arrival or resolution of a committed fleet.
 
 Notifications must be configurable and sparse. They should protect the player's attention rather than manufacture urgency.
+
+### First proper playable-version experience
+
+The first proper version is a responsive web application with Situation, Map, Operations, and Macbox as its primary surfaces. Economy, research, fleets, and reports appear in context around those surfaces. Its authoritative, skippable onboarding covers placement, collectors, first research, Sensor Array I and scanning, the first fleet and return, Hai/Hackboot economic warfare, alliance defense, and finally the three command-ship archetypes and first levels.
+
+Browser notifications are limited to incoming attacks, critical defense or operation decisions, combat results, and fleet returns. Native applications, a separate tutorial world or ruleset, large expert dashboards, and routine production notifications are deferred.
 
 ## Activity and timing
 

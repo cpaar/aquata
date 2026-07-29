@@ -1,6 +1,6 @@
 # Identity, safety, and account lifecycle
 
-Stand: 2026-07-22
+Stand: 2026-07-29
 
 ## Product premise
 
@@ -184,6 +184,12 @@ The player may still log in, manage the persistent account and profile, and part
 Vacation mode must not be an instant escape from an incoming operation or a free tactical observation post. Activation therefore needs explicit safeguards such as an advance delay, no active fleets, a minimum duration, and restrictions around existing attacks. Exact rules and which live strategic information remains visible are open.
 
 All gameplay freezes must be enforced on the server. A read-only interface is useful feedback, but it is not the security boundary.
+
+## First proper playable-version scope
+
+The closed first test season includes persistent account registration, login, and recovery; exactly one seasonal player and station per account; a public player name and basic profile; visible alliance membership; block, mute, and report actions; basic moderation; and audit trails for critical delegated, intelligence, and combat actions. Multi-account play remains prohibited and may be reviewed manually for the initial cohort.
+
+Incognito seasons, the persistent friend graph, household modes, vacation mode, automated inactivity deactivation, abandoned stations, cosmetic profile systems, and the complete progressive sanction ladder are deferred from this version. Their later product contracts remain below and elsewhere in this document; they are not implementation prerequisites for the first test season.
 
 ## Product consequences
 
