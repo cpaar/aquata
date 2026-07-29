@@ -5,9 +5,35 @@ on:
     branches: ["main"]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: true
+      DATABASE_URL: postgres://aquata:aquata@127.0.0.1:55432/aquata_test
+      TEST_DATABASE_URL: postgres://aquata:aquata@127.0.0.1:55432/aquata_test
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: aquata_test
+          POSTGRES_USER: aquata
+          POSTGRES_PASSWORD: aquata
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U aquata -d aquata_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -18,7 +44,20 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm build
+      - run: pnpm --filter @aquata/e2e exec playwright install --with-deps chromium
       - run: pnpm e2e
+      - name: Upload Playwright diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diagnostics
+          path: |
+            apps/e2e/playwright-report/
+            apps/e2e/test-results/
+          if-no-files-found: ignore
+          retention-days: 7

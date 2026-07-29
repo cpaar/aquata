@@ -26,6 +26,12 @@ Tests should prove player-visible outcomes rather than merely mirror implementat
 
 The workspace currently has no dedicated coverage script. Add or run appropriate coverage when implementation work materially changes tested logic, and do not present a green test command as coverage evidence.
 
+## Continuous integration
+
+GitHub Actions runs the complete command set above for every pull request and every push to `main`. The workflow provisions a disposable PostgreSQL 16 service, exposes it only as the dedicated test database, installs the Playwright Chromium version expected by the workspace, and uploads Playwright diagnostics after a failure.
+
+Keep the local and CI command sets aligned. A green unit-test step is not sufficient when PostgreSQL integration tests were skipped or the Playwright acceptance flow did not run.
+
 ## Current automated coverage
 
 The current repository contains:

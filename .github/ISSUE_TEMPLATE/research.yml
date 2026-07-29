@@ -1,0 +1,39 @@
+name: Product or technical research
+description: Investigate an unresolved decision without prematurely turning it into implementation scope.
+title: "[Research]: "
+labels:
+  - "type: research"
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Decision to make
+      description: Phrase the exact product or engineering question this work should resolve.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and owning document
+      description: Link the relevant source-of-truth document and any current open question.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence required
+      description: Describe prototypes, simulations, player feedback, measurements, or source material needed for a responsible decision.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and trade-offs
+      description: List known choices without assuming the outcome.
+  - type: textarea
+    id: completion
+    attributes:
+      label: Completion condition
+      description: State where the accepted decision will be recorded and which open question will be removed.
+    validations:
+      required: true
