@@ -1,0 +1,50 @@
+name: Playable outcome or feature
+description: Define an implementable player or engineering outcome within the accepted product direction.
+title: "[Outcome]: "
+labels:
+  - "type: feature"
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What should a player, operator, or developer be able to accomplish when this is complete?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Product context
+      description: Link the owning documents and explain why the outcome belongs in the current roadmap slice.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List observable, testable completion conditions.
+      placeholder: |
+        - [ ] Deterministic domain behavior is covered.
+        - [ ] The player flow is usable on mobile and desktop.
+        - [ ] Relevant documentation matches the implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Explicit non-goals
+      description: State adjacent work that must not expand this issue.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and invariants
+      description: Include relevant transaction, idempotency, authorization, timing, information, or compatibility boundaries.
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification plan
+      description: Name the domain, PostgreSQL, API, build, and Playwright evidence needed.
+    validations:
+      required: true

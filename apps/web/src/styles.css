@@ -168,6 +168,14 @@ h3 {
   background: #fbfffd;
 }
 
+.topbar > div:first-child {
+  min-width: 0;
+}
+
+.topbar h1 {
+  overflow-wrap: anywhere;
+}
+
 .topbar-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
