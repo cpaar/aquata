@@ -17,11 +17,11 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "drizzle-orm": "^0.44.2",
-    "pg": "^8.16.0"
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.4",
+    "@types/pg": "^8.23.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.20.3",
     "vitest": "^3.2.3"
