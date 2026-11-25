@@ -93,7 +93,27 @@ Jeder Spieler hat genau eine Station, die er ausbaut. Rohstoffe kommen von Resso
 - Anfängerschutz, solange man klein ist.
 - Angriffsgrenzen nach Punkteabstand, damit Große nicht auf Kleine gehen.
 
-Offen: konkrete Bauzeiten und Kosten.
+**Stationsausbau (entschieden):**
+
+**Kernprinzip: klein anfangen, Features wachsen mit.** Man startet mit einem kleinen Teil des Spiels und schaltet nach und nach Funktionen frei, z. B. Werft 1 nur mit Piranha, das KS ab Werft 3 oder 4. Idee: ein **Kommunikationszentrum** (Start mit Stufe 1 oder sehr früh gebaut) schaltet den Chat frei, höhere Stufen Allianz, geteilte Scans usw.
+
+- Nur Gebäude, keine eigene Forschung. Sechs Gebäude mit Stufen:
+  - **Werft:** Die 12 Schiffe sind auf die Stufen verteilt, fast jede Stufe schaltet etwas frei (erst Normal, dann EMP, Erstschlag, Spezial). Dazwischen baut sie schneller.
+  - **Antriebslabor:** schnellere Flotten und Sammler, weniger Plutoniumverbrauch.
+  - **Reaktor** und **Energiespeicher:** Energie für Sonar und Scans.
+  - **Sonar:** Reichweite und Detailstufe.
+  - **Störsender** (EN Jammer): erschwert fremde Scans.
+- Kein Hauptgebäude, das andere begrenzt. Jeder setzt seine Prioritäten selbst, auch All-in auf ein Gebäude. Steigende Kosten und Bauzeiten gleichen das aus.
+- Keine Lagergrenze und kein geschützter Anteil. Wer viel hortet, wird zum lohnenden Ziel.
+- Gestrichen: Kommandozentrale, Sammlerdock, Lager.
+- Das KS braucht kein eigenes Gebäude. Grobe Idee: Man startet mit Werft 1 und nur der Piranha, das KS kommt erst mit Werftstufe 3 oder 4 dazu.
+- **Müllschutz:** Kommt Müll zu Hause an, wird er sofort zu Rohstoffen. Dieser Anteil ist aber 12 Ticks lang vor Raub geschützt. Das muss in der Station sichtbar sein. Scans zeigen entweder nur raubbare Rohstoffe oder eine Aufteilung in gesamt und raubbar.
+- Normale Rohstoffe bekommen nach einem verlorenen Kampf keinen zusätzlichen Schutz (Vorschlag, noch nicht bestätigt).
+- Es wird immer nur ein Gebäude gleichzeitig gebaut, mit Warteschlange.
+- Schiffe und Sammler sind nicht begrenzt: Man baut so viele, wie die Rohstoffe hergeben.
+- Bauzeiten als Startwert: am Anfang Minuten, mittelfristig Stunden, spät höchstens etwa 1 bis 2 Tage pro Stufe. Mit dem Rundenfortschritt werden sie schneller und günstiger. Feinabstimmung später.
+
+Offen: konkrete Kosten, Gebäudeliste und Freischaltreihenfolge.
 
 ## Flotten & Kampf
 
@@ -144,6 +164,19 @@ Dazu gab es pro Schiff eine Trefferchance und einen Schadensfaktor gegen jedes d
 - Rückkehrende Flotten können unterwegs nicht abgefangen werden. Man kann aber den Heimatort so angreifen, dass man im selben Tick ankommt wie die Rückkehrer. Dann kann der Spieler sie nicht mehr in Sicherheit bringen.
 - Sammler-Beute ist begrenzt: Jedes Hackboot kann insgesamt einen Sammler erbeuten, nicht mehr einen pro Tick. 100 Hackboote holen also höchstens 100 Sammler pro Angriff, die dann erst heimgebracht werden müssen.
 - Rohstoff-Beute ist nicht begrenzt. Plutonium hat die Flotte ohnehin als Treibstoff dabei.
+
+**Müll (altes System, Analyse):**
+
+- Beide Seiten bekamen Müll, nicht nur der Sieger: 20 % der eigenen Verluste und 14 % der gegnerischen Verluste, aufgeteilt nach dem eigenen Anteil an der Flotte der eigenen Seite. Nur Alu und Stahl, kein Plutonium.
+- Der Müll-Skill des KS hob beides auf bis zum 2,75-Fachen (55 % eigene, 38,5 % gegnerische Verluste). Zusammen blieb das immer unter 100 % des zerstörten Werts. Der beste Müll-Skill einer Seite galt für alle Verbündeten im Kampf.
+- Müll lag in einem eigenen Speicher, den man per Knopf in Rohstoffe umwandelte. Achievements gaben sogar tägliche Zinsen darauf.
+
+**Müll (entschieden bzw. Vorschlag):**
+
+- Grundwerte wie bisher als Startpunkt: 20 % der eigenen und 14 % der gegnerischen Verluste für beide Seiten, nur Alu und Stahl. Chris: Das ist ohne Boni wenig, wenn man die ganze Flotte verliert. Im Auge behalten, ggf. Grundwert anheben.
+- Müll-Boni für alle KS erreichbar (wie früher), z. B. über ein Systemmodul "Bergungsdrohnen", das jede Rolle tragen und per Training verbessern kann. Der Logistiker bekommt über Talente mehr. Alles gedeckelt, sodass die Summe pro zerstörtem Schiff immer unter 100 % bleibt (Vorschlag).
+- Angreifer und Verteidiger (auch verbündete) müssen ihren Müll erst nach Hause bringen. Wer an der eigenen Station verteidigt, bekommt ihn sofort (entschieden).
+- Zu Hause wird Müll sofort zu Rohstoffen, dieser Anteil ist 12 Ticks lang vor Raub geschützt (entschieden). Keine Zinsen.
 
 **Balancing-Grundregeln:**
 
@@ -333,21 +366,85 @@ Siedlungen waren eine zweite Gruppenebene neben der Allianz: kleine Nachbarschaf
 
 **Events:** Havoc war immer ein echtes Event, für das sich Leute verabredet haben und nachts wach geblieben sind. Das soll bewusst gefördert werden.
 
+## Karte
+
+Die Karte ist ein 2D-Raster. Sie ist die Grundlage der Wirtschaft, weil die Entfernung zu den Nodes bestimmt, wie viel die Sammler fördern. Deshalb muss sie fair sein.
+
+**Entschieden:**
+
+- Die Karte wächst mit der Spielerzahl: Neue Regionen öffnen sich am Rand, wenn sich die Karte füllt.
+- Nodes sind halbwegs gleichmäßig verteilt, mit etwas Zufall, damit es nicht künstlich wirkt.
+- Spieler wählen ihren Startplatz selbst und bekommen ein paar gute Plätze empfohlen.
+
+**Vorschlag:**
+
+- Alle Nodes liefern gleich viel. Weil Nodes unbegrenzt und teilbar sind, ist der einzige wirtschaftliche Unterschied die Entfernung. "Reiche Gebiete" entstehen dann von selbst dort, wo mehrere Nodes nah beieinander liegen. Die Verteilung achtet darauf, dass jede Region in einem fairen Umkreis alle drei Rohstoffe hat.
+- Empfohlene Startplätze: gute Wege zu allen drei Rohstoffen, nicht direkt neben großen Spielern, auf Wunsch nahe bei Freunden oder der eigenen Allianz.
+
+**Reisezeiten (entschieden):**
+
+- Flugzeiten dürfen auch bei nahen Zielen nicht zu kurz werden, damit man mit einem Gegner direkt nebenan noch ruhig schlafen kann.
+- Richtung: logarithmische Funktion der Entfernung mit einem Basiswert von 4 Ticks, der nur mit maximal ausgebauten Antrieben erreicht wird. Weite Ziele dauern länger, aber nicht linear länger.
+- Eine Flotte fliegt so schnell wie ihr langsamstes Schiff.
+- Verteidiger sind einen Tick schneller als Angreifer (wie bisher). Das passt zur Mindestwarnzeit von 3 Stunden.
+- Offen: ob große Schiffe langsamer bleiben als Jäger (Vorschlag: ja, z. B. Jäger ×1, Mittel ×1,1, Fregatten ×1,25, Schwere ×1,5).
+
+Schiffsklassen sind unterschiedlich schnell, große langsamer als Jäger. Weil Flugzeiten ganze Ticks sind, muss das gut verständlich sein. Vorschlag: statt Faktoren feste Zusatzticks pro Klasse (z. B. Jäger und Mittel +0, Fregatten +1, Schwere +2), und beim Losschicken zeigt das Spiel direkt die Ankunftszeit pro Ziel an.
+
+## Rangliste
+
+Bestenlisten sind nur ein kleiner Anreiz, das Spielen selbst ist das Ziel.
+
+- **Hauptwertung:** Punkte.
+- **Nebenwertungen:** u. a. Sammler (war immer spannend) und eine Kampfwertung (früher Kampfpunkte).
+- **Allianzwertung:** Summe der Mitgliederpunkte, damit große Allianzen auch kleine Spieler aufnehmen wollen. Das Größenlimit verhindert, dass einfach die größte Allianz gewinnt.
+- Wertungen werden vor Havoc eingefroren.
+- **Später (nicht Kern):** Bestenlisten pro Runde als Historie speichern, eventuell mit Badges für Platzierungen, größte Kämpfe usw. Muss noch zur Regel "nichts rundenübergreifend" passen: reine Anzeige, kein Spielvorteil.
+
+## Angriffsplanung
+
+**Entschieden:**
+
+- Ein Spieler legt einen Plan an (Ziel, gewünschter Ankunftstick). Mitglieder tragen ihre Flotten ein, das Spiel rechnet für jeden aus, wann er starten muss.
+- **Start nur manuell.** Kein automatischer Start, sonst könnte ein Angreifer um 3 Uhr nachts schlafend angreifen, während der Verteidiger wach sein muss. Wer angreift, muss also auch online sein. Das Spiel erinnert per Push rechtzeitig an den eigenen Starttick.
+- Der Plan bleibt geheim. Das Ziel sieht die Flotten erst, wenn sie losfliegen und in sein Sonar kommen.
+
+**Früher:** Jeder startete seine Flotte selbst. Der General der Siedlung konnte freigegebene Flotten zurückrufen, und jeder konnte sich Verteidigung aus seiner Siedlung "ziehen".
+
+**Neu (entschieden):** Niemand steuert fremde Flotten, kein "Ziehen" und kein Zurückrufen durch den Leiter. Stattdessen gibt es Benachrichtigungen per Knopfdruck:
+
+- **Hilferuf:** Der Angegriffene ruft um Hilfe, Verbündete bekommen eine Push-Nachricht und können mit einem Klick Verteidigung schicken.
+- **Rückzugsruf:** Der Angriffsleiter (oder jeder Beteiligte) fordert alle Flotten eines Plans auf, sich zurückzuziehen. Jeder ruft seine Flotte selbst zurück.
+
+## Havoc und Rundenwechsel
+
+**Entschieden:**
+
+- Havoc dauert 7 bis 10 Tage, mit Ticks alle 5 Minuten. Das ist schnell genug für Chaos, lässt aber noch Zeit zum Reagieren.
+- Bauzeiten stark verkürzt. Anfängerschutz, Weiße Flagge und Angriffsgrenzen fallen weg. Das KS stirbt ohne steigende Wiederbelebungskosten. Alle sollen raushauen, was sie haben.
+- Wertungen sind schon vor Havoc eingefroren.
+- **Ende:** Wenn Ende, dann Ende, kein Finale. Am Ende von Havoc wird der Tick einfach angehalten.
+- Etwa eine Stunde später läuft der automatische Reset. Danach können sich alle wieder einloggen, ihren Startplatz wählen und chatten.
+- Die nächste Runde startet 1 bis 2 Tage nach dem Reset.
+
 ## Offene Fragen & nächste Themen
 
-Erste Interviewrunde und Detailrunden zu Kommandoschiff, Schiffsraster, Intel und Angriffsgrenzen sind abgeschlossen (Stand 25.11.2026). Offen sind noch:
+Erste Interviewrunde und die Detailrunden sind weitgehend abgeschlossen (Stand 25.11.2026). Offen sind noch:
 
 - [x] Kommandoschiff: Rollen, Module, Training, Talent-Ideen (grob)
 - [x] Schiffsraster: Struktur, Zielreihenfolge, Namen
 - [x] Intel: Energie, Sonar, gezielte Scans, Warnregeln
 - [x] Angriffsgrenzen und Anfängerschutz (Grundregeln)
-- [ ] Stationsausbau: Gebäude oder Forschung, Freischaltreihenfolge, Bauzeiten und Kosten
-- [ ] Müll-Mechanik: Anteil der Verluste, Wiederaufbau, Regel "kein Kampf erzeugt Rohstoffe"
-- [ ] Karte: Größe des 2D-Rasters, Verteilung der Nodes, Startregionen, Reisezeiten
-- [ ] Angriffsplanung: wie das Werkzeug genau aussieht
-- [ ] Rangliste: wonach wird gewertet, wer ist Rundensieger
-- [ ] Havoc: Dauer, Ticktakt, Sonderregeln
-- [ ] Allianz: Flottenfreigabe an einen Angriffsleiter? Auren nur im Kampf oder ganz weg?
+- [x] Stationsausbau: Gebäude, Bauschlange, Bauzeiten (grob)
+- [x] Müll-Mechanik: Grundwerte, Heimtransport, Schutz
+- [x] Karte: Wachstum, Nodes, Startplatz, Reisezeiten
+- [x] Angriffsplanung: Plan, manueller Start, Hilferuf und Rückzugsruf
+- [x] Rangliste: Wertungen, Allianzsumme
+- [x] Havoc und Rundenwechsel
+- [ ] Stationsausbau im Detail: Freischaltreihenfolge (inkl. Kommunikationszentrum), Kosten
+- [ ] Geschwindigkeit der Schiffsklassen (Zusatzticks?)
+- [ ] Allianz: Auren nur im Kampf oder ganz weg?
 - [ ] Pause nach einem verlorenen Kampf
 - [ ] Flottenbeschleunigung: ob und wie begrenzt
 - [ ] Talentbäume und Modulliste im Detail
+- [ ] Onboarding und Tutorial für neue Spieler
