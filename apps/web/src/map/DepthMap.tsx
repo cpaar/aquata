@@ -18,7 +18,7 @@ interface Props {
   fleets?: MapFleet[];
   selected?: number | null;
   onStation?: (s: MapStation) => void;
-  /** Startansicht: Mittelpunkt und Zoom (1 = ganze Karte) */
+  /** Startansicht: Mittelpunkt und Zoom (1 = ganze Karte). Danach zoomt man stufenlos per Mausrad, zwei Fingern oder Knöpfen. */
   focus?: Pt;
   zoom?: number;
   height?: number;
@@ -26,23 +26,67 @@ interface Props {
 
 const C = { line: '159,208,200', petrol: '#5fa8a0', amber: '#d9a04a', rust: '#c4653f', fg: '#d9e4e2', muted: '#7f9a9a', deep: '#0b1519' };
 
-/** Tiefenlinien-Karte auf Canvas. Ziehen verschiebt (wenn gezoomt), Tippen wählt Station oder Platz. */
-export function DepthMap({ seed, size, stations, suggestions = [], picked, onPick, sonar, fleets = [], selected, onStation, focus, zoom = 1, height = 420 }: Props) {
+const MIN_ZOOM = 1, MAX_ZOOM = 8;
+
+/** Tiefenlinien-Karte auf Canvas. Stufenlos zoombar (Mausrad, zwei Finger, Knöpfe), Ziehen verschiebt, Tippen wählt Station oder Platz. */
+export function DepthMap({ seed, size, stations, suggestions = [], picked, onPick, sonar, fleets = [], selected, onStation, focus, zoom: startZoom = 1, height = 420 }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
   const contours = useMemo(() => buildContours(seed, size.width, size.height), [seed, size.width, size.height]);
-  const [center, setCenter] = useState<Pt>(focus ?? { x: size.width / 2, y: size.height / 2 });
-  useEffect(() => { if (focus) setCenter(focus); }, [focus?.x, focus?.y, zoom]); // eslint-disable-line react-hooks/exhaustive-deps
-  const drag = useRef<{ x: number; y: number; c: Pt; moved: boolean } | null>(null);
+  const home = focus ?? { x: size.width / 2, y: size.height / 2 };
+  const [cam, setCam] = useState({ c: home, z: startZoom });
+  const camRef = useRef(cam);
+  camRef.current = cam;
+  const { c: center, z: zoom } = cam;
+  const pointers = useRef(new Map<number, Pt>());
+  const drag = useRef<{ moved: boolean; last: Pt; pinch?: number } | null>(null);
 
-  /** Abbildung Karte → Bildschirm für die aktuelle Größe */
-  const view = (w: number, h: number) => {
-    const sc = Math.min(w / size.width, h / size.height) * zoom;
+  /** Abbildung Karte → Bildschirm für eine Kamera und Rahmengröße; der Mittelpunkt wird so begrenzt, dass die Karte den Rahmen füllt */
+  const viewOf = (c: Pt, z: number, w: number, h: number) => {
+    const sc = Math.max(w / size.width, h / size.height) * z;
     const half = { x: w / 2 / sc, y: h / 2 / sc };
-    // Mittelpunkt so begrenzen, dass die Karte den Rahmen füllt
-    const cx = zoom <= 1 ? size.width / 2 : Math.min(size.width - half.x, Math.max(half.x, center.x));
-    const cy = zoom <= 1 ? size.height / 2 : Math.min(size.height - half.y, Math.max(half.y, center.y));
-    return { sc, ox: w / 2 - cx * sc, oy: h / 2 - cy * sc };
+    const cx = half.x * 2 >= size.width ? size.width / 2 : Math.min(size.width - half.x, Math.max(half.x, c.x));
+    const cy = half.y * 2 >= size.height ? size.height / 2 : Math.min(size.height - half.y, Math.max(half.y, c.y));
+    return { sc, ox: w / 2 - cx * sc, oy: h / 2 - cy * sc, cx, cy };
   };
+  const view = (w: number, h: number) => viewOf(center, zoom, w, h);
+
+  /** Zoomt um einen Bildschirmpunkt (sx, sy relativ zum Canvas), der Kartenpunkt darunter bleibt stehen */
+  const zoomAt = (factor: number, sx?: number, sy?: number) => {
+    const cv = ref.current;
+    if (!cv) return;
+    const { width: w, height: h } = cv.getBoundingClientRect();
+    const { c, z } = camRef.current;
+    const nz = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * factor));
+    const px = sx ?? w / 2, py = sy ?? h / 2;
+    const v = viewOf(c, z, w, h);
+    const m = { x: (px - v.ox) / v.sc, y: (py - v.oy) / v.sc };
+    const nsc = Math.max(w / size.width, h / size.height) * nz;
+    const nc = { x: m.x - (px - w / 2) / nsc, y: m.y - (py - h / 2) / nsc };
+    const cl = viewOf(nc, nz, w, h);
+    setCam({ c: { x: cl.cx, y: cl.cy }, z: nz });
+  };
+  const panBy = (dx: number, dy: number) => {
+    const cv = ref.current;
+    if (!cv) return;
+    const { width: w, height: h } = cv.getBoundingClientRect();
+    const { c, z } = camRef.current;
+    const v = viewOf(c, z, w, h);
+    const cl = viewOf({ x: v.cx - dx / v.sc, y: v.cy - dy / v.sc }, z, w, h);
+    setCam({ c: { x: cl.cx, y: cl.cy }, z });
+  };
+
+  // Mausrad und Trackpad-Pinch: nativer Listener, damit die Seite dabei nicht scrollt
+  useEffect(() => {
+    const cv = ref.current;
+    if (!cv) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const r = cv.getBoundingClientRect();
+      zoomAt(Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.0015)), e.clientX - r.left, e.clientY - r.top);
+    };
+    cv.addEventListener('wheel', onWheel, { passive: false });
+    return () => cv.removeEventListener('wheel', onWheel);
+  }); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const cv = ref.current;
@@ -106,7 +150,7 @@ export function DepthMap({ seed, size, stations, suggestions = [], picked, onPic
         c.strokeStyle = col; c.lineWidth = 1.5; c.fillStyle = 'rgba(11,21,25,.8)';
         c.beginPath(); c.arc(X(s.x), Y(s.y), s.own ? 8 : 6, 0, 7); c.fill(); c.stroke();
         c.fillStyle = col; c.beginPath(); c.arc(X(s.x), Y(s.y), 2.2, 0, 7); c.fill();
-        if (zoom > 1 || s.own || sel || stations.length < 12) { c.fillStyle = s.own || sel ? C.fg : C.muted; c.fillText(s.name, X(s.x), Y(s.y) + 20); }
+        if (zoom > 1.6 || s.own || sel || stations.length < 12) { c.fillStyle = s.own || sel ? C.fg : C.muted; c.fillText(s.name, X(s.x), Y(s.y) + 20); }
       }
       // gewählter Platz
       if (picked) {
@@ -119,7 +163,7 @@ export function DepthMap({ seed, size, stations, suggestions = [], picked, onPic
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);
-  }, [contours, stations, suggestions, picked, size, sonar, fleets, selected, zoom, center]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [contours, stations, suggestions, picked, size, sonar, fleets, selected, cam]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const toMap = (el: HTMLCanvasElement, clientX: number, clientY: number) => {
     const rect = el.getBoundingClientRect();
@@ -127,21 +171,38 @@ export function DepthMap({ seed, size, stations, suggestions = [], picked, onPic
     return { x: (clientX - rect.left - ox) / sc, y: (clientY - rect.top - oy) / sc, sc };
   };
 
+  const rel = (e: React.PointerEvent<HTMLCanvasElement>) => { const r = e.currentTarget.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  const pinchState = () => {
+    const [p, q] = [...pointers.current.values()];
+    return { d: Math.hypot(p!.x - q!.x, p!.y - q!.y), mid: { x: (p!.x + q!.x) / 2, y: (p!.y + q!.y) / 2 } };
+  };
   const down = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    drag.current = { x: e.clientX, y: e.clientY, c: center, moved: false };
+    pointers.current.set(e.pointerId, rel(e));
     e.currentTarget.setPointerCapture(e.pointerId);
+    if (pointers.current.size === 2) { const ps = pinchState(); drag.current = { moved: true, last: ps.mid, pinch: ps.d }; }
+    else drag.current = { moved: false, last: rel(e) };
   };
   const move = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!pointers.current.has(e.pointerId)) return;
+    pointers.current.set(e.pointerId, rel(e));
     const dr = drag.current;
-    if (!dr || zoom <= 1) return;
-    const dx = e.clientX - dr.x, dy = e.clientY - dr.y;
-    if (!dr.moved && Math.hypot(dx, dy) < 6) return;
-    dr.moved = true;
-    const { sc } = toMap(e.currentTarget, e.clientX, e.clientY);
-    setCenter({ x: dr.c.x - dx / sc, y: dr.c.y - dy / sc });
+    if (!dr) return;
+    if (pointers.current.size >= 2 && dr.pinch) {
+      const ps = pinchState();
+      zoomAt(ps.d / dr.pinch, ps.mid.x, ps.mid.y);
+      panBy(ps.mid.x - dr.last.x, ps.mid.y - dr.last.y);
+      drag.current = { moved: true, last: ps.mid, pinch: ps.d };
+      return;
+    }
+    const p = rel(e);
+    if (!dr.moved && Math.hypot(p.x - dr.last.x, p.y - dr.last.y) < 6) return;
+    panBy(p.x - dr.last.x, p.y - dr.last.y);
+    drag.current = { moved: true, last: p };
   };
   const up = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    pointers.current.delete(e.pointerId);
     const dr = drag.current;
+    if (pointers.current.size > 0) { const [p] = [...pointers.current.values()]; drag.current = { moved: true, last: p! }; return; }
     drag.current = null;
     if (dr?.moved) return;
     const { x, y, sc } = toMap(e.currentTarget, e.clientX, e.clientY);
@@ -156,8 +217,15 @@ export function DepthMap({ seed, size, stations, suggestions = [], picked, onPic
   };
 
   return (
-    <canvas ref={ref} onPointerDown={down} onPointerMove={move} onPointerUp={up}
-      style={{ width: '100%', height, display: 'block', touchAction: zoom > 1 ? 'none' : 'auto', cursor: onPick ? 'crosshair' : zoom > 1 ? 'grab' : 'default', borderRadius: 'var(--pebble)', border: '1px solid var(--line)' }}
-      aria-label="Tiefenlinien-Karte" />
+    <div className="depthmap">
+      <canvas ref={ref} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}
+        style={{ width: '100%', height, display: 'block', touchAction: 'none', cursor: onPick ? 'crosshair' : 'grab', borderRadius: 'var(--pebble)', border: '1px solid var(--line)' }}
+        aria-label="Tiefenlinien-Karte" />
+      <div className="depthmap__ctl">
+        <button type="button" aria-label="hineinzoomen" onClick={() => zoomAt(1.5)} disabled={zoom >= MAX_ZOOM}>+</button>
+        <button type="button" aria-label="herauszoomen" onClick={() => zoomAt(1 / 1.5)} disabled={zoom <= MIN_ZOOM}>−</button>
+        {focus && <button type="button" aria-label="zur eigenen Station" onClick={() => setCam({ c: home, z: Math.max(zoom, 2.6) })}>⌖</button>}
+      </div>
+    </div>
   );
 }

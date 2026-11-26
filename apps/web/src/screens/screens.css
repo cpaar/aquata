@@ -108,3 +108,17 @@
 .replay__par { background: repeating-linear-gradient(135deg, var(--amber) 0 3px, transparent 3px 6px); opacity: 0.9; }
 .replay__text { margin: 0; font-size: 0.82rem; min-height: 3.6em; }
 @media (prefers-reduced-motion: reduce) { .replay__fill, .replay__par { transition: none; } }
+
+/* Bestellen in beliebiger Menge */
+.order-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; }
+.order-row__n { min-height: 40px; padding: 0 10px; text-align: right; font-family: var(--f-data); }
+.order-row__cost { grid-column: 1 / -1; font-size: 0.72rem; }
+.ship-order { display: grid; gap: 6px; padding: 12px 0; }
+.ship-order + .ship-order { border-top: 1px solid var(--line); }
+
+/* Karten-Steuerung */
+.depthmap { position: relative; }
+.depthmap__ctl { position: absolute; right: 10px; bottom: 10px; display: grid; gap: 6px; }
+.depthmap__ctl button { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line2); background: rgba(11, 21, 25, 0.82); color: var(--fg); font: 500 1.1rem var(--f-data); cursor: pointer; }
+.depthmap__ctl button:disabled { opacity: 0.35; cursor: default; }
+.depthmap__ctl button:focus-visible { outline: 2px solid var(--petrol); outline-offset: 2px; }

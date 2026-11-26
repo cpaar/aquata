@@ -16,7 +16,7 @@ export interface ShipType {
   class: ShipClass;
   role: ShipRole;
   cost: Cost;
-  /** Bauzeit in Sekunden pro Schiff */
+  /** Bauzeit in Sekunden pro Auftrag, egal wie viele Schiffe (wie im alten Spiel) */
   buildSeconds: number;
   /** Werft-Stufe, ab der das Schiff baubar ist */
   werft: number;
@@ -72,8 +72,11 @@ export const START = {
   buildings: { werft: 1, antrieb: 0, sonar: 1 } as Record<'werft' | 'antrieb' | 'sonar', number>,
 };
 
-/** Sammler: Kosten und Bauzeit pro Stück */
-export const COLLECTOR = { cost: { alu: 800, stahl: 400, pu: 0 } as Cost, buildSeconds: 45 };
+/** Sammler: Kosten pro Stück; jeder Auftrag dauert buildTicks Ticks, egal wie viele (wie im alten Spiel) */
+export const COLLECTOR = { cost: { alu: 800, stahl: 400, pu: 0 } as Cost, buildTicks: 4 };
+
+/** Höchstmenge pro Bauauftrag (nur gegen Tippfehler) */
+export const MAX_ORDER = 100_000;
 
 /** Höchststufe je Gebäude im Prototyp */
 export const MAX_LEVEL = 10;

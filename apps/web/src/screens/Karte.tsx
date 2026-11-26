@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { flightTicks, sonarRange } from '@aquata/rules';
-import { Button, Panel, Sheet, Tabs } from '../kit';
+import { Button, Panel, Sheet } from '../kit';
 import { api, type MapData, type Me } from '../api';
 import { DepthMap, type MapFleet, type MapStation } from '../map/DepthMap';
 import type { TickState } from '../server';
@@ -14,7 +14,6 @@ type Fl = ReturnType<typeof useFleets>;
 /** Karte: Tiefenlinien, Sonar, Stationen, eigene und gesichtete Flotten. Tippen auf eine Station öffnet ihr Blatt. */
 export function Karte({ st, fl, me, t, onSend }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; t: TickState; onSend: (i: SendInit) => void }) {
   const [map, setMap] = useState<MapData | null>(null);
-  const [zoom, setZoom] = useState<'nah' | 'ganz'>('nah');
   const [sel, setSel] = useState<MapStation | null>(null);
   useEffect(() => { api.map().then(setMap).catch(() => {}); }, [t.tick]);
 
@@ -38,10 +37,10 @@ export function Karte({ st, fl, me, t, onSend }: { st: St; fl: Fl; me: Me & { pl
 
   return (
     <>
-      <Panel title="Karte" aside={<Tabs label="Ausschnitt" value={zoom} onChange={setZoom} options={[{ id: 'nah', label: 'Nah' }, { id: 'ganz', label: 'Ganz' }]} />}>
+      <Panel title="Karte">
         {map ? (
           <DepthMap seed={map.seed} size={map.size} stations={map.stations} sonar={sonar} fleets={fleets} selected={sel?.id ?? null}
-            onStation={setSel} focus={pos} zoom={zoom === 'nah' ? 2.6 : 1} height={420} />
+            onStation={setSel} focus={pos} zoom={2.6} height={420} />
         ) : <p className="k-muted">Karte lädt …</p>}
         <div className="map-legend">
           <span><i style={{ background: 'var(--petrol)' }} />deine Station und Flotten</span>

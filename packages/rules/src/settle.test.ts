@@ -30,17 +30,19 @@ describe('Wirtschaft abrechnen', () => {
     expect('error' in again && again.error).toMatch(/läuft schon/);
   });
 
-  it('stellt neue Sammler hinter laufende Sammler-Aufträge', () => {
-    const r1 = startCollectors(fresh(), [], 2, 0);
+  it('Sammler-Aufträge dauern 4 Ticks, egal wie viele, und laufen parallel', () => {
+    const r1 = startCollectors(fresh(), [], 2, 0, 3600);
     if ('error' in r1) throw new Error(r1.error);
-    const r2 = startCollectors(r1.state, [{ id: 1, ...r1.job }], 1, 0);
+    const r2 = startCollectors(r1.state, [{ id: 1, ...r1.job }], 5, 0, 3600);
     if ('error' in r2) throw new Error(r2.error);
-    expect(r2.job.startedAt).toBe(r1.job.finishesAt);
+    expect(r1.job.finishesAt).toBe(4 * 3600 * 1000);
+    expect(r2.job.startedAt).toBe(0);
+    expect(r2.job.finishesAt).toBe(r1.job.finishesAt);
   });
 
   it('lehnt zu teure Aufträge ab', () => {
     const poor = { ...fresh(), res: { alu: 10, stahl: 10, pu: 0 } };
-    expect(startCollectors(poor, [], 5, 0)).toEqual({ error: 'Nicht genug Rohstoffe.' });
+    expect(startCollectors(poor, [], 5, 0, 3600)).toEqual({ error: 'Nicht genug Rohstoffe.' });
   });
 });
 
@@ -49,6 +51,16 @@ describe('Werft', () => {
     const s = fresh();
     expect(startShips(s, [], 'mako', 1, 0)).toEqual({ error: `Mako braucht Werft Stufe ${SHIPS.mako!.werft}.` });
     expect('job' in startShips(s, [], 'piranha', 2, 0)).toBe(true);
+  });
+
+  it('ein Auftrag dauert gleich lang, egal wie viele Schiffe; Aufträge laufen parallel', () => {
+    const rich = { ...fresh(), res: { alu: 1e7, stahl: 1e7, pu: 1e5 } };
+    const a = startShips(rich, [], 'piranha', 1, 0), b = startShips(rich, [], 'piranha', 2000, 0);
+    if ('error' in a || 'error' in b) throw new Error('unerwartet');
+    expect(b.job.finishesAt).toBe(a.job.finishesAt);
+    const c = startShips(b.state, [{ id: 1, ...b.job }], 'piranha', 10, 0);
+    if ('error' in c) throw new Error(c.error);
+    expect(c.job.startedAt).toBe(0);
   });
 
   it('fertige Schiffe landen im Hangar', () => {

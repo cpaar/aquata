@@ -5,6 +5,7 @@ import { fallbackTick, useServer, type TickState } from '../server';
 import { fmtCost, fmtDuration, RES_NAMES, useStation, type StationData } from '../station';
 import type { Me } from '../api';
 import { useFleets } from '../fleets';
+import { OrderRow } from './OrderRow';
 import { Flotten, IncomingAlarm, SendSheet, type SendInit } from './Flotten';
 import { Karte } from './Karte';
 import { ReportSheet } from './Bericht';
@@ -159,18 +160,13 @@ function Station({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
 
       <Panel title="Sammler" aside={<span className="k-data">{d.collectors}</span>}>
         <p className="k-muted" style={{ margin: '0 0 10px', fontSize: '.82rem' }}>
-          Sammler pendeln zwischen Station und Rohstoffknoten. Ein Sammler kostet <span className="k-data">{fmtCost(d.collector.cost)}</span> und braucht {fmtDuration(d.collector.buildSeconds * 1000)}.
+          Sammler pendeln zwischen Station und Rohstoffknoten. Einer kostet <span className="k-data">{fmtCost(d.collector.cost)}</span>. Jeder Auftrag braucht {d.collector.buildTicks} Ticks, egal wie viele Sammler, und mehrere Aufträge laufen gleichzeitig.
         </p>
-        <div className="kit__row">
-          {[1, 5, 10].map((n) => {
-            const cost = { alu: d.collector.cost.alu * n, stahl: d.collector.cost.stahl * n, pu: d.collector.cost.pu * n };
-            return <Button key={n} variant="outline" icon="plus" disabled={!canAfford(st.live!, cost)} onClick={() => st.act('/api/station/collectors', { amount: n })}>{n}</Button>;
-          })}
-        </div>
+        <OrderRow unit={d.collector.cost} live={st.live} label="Sammler" onOrder={(n) => st.act('/api/station/collectors', { amount: n })} />
         {queue.length > 0 && (
           <div style={{ marginTop: 12, display: 'grid', gap: 6 }}>
             {queue.map((j) => (
-              <div key={j.id} className="k-data k-muted" style={{ fontSize: '.75rem' }}>+{j.amount} Sammler · fertig in {fmtDuration(j.finishesAt - st.now)} (Tick {toTick(j.finishesAt)})</div>
+              <div key={j.id} className="k-data k-muted" style={{ fontSize: '.75rem' }}>+{(j.amount ?? 0).toLocaleString('de-DE')} Sammler · fertig in {fmtDuration(j.finishesAt - st.now)} (Tick {toTick(j.finishesAt)})</div>
             ))}
           </div>
         )}

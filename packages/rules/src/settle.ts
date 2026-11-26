@@ -1,4 +1,4 @@
-import { BUILDINGS, COLLECTOR, MAX_LEVEL, RESOURCES, SHIPS, type BuildingId, type Cost } from './data.ts';
+import { BUILDINGS, COLLECTOR, MAX_LEVEL, MAX_ORDER, RESOURCES, SHIPS, type BuildingId, type Cost } from './data.ts';
 import { buildingCost, canAfford, productionPerHour, type Split } from './economy.ts';
 
 export interface EconomyState {
@@ -59,29 +59,29 @@ export function startBuilding(state: EconomyState, open: Job[], id: BuildingId, 
   return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'building', item: id, level, startedAt: now, finishesAt: now + seconds * 1000 } };
 }
 
-/** Prüft und bucht neue Sammler. Sie werden nach allen schon laufenden Sammler-Aufträgen gebaut. */
-export function startCollectors(state: EconomyState, open: Job[], amount: number, now: number): { state: EconomyState; job: Omit<Job & { kind: 'collector' }, 'id'> } | { error: string } {
-  if (!Number.isInteger(amount) || amount < 1 || amount > 100) return { error: 'Bitte 1 bis 100 Sammler.' };
+/** Prüft und bucht neue Sammler. Jeder Auftrag dauert COLLECTOR.buildTicks Ticks, Aufträge laufen parallel. */
+export function startCollectors(state: EconomyState, open: Job[], amount: number, now: number, tickSeconds: number): { state: EconomyState; job: Omit<Job & { kind: 'collector' }, 'id'> } | { error: string } {
+  void open;
+  if (!Number.isInteger(amount) || amount < 1 || amount > MAX_ORDER) return { error: 'Bitte eine Anzahl ab 1 angeben.' };
   const cost = { alu: COLLECTOR.cost.alu * amount, stahl: COLLECTOR.cost.stahl * amount, pu: COLLECTOR.cost.pu * amount };
   if (!canAfford(state.res, cost)) return { error: 'Nicht genug Rohstoffe.' };
-  const start = Math.max(now, ...open.filter((j) => j.kind === 'collector').map((j) => j.finishesAt));
-  return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'collector', amount, startedAt: start, finishesAt: start + amount * COLLECTOR.buildSeconds * 1000 } };
+  return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'collector', amount, startedAt: now, finishesAt: now + COLLECTOR.buildTicks * tickSeconds * 1000 } };
 }
 
-/** Bauzeit pro Schiff: jede Werftstufe über 1 macht 5 % schneller, höchstens 40 % */
+/** Bauzeit pro Auftrag: jede Werftstufe über 1 macht 5 % schneller, höchstens 40 % */
 export function shipSeconds(shipId: string, werftLevel: number): number {
   const base = SHIPS[shipId]?.buildSeconds ?? 0;
   return Math.round(base * (1 - Math.min(0.4, 0.05 * (werftLevel - 1))));
 }
 
-/** Prüft und bucht Schiffe. Die Werft baut nacheinander: neue Aufträge kommen hinter laufende Schiffsaufträge. */
+/** Prüft und bucht Schiffe. Ein Auftrag dauert die Bauzeit des Typs, egal wie viele Schiffe; Aufträge laufen parallel. */
 export function startShips(state: EconomyState, open: Job[], shipId: string, amount: number, now: number): { state: EconomyState; job: NewJob & { kind: 'ship' } } | { error: string } {
   const ship = SHIPS[shipId];
   if (!ship) return { error: 'Unbekannter Schiffstyp.' };
   if (state.buildings.werft < ship.werft) return { error: `${ship.name} braucht Werft Stufe ${ship.werft}.` };
-  if (!Number.isInteger(amount) || amount < 1 || amount > 1000) return { error: 'Bitte 1 bis 1000 Schiffe.' };
+  if (!Number.isInteger(amount) || amount < 1 || amount > MAX_ORDER) return { error: 'Bitte eine Anzahl ab 1 angeben.' };
   const cost = { alu: ship.cost.alu * amount, stahl: ship.cost.stahl * amount, pu: ship.cost.pu * amount };
   if (!canAfford(state.res, cost)) return { error: 'Nicht genug Rohstoffe.' };
-  const start = Math.max(now, ...open.filter((j) => j.kind === 'ship').map((j) => j.finishesAt));
-  return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'ship', item: shipId, amount, startedAt: start, finishesAt: start + amount * shipSeconds(shipId, state.buildings.werft) * 1000 } };
+  void open;
+  return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'ship', item: shipId, amount, startedAt: now, finishesAt: now + shipSeconds(shipId, state.buildings.werft) * 1000 } };
 }

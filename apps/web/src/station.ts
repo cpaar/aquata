@@ -6,7 +6,7 @@ export interface StationJob { id: number; kind: 'building' | 'collector' | 'ship
 export interface StationData {
   resources: Cost; resAt: number; rate: Cost; collectors: number; split: Cost;
   buildings: { id: BuildingId; name: string; level: number; next: { cost: Cost; seconds: number } }[];
-  collector: { cost: Cost; buildSeconds: number };
+  collector: { cost: Cost; buildTicks: number };
   ships: Record<string, number>;
   shipTypes: { id: string; name: string; class: string; role: 'normal' | 'emp' | 'erstschlag'; cost: Cost; seconds: number; werft: number; unlocked: boolean }[];
   jobs: StationJob[];

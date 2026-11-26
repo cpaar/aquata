@@ -86,7 +86,7 @@ export function registerRoutes(app: FastifyInstance, db: Db, round: Round, secur
   }));
 
   app.post('/api/station/collectors', action((b) => async (s, open, now, q, pid) => {
-    const r = startCollectors(s, open, Number(b.amount), now);
+    const r = startCollectors(s, open, Number(b.amount), now, round.tickSeconds);
     if ('error' in r) return { state: s, result: r.error };
     await insertJob(q, pid, r.job);
     return { state: r.state, result: null };

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ATTACK, canAfford, countShips, flightTicks, fuelCost, MIN_WARNING_TICKS, SHIPS, tickTime, type Cost, type Ships } from '@aquata/rules';
+import { ATTACK, countShips, flightTicks, fuelCost, MIN_WARNING_TICKS, SHIPS, tickTime, type Cost, type Ships } from '@aquata/rules';
 import { AlarmStrip, Button, Panel, Row, Sheet, Tabs, Tag } from '../kit';
 import { api, type Me } from '../api';
 import type { MapStation } from '../map/DepthMap';
 import { fmtCost, fmtDuration, type useStation } from '../station';
+import { OrderRow } from './OrderRow';
 import type { IncomingFleet, OwnFleet, useFleets } from '../fleets';
 
 type St = ReturnType<typeof useStation>;
@@ -40,7 +41,6 @@ const statusText = (f: OwnFleet) =>
 
 export function Flotten({ st, fl, me, toTick, onSend, onReport }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; toTick: (ms: number) => number; onSend: () => void; onReport: (id: number) => void }) {
   const d = st.data;
-  const [amount, setAmount] = useState<Record<string, number>>({});
   if (!d || !st.live) return <p className="k-muted">Flotten laden …</p>;
   const queue = d.jobs.filter((j) => j.kind === 'ship');
   const home = Object.entries(d.ships).filter(([, n]) => n > 0);
@@ -81,22 +81,14 @@ export function Flotten({ st, fl, me, toTick, onSend, onReport }: { st: St; fl: 
       )}
 
       <Panel title={`Werft · Stufe ${werft}`}>
-        {d.shipTypes.filter((t) => t.unlocked).map((t) => {
-          const n = amount[t.id] ?? 1;
-          const cost = { alu: t.cost.alu * n, stahl: t.cost.stahl * n, pu: t.cost.pu * n };
-          const ok = canAfford(st.live!, cost);
-          return (
-            <div key={t.id} className="ship-row">
-              <div style={{ minWidth: 0 }}>
-                <div className="k-row__title">{t.name} <span className="k-muted" style={{ fontSize: '.75rem' }}>{CLASS[t.class]} · {ROLE[t.role]}</span></div>
-                <div className="k-row__sub k-data">{fmtCost(t.cost)} · {fmtDuration(t.seconds * 1000)} je Schiff</div>
-              </div>
-              <input className="k-input ship-row__n" type="number" min={1} max={1000} value={n} aria-label={`Anzahl ${t.name}`}
-                onChange={(e) => setAmount({ ...amount, [t.id]: Math.max(1, Math.min(1000, Math.floor(Number(e.target.value) || 1))) })} />
-              <Button disabled={!ok} title={ok ? undefined : 'zu wenig Rohstoffe'} onClick={() => st.act('/api/station/ships', { ship: t.id, amount: n })}>Bauen</Button>
-            </div>
-          );
-        })}
+        <p className="k-muted" style={{ margin: '0 0 6px', fontSize: '.8rem' }}>Ein Auftrag dauert gleich lang, egal wie viele Schiffe. Mehrere Aufträge laufen gleichzeitig.</p>
+        {d.shipTypes.filter((t) => t.unlocked).map((t) => (
+          <div key={t.id} className="ship-order">
+            <div className="k-row__title">{t.name} <span className="k-muted" style={{ fontSize: '.75rem' }}>{CLASS[t.class]} · {ROLE[t.role]}</span></div>
+            <div className="k-row__sub k-data">{fmtCost(t.cost)} je Schiff · {fmtDuration(t.seconds * 1000)} je Auftrag</div>
+            <OrderRow unit={t.cost} live={st.live!} label={t.name} onOrder={(n) => st.act('/api/station/ships', { ship: t.id, amount: n })} />
+          </div>
+        ))}
         {d.shipTypes.filter((t) => !t.unlocked).slice(0, 1).map((t) => (
           <p key={t.id} className="k-muted" style={{ margin: '10px 0 0', fontSize: '.78rem' }}>Nächster Schiffstyp: {t.name} mit Werft Stufe {t.werft}.</p>
         ))}
@@ -108,7 +100,7 @@ export function Flotten({ st, fl, me, toTick, onSend, onReport }: { st: St; fl: 
             const t = d.shipTypes.find((x) => x.id === j.item);
             const running = st.now >= j.startedAt;
             return (
-              <Row key={j.id} icon="werft" tone="amber" title={<>{j.amount}× {t?.name}</>}
+              <Row key={j.id} icon="werft" tone="amber" title={<>{(j.amount ?? 0).toLocaleString('de-DE')}× {t?.name}</>}
                 sub={running ? `fertig in ${fmtDuration(j.finishesAt - st.now)} · Tick ${toTick(j.finishesAt)}` : `wartet · startet in ${fmtDuration(j.startedAt - st.now)}`}
                 trailing={running ? <Tag tone="amber">{Math.round(((st.now - j.startedAt) / (j.finishesAt - j.startedAt)) * 100)} %</Tag> : <Tag>wartet</Tag>} />
             );

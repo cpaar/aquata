@@ -11,7 +11,7 @@ const NAMES = ['Kelpwerk', 'Schlotfeld', 'Perlbank', 'Tangriff', 'Ankerplatz', '
  * Gebäude reihum ausbauen (Werft zuerst bis 3), Sammler nachkaufen, mit dem Rest Schiffe bauen.
  * Ein Teil der Rohstoffe bleibt immer liegen, damit Angreifer auch etwas zu holen haben.
  */
-export function botDecide(s: EconomyState, open: Job[], seed: number): { state: EconomyState; jobs: NewJob[] } {
+export function botDecide(s: EconomyState, open: Job[], seed: number, tickSeconds = 3600): { state: EconomyState; jobs: NewJob[] } {
   const rand = rng(seed);
   const jobs: NewJob[] = [];
   let state = s;
@@ -32,7 +32,7 @@ export function botDecide(s: EconomyState, open: Job[], seed: number): { state: 
     const sp = spendable();
     const n = Math.min(5, Math.floor(Math.min(sp.alu / COLLECTOR.cost.alu, COLLECTOR.cost.stahl ? sp.stahl / COLLECTOR.cost.stahl : Infinity)));
     if (n >= 1) {
-      const r = startCollectors(state, open, n, Date.now());
+      const r = startCollectors(state, open, n, Date.now(), tickSeconds);
       if (!('error' in r)) { state = r.state; jobs.push(r.job); }
     }
   }
@@ -84,7 +84,7 @@ export async function runBots(db: Db, round: Round, tick: number, attacks: boole
   const bots = (await db.query<{ id: number; x: number; y: number }>('select id, x, y from players where round_id = $1 and is_bot order by id', [round.id])).rows;
   for (const b of bots) {
     await withStation<null>(db, b.id, async (s, open, _now, q, pid) => {
-      const { state, jobs } = botDecide(s, open, round.id * 7_368_787 + tick * 131 + b.id);
+      const { state, jobs } = botDecide(s, open, round.id * 7_368_787 + tick * 131 + b.id, round.tickSeconds);
       for (const j of jobs) await insertJob(q, pid, j);
       return { state, result: null };
     });
