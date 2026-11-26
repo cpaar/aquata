@@ -1,5 +1,5 @@
 import { BUILDINGS, COLLECTOR, MAX_LEVEL, MAX_ORDER, RESOURCES, SHIPS, type BuildingId, type Cost } from './data.ts';
-import { buildingCost, canAfford, productionPerHour, type Split } from './economy.ts';
+import { buildingCost, canAfford, collectorCost, productionPerHour, type Split } from './economy.ts';
 
 export interface EconomyState {
   res: Cost;
@@ -61,9 +61,9 @@ export function startBuilding(state: EconomyState, open: Job[], id: BuildingId, 
 
 /** Prüft und bucht neue Sammler. Jeder Auftrag dauert COLLECTOR.buildTicks Ticks, Aufträge laufen parallel. */
 export function startCollectors(state: EconomyState, open: Job[], amount: number, now: number, tickSeconds: number): { state: EconomyState; job: Omit<Job & { kind: 'collector' }, 'id'> } | { error: string } {
-  void open;
   if (!Number.isInteger(amount) || amount < 1 || amount > MAX_ORDER) return { error: 'Bitte eine Anzahl ab 1 angeben.' };
-  const cost = { alu: COLLECTOR.cost.alu * amount, stahl: COLLECTOR.cost.stahl * amount, pu: COLLECTOR.cost.pu * amount };
+  const building = open.reduce((n, j) => n + (j.kind === 'collector' ? j.amount : 0), 0);
+  const cost = collectorCost(state.collectors + building, amount);
   if (!canAfford(state.res, cost)) return { error: 'Nicht genug Rohstoffe.' };
   return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'collector', amount, startedAt: now, finishesAt: now + COLLECTOR.buildTicks * tickSeconds * 1000 } };
 }

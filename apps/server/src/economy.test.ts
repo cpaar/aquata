@@ -37,14 +37,14 @@ describe('Station und Wirtschaft', () => {
     const res = await post('/api/station/collectors', { amount: 2 });
     expect(res.statusCode).toBe(200);
     expect(res.json().jobs.some((j: { kind: string; amount: number }) => j.kind === 'collector' && j.amount === 2)).toBe(true);
-    expect(COLLECTOR.cost.alu).toBeGreaterThan(0);
+    expect(COLLECTOR.base).toBeGreaterThan(0);
     const sp = (await post('/api/station/split', { alu: 1, stahl: 1, pu: 2 })).json();
     expect(sp.split.pu).toBeCloseTo(50);
     expect((await post('/api/station/split', { alu: -1, stahl: 0, pu: 0 })).statusCode).toBe(400);
   });
 
   it('gibt Schiffe in Auftrag, gesperrte Typen nicht', async () => {
-    const ok = await post('/api/station/ships', { ship: 'piranha', amount: 2 });
+    const ok = await post('/api/station/ships', { ship: 'piranha', amount: 1 });
     expect(ok.statusCode).toBe(200);
     expect(ok.json().jobs.some((j: { kind: string; item: string }) => j.kind === 'ship' && j.item === 'piranha')).toBe(true);
     expect(ok.json().shipTypes.find((t: { id: string }) => t.id === 'mako').unlocked).toBe(false);

@@ -58,8 +58,10 @@ export type BuildingId = keyof typeof BUILDINGS;
 /** Kosten- und Zeitsteigerung pro Stufe */
 export const LEVEL_GROWTH = { cost: 1.6, time: 1.5 };
 
-/** Ertrag eines Sammlers pro Stunde, je nach Ressource */
-export const COLLECTOR_YIELD_PER_HOUR: Cost = { alu: 60, stahl: 45, pu: 20 };
+/** Ertrag eines Sammlers pro Stunde (= pro Tick im alten Spiel), je nach Ressource */
+export const COLLECTOR_YIELD_PER_HOUR: Cost = { alu: 250, stahl: 250, pu: 250 };
+/** Grundertrag jeder Station pro Stunde, unabhängig von Sammlern (wie im alten Spiel) */
+export const BASE_INCOME_PER_HOUR: Cost = { alu: 750, stahl: 750, pu: 750 };
 
 /** Flugzeit: Basis-Ticks nur mit voll ausgebautem Antrieb, logarithmisch mit der Entfernung */
 export const FLIGHT = { baseTicks: 4, maxPenaltyTicks: 4, distanceScale: 40, drivePenaltyTicks: 3, maxDriveLevel: 10 };
@@ -72,8 +74,11 @@ export const START = {
   buildings: { werft: 1, antrieb: 0, sonar: 1 } as Record<'werft' | 'antrieb' | 'sonar', number>,
 };
 
-/** Sammler: Kosten pro Stück; jeder Auftrag dauert buildTicks Ticks, egal wie viele (wie im alten Spiel) */
-export const COLLECTOR = { cost: { alu: 800, stahl: 400, pu: 0 } as Cost, buildTicks: 4 };
+/**
+ * Sammler wie im alten Spiel: der n-te Sammler kostet base + step · n, je in Alu UND Stahl.
+ * n zählt alle Sammler, auch die im Bau. Jeder Auftrag dauert buildTicks Ticks, egal wie viele.
+ */
+export const COLLECTOR = { base: 850, step: 112, buildTicks: 4 };
 
 /** Höchstmenge pro Bauauftrag (nur gegen Tippfehler) */
 export const MAX_ORDER = 100_000;

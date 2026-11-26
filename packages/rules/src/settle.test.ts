@@ -15,7 +15,8 @@ describe('Wirtschaft abrechnen', () => {
     const { state, done, open } = settle(fresh(), [job], H);
     const rate10 = productionPerHour(10, { alu: 100, stahl: 0, pu: 0 }).alu;
     expect(state.collectors).toBe(20);
-    expect(state.res.alu).toBeCloseTo(START.resources.alu + rate10 * 0.5 + rate10 * 2 * 0.5);
+    const rate20 = productionPerHour(20, { alu: 100, stahl: 0, pu: 0 }).alu;
+    expect(state.res.alu).toBeCloseTo(START.resources.alu + rate10 * 0.5 + rate20 * 0.5);
     expect(done).toHaveLength(1);
     expect(open).toHaveLength(0);
   });
@@ -31,7 +32,7 @@ describe('Wirtschaft abrechnen', () => {
   });
 
   it('Sammler-Aufträge dauern 4 Ticks, egal wie viele, und laufen parallel', () => {
-    const r1 = startCollectors(fresh(), [], 2, 0, 3600);
+    const r1 = startCollectors({ ...fresh(), res: { alu: 1e6, stahl: 1e6, pu: 0 } }, [], 2, 0, 3600);
     if ('error' in r1) throw new Error(r1.error);
     const r2 = startCollectors(r1.state, [{ id: 1, ...r1.job }], 5, 0, 3600);
     if ('error' in r2) throw new Error(r2.error);

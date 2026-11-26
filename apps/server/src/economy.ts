@@ -69,7 +69,7 @@ export async function stationView(db: Db, playerId: number) {
     collectors: state.collectors,
     split: normalizeSplit(state.split),
     buildings: (Object.keys(BUILDINGS) as BuildingId[]).map((id) => ({ id, name: BUILDINGS[id].name, level: state.buildings[id], next: buildingCost(id, state.buildings[id] + 1) })),
-    collector: { cost: COLLECTOR.cost, buildTicks: COLLECTOR.buildTicks },
+    collector: { ...COLLECTOR, owned: state.collectors + jobs.reduce((n, j) => n + (j.kind === 'collector' ? j.amount : 0), 0) },
     ships: state.ships,
     shipTypes: Object.values(SHIPS).map((t) => ({ ...t, seconds: shipSeconds(t.id, state.buildings.werft), unlocked: state.buildings.werft >= t.werft })),
     jobs: jobs.map((j) => ({ ...j })),

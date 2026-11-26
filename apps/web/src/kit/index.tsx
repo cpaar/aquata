@@ -157,9 +157,10 @@ export function TideBar({ currentTick, progress, events, span = 8 }: { currentTi
 }
 
 /* ---------- Stationsbild mit Deck ---------- */
-export function Hero({ stage, height = 300, children }: { stage: 1 | 2 | 3 | 4 | 5; height?: number; children?: ReactNode }) {
+/** Stationsbild. Mit grow füllt es freien Platz, damit unter dem Inhalt keine Lücke bis zur Navigation bleibt; height ist dann die Mindesthöhe. */
+export function Hero({ stage, height = 300, grow, children }: { stage: 1 | 2 | 3 | 4 | 5; height?: number; grow?: boolean; children?: ReactNode }) {
   return (
-    <div className="k-hero" style={{ height }}>
+    <div className="k-hero" style={grow ? { minHeight: height, flex: '1 0 auto' } : { height }}>
       <img src={`/station/stufe-${stage}.jpg`} alt={`Deine Station, Ausbaustufe ${stage}`} />
       {children}
     </div>

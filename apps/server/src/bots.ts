@@ -1,4 +1,4 @@
-import { BUILDINGS, MAX_LEVEL, SHIPS, buildingCost, canAfford, countShips, rng, startBuilding, startCollectors, startShips, suggestSpots, COLLECTOR, type BuildingId, type EconomyState, type Job, type NewJob } from '@aquata/rules';
+import { BUILDINGS, MAX_LEVEL, SHIPS, buildingCost, canAfford, countShips, rng, startBuilding, startCollectors, startShips, suggestSpots, maxCollectors, type BuildingId, type EconomyState, type Job, type NewJob } from '@aquata/rules';
 import type { Db } from './db/index.ts';
 import type { Round } from './round.ts';
 import { insertJob, startValues, withStation } from './economy.ts';
@@ -16,7 +16,8 @@ export function botDecide(s: EconomyState, open: Job[], seed: number, tickSecond
   const jobs: NewJob[] = [];
   let state = s;
   const reserve = 0.3;
-  const spendable = () => ({ alu: state.res.alu * (1 - reserve), stahl: state.res.stahl * (1 - reserve), pu: state.res.pu * (1 - reserve) });
+  const keep = { alu: s.res.alu * reserve, stahl: s.res.stahl * reserve, pu: s.res.pu * reserve };
+  const spendable = () => ({ alu: Math.max(0, state.res.alu - keep.alu), stahl: Math.max(0, state.res.stahl - keep.stahl), pu: Math.max(0, state.res.pu - keep.pu) });
 
   if (!open.some((j) => j.kind === 'building')) {
     const ids = Object.keys(BUILDINGS) as BuildingId[];
@@ -29,8 +30,7 @@ export function botDecide(s: EconomyState, open: Job[], seed: number, tickSecond
 
   const levels = Object.values(state.buildings).reduce((a, b) => a + b, 0);
   if (!open.some((j) => j.kind === 'collector') && state.collectors < 10 + 4 * levels) {
-    const sp = spendable();
-    const n = Math.min(5, Math.floor(Math.min(sp.alu / COLLECTOR.cost.alu, COLLECTOR.cost.stahl ? sp.stahl / COLLECTOR.cost.stahl : Infinity)));
+    const n = Math.min(10, maxCollectors(state.collectors, spendable()));
     if (n >= 1) {
       const r = startCollectors(state, open, n, Date.now(), tickSeconds);
       if (!('error' in r)) { state = r.state; jobs.push(r.job); }

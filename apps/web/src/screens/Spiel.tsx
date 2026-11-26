@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { canAfford, COLLECTOR_YIELD_PER_HOUR, tickAt, type BuildingId, type Cost } from '@aquata/rules';
+import { canAfford, collectorCost, COLLECTOR_YIELD_PER_HOUR, tickAt, type BuildingId, type Cost } from '@aquata/rules';
 import { Button, Deck, Hero, NavBar, Panel, Progress, Resources, Row, Tag, TickClock, TideBar, type IconName, type NavItem, type TideEvent } from '../kit';
 import { fallbackTick, useServer, type TickState } from '../server';
 import { fmtCost, fmtDuration, RES_NAMES, useStation, type StationData } from '../station';
@@ -67,7 +67,7 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
   return (
     <div className="screen">
       <main className="screen__scroll" key={tab}>
-        <Hero stage={heroStage(st.data)} height={tab === 'bruecke' ? 330 : 190}>{hud}</Hero>
+        <Hero grow stage={heroStage(st.data)} height={tab === 'bruecke' ? 330 : 190}>{hud}</Hero>
         <Deck overlap={tab === 'bruecke' ? 48 : 32}>
           {st.error && <p className="k-error" role="alert">{st.error}</p>}
           {tab === 'bruecke' && <Bruecke st={st} fl={fl} me={me} t={t} toTick={toTick} go={setTab} onReport={setReportId} />}
@@ -106,7 +106,7 @@ function Bruecke({ st, fl, me, t, toTick, go, onReport }: { st: St; fl: Fl; me: 
   const needs: React.ReactNode[] = [];
   if (unseen.length) needs.push(<Row key="r" icon="bericht" tone="rust" title={unseen.length === 1 ? 'Neuer Kampfbericht' : `${unseen.length} neue Kampfberichte`} sub={unseen[0]!.target} trailing={<Button variant="outline" onClick={() => onReport(unseen[0]!.id)}>Lesen</Button>} />);
   if (d && !building) needs.push(<Row key="b" icon="station" title="Bauplatz frei" sub="Kein Gebäude im Ausbau" trailing={<Button variant="outline" onClick={() => go('station')}>Ausbauen</Button>} />);
-  if (d && collecting.length === 0 && st.live && canAfford(st.live, d.collector.cost)) needs.push(<Row key="c" icon="sammler" title="Mehr Sammler möglich" sub={`${d.collectors} Sammler fördern gerade`} trailing={<Button variant="outline" onClick={() => go('station')}>Bauen</Button>} />);
+  if (d && collecting.length === 0 && st.live && canAfford(st.live, collectorCost(d.collector.owned, 1))) needs.push(<Row key="c" icon="sammler" title="Mehr Sammler möglich" sub={`${d.collectors} Sammler fördern gerade`} trailing={<Button variant="outline" onClick={() => go('station')}>Bauen</Button>} />);
 
   return (
     <>
@@ -160,9 +160,9 @@ function Station({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
 
       <Panel title="Sammler" aside={<span className="k-data">{d.collectors}</span>}>
         <p className="k-muted" style={{ margin: '0 0 10px', fontSize: '.82rem' }}>
-          Sammler pendeln zwischen Station und Rohstoffknoten. Einer kostet <span className="k-data">{fmtCost(d.collector.cost)}</span>. Jeder Auftrag braucht {d.collector.buildTicks} Ticks, egal wie viele Sammler, und mehrere Aufträge laufen gleichzeitig.
+          Sammler pendeln zwischen Station und Rohstoffknoten. Jeder weitere wird etwas teurer: der nächste kostet <span className="k-data">{fmtCost(collectorCost(d.collector.owned, 1))}</span>. Ein Auftrag braucht {d.collector.buildTicks} Ticks, egal wie viele Sammler, und mehrere Aufträge laufen gleichzeitig.
         </p>
-        <OrderRow unit={d.collector.cost} live={st.live} label="Sammler" onOrder={(n) => st.act('/api/station/collectors', { amount: n })} />
+        <OrderRow costFor={(n) => collectorCost(d.collector.owned, n)} live={st.live} label="Sammler" onOrder={(n) => st.act('/api/station/collectors', { amount: n })} />
         {queue.length > 0 && (
           <div style={{ marginTop: 12, display: 'grid', gap: 6 }}>
             {queue.map((j) => (
