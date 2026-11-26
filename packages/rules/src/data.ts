@@ -46,3 +46,17 @@ export const COLLECTOR_YIELD_PER_HOUR: Cost = { alu: 60, stahl: 45, pu: 20 };
 
 /** Flugzeit: Basis-Ticks nur mit voll ausgebautem Antrieb, logarithmisch mit der Entfernung */
 export const FLIGHT = { baseTicks: 4, maxPenaltyTicks: 4, distanceScale: 40, drivePenaltyTicks: 3, maxDriveLevel: 10 };
+
+/** Startwerte für neue Stationen */
+export const START = {
+  resources: { alu: 10000, stahl: 10000, pu: 2000 } as Cost,
+  collectors: 10,
+  split: { alu: 60, stahl: 30, pu: 10 },
+  buildings: { werft: 1, antrieb: 0, sonar: 1 } as Record<'werft' | 'antrieb' | 'sonar', number>,
+};
+
+/** Sammler: Kosten und Bauzeit pro Stück */
+export const COLLECTOR = { cost: { alu: 800, stahl: 400, pu: 0 } as Cost, buildSeconds: 45 };
+
+/** Höchststufe je Gebäude im Prototyp */
+export const MAX_LEVEL = 10;

@@ -45,3 +45,9 @@
 
 /* Platzwahl */
 .pick { padding: calc(20px + env(safe-area-inset-top, 0px)) var(--pad) 28px; display: grid; gap: 16px; }
+
+/* Aufteilung */
+.split-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 110px; gap: 10px; align-items: center; font-size: 0.85rem; }
+.split-row .k-data { font-size: 0.72rem; color: var(--muted); text-align: right; }
+.split-row input[type='range'] { accent-color: var(--petrol); width: 100%; }
+@media (max-width: 380px) { .split-row { grid-template-columns: 80px minmax(0, 1fr); } .split-row .k-data { grid-column: 1 / -1; text-align: left; } }

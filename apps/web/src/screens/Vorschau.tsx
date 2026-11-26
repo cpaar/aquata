@@ -19,7 +19,7 @@ const loadedAt = Date.now();
 const STORED = { alu: 12480, stahl: 8215, pu: 2940 };
 const RATE = productionPerHour(48, { alu: 50, stahl: 30, pu: 20 });
 
-export function Bruecke({ stationName = 'Nerea', coords = '32|−07', onLogout }: { stationName?: string; coords?: string; onLogout?: () => void }) {
+export function Vorschau({ stationName = 'Nerea', coords = '32|−07', onLogout }: { stationName?: string; coords?: string; onLogout?: () => void }) {
   const { tick: live, online } = useServer();
   const t = live ?? fallbackTick();
   const now = useNow();

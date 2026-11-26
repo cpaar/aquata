@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Bruecke } from './screens/Bruecke';
+import { Vorschau } from './screens/Vorschau';
+import { Spiel } from './screens/Spiel';
 import { Baukasten } from './screens/Baukasten';
 import { Anmelden } from './screens/Anmelden';
 import { Platzwahl } from './screens/Platzwahl';
@@ -23,9 +24,9 @@ export function App() {
   useEffect(reload, [reload]);
 
   if (hash === '#baukasten') return <Baukasten />;
-  if (offline) return <Bruecke />; // ohne Server: reine Vorschau
+  if (offline) return <Vorschau />; // ohne Server: reine Vorschau
   if (!me) return null;
   if (!me.account) return <Anmelden onDone={reload} />;
   if (!me.player) return <Platzwahl playerName={me.account.name} roundName={me.round.name} onDone={reload} />;
-  return <Bruecke stationName={me.player.stationName} coords={`${me.player.x}|${me.player.y}`} onLogout={() => api.logout().then(reload)} />;
+  return <Spiel me={{ ...me, player: me.player }} onLogout={() => api.logout().then(reload)} />;
 }

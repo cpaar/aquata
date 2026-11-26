@@ -3,7 +3,7 @@ import type { MapStation, Pt } from './map/DepthMap';
 export interface Me {
   account: { id: number; email: string; name: string } | null;
   player: { id: number; stationName: string; x: number; y: number } | null;
-  round: { id: number; name: string };
+  round: { id: number; name: string; startedAt: number; tickSeconds: number };
 }
 export interface MapData { size: { width: number; height: number }; seed: number; stations: MapStation[]; suggestions: Pt[] }
 
