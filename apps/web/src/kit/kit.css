@@ -1,0 +1,294 @@
+/*
+ * Aquata Baukasten, Stil E „Petrol“ mit Kiesel-Form.
+ * Jede Farbe hat eine feste Bedeutung:
+ *   Petrol  = Eigenes und Bedienbares
+ *   Bernstein = Zeit und Fortschritt
+ *   Rost    = Gefahr und Gegner
+ * Aquata ist bewusst ein dunkles Spiel: es gibt nur dieses eine Farbschema.
+ */
+:root {
+  --deep: #0b1519;
+  --deep2: #13252c;
+  --panel: #10202a;
+  --panel2: #162d36;
+  --line: rgba(159, 208, 200, 0.16);
+  --line2: rgba(159, 208, 200, 0.3);
+  --fg: #d9e4e2;
+  --muted: #7f9a9a;
+  --dim: #56706f;
+  --petrol: #5fa8a0;
+  --amber: #d9a04a;
+  --rust: #c4653f;
+  --alu: #b9cfcb;
+  --stahl: #c4653f;
+  --pu: #d9a04a;
+
+  --f-head: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+  --f-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --f-data: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --r: 14px; /* Kiesel */
+  --r-s: 4px; /* die knappe Ecke unten links */
+  --r-btn: 10px;
+  --r-sheet: 24px;
+  --pebble: var(--r) var(--r) var(--r) var(--r-s);
+  --gap: 12px;
+  --pad: 16px;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--deep);
+  color: var(--fg);
+  font: 15px/1.5 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Typografie ---------- */
+.k-h1, .k-h2, .k-h3, .k-eyebrow {
+  font-family: var(--f-head);
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+.k-h1 { font-weight: 300; font-size: 1.5rem; letter-spacing: 0.2em; }
+.k-h2 { font-weight: 300; font-size: 1.1rem; letter-spacing: 0.16em; }
+.k-h3 { font-weight: 400; font-size: 0.82rem; letter-spacing: 0.14em; }
+.k-eyebrow { font-weight: 400; font-size: 0.68rem; letter-spacing: 0.22em; color: var(--amber); }
+.k-muted { color: var(--muted); }
+.k-data { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+
+/* ---------- Kiesel-Paneel ---------- */
+.k-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--pebble);
+  padding: 14px var(--pad);
+}
+.k-panel--raised { background: var(--panel2); }
+.k-panel--danger { border-color: rgba(196, 101, 63, 0.55); background: rgba(196, 101, 63, 0.08); }
+.k-panel__head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.k-panel__head > :first-child { flex: 1; min-width: 0; }
+
+/* ---------- Knöpfe ---------- */
+.k-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--r-btn);
+  font-family: var(--f-head);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, transform 0.08s;
+}
+.k-btn:active { transform: translateY(1px); }
+.k-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.k-btn--solid { background: var(--petrol); color: var(--deep); }
+.k-btn--solid:hover { background: #6db7af; }
+.k-btn--outline { box-shadow: inset 0 0 0 1px var(--line2); color: var(--fg); }
+.k-btn--outline:hover { box-shadow: inset 0 0 0 1px var(--petrol); }
+.k-btn--danger { background: var(--rust); color: #fff4ee; }
+.k-btn--block { width: 100%; }
+.k-btn[aria-disabled='true'] { opacity: 0.4; pointer-events: none; }
+
+/* ---------- Kennzeichen (Status, kein Knopf) ---------- */
+.k-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px 8px 8px 3px;
+  font-family: var(--f-head);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.k-tag--amber { color: var(--amber); border-color: rgba(217, 160, 74, 0.45); }
+.k-tag--rust { color: var(--rust); border-color: rgba(196, 101, 63, 0.55); }
+.k-tag--petrol { color: var(--petrol); border-color: rgba(95, 168, 160, 0.5); }
+
+/* ---------- Fortschritt ---------- */
+.k-progress { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.k-progress > i { display: block; height: 100%; background: var(--amber); border-radius: inherit; transition: width 0.6s ease; }
+.k-progress--petrol > i { background: var(--petrol); }
+
+/* ---------- Rohstoffe ---------- */
+.k-res { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--f-data); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+.k-res__item { display: inline-flex; align-items: baseline; gap: 6px; }
+.k-res__dot { width: 7px; height: 7px; border-radius: 50%; align-self: center; flex: none; }
+.k-res__rate { color: var(--muted); font-size: 0.66rem; }
+
+/* ---------- Tick-Uhr ---------- */
+.k-tick {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  border: 1px solid rgba(217, 160, 74, 0.45);
+  border-radius: 22px;
+  background: rgba(11, 21, 25, 0.55);
+  backdrop-filter: blur(3px);
+}
+.k-tick svg { width: 28px; height: 28px; display: block; }
+.k-tick b { display: block; font: 500 0.82rem/1.1 var(--f-data); color: var(--amber); font-variant-numeric: tabular-nums; }
+.k-tick small { font-family: var(--f-head); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.56rem; color: var(--muted); }
+.k-tick--pulse { animation: k-tick-pulse 1.6s ease-out 1; }
+@keyframes k-tick-pulse { 0% { box-shadow: 0 0 0 0 rgba(217, 160, 74, 0.55); } 100% { box-shadow: 0 0 0 16px rgba(217, 160, 74, 0); } }
+
+/* ---------- Listenzeile ---------- */
+.k-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.k-row:first-child { border-top: 0; }
+.k-row__icon { width: 32px; height: 32px; border-radius: 10px 10px 10px 3px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--petrol); }
+.k-row__icon svg { width: 18px; height: 18px; }
+.k-row--rust .k-row__icon { color: var(--rust); border-color: rgba(196, 101, 63, 0.45); }
+.k-row--amber .k-row__icon { color: var(--amber); border-color: rgba(217, 160, 74, 0.4); }
+.k-row__title { font-size: 0.9rem; line-height: 1.3; }
+.k-row__sub { font-size: 0.76rem; color: var(--muted); }
+button.k-row { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); cursor: pointer; width: 100%; }
+
+/* ---------- Alarm-Streifen ---------- */
+.k-alarm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px var(--pad);
+  background: linear-gradient(90deg, rgba(196, 101, 63, 0.9), rgba(196, 101, 63, 0.7));
+  color: #fff4ee;
+  font-size: 0.8rem;
+}
+.k-alarm b { font-family: var(--f-head); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.72rem; }
+.k-alarm__dot { width: 8px; height: 8px; border-radius: 50%; background: #fff4ee; animation: k-ping 1.6s infinite; flex: none; }
+@keyframes k-ping { 0% { box-shadow: 0 0 0 0 rgba(255, 244, 238, 0.7); } 100% { box-shadow: 0 0 0 10px rgba(255, 244, 238, 0); } }
+
+/* ---------- Gezeitenleiste ---------- */
+.k-tide { position: relative; padding: 6px 0 2px; }
+.k-tide__track { position: relative; height: 54px; }
+.k-tide__line { position: absolute; left: 0; right: 0; top: 26px; height: 1px; background: var(--line2); }
+.k-tide__tick { position: absolute; top: 20px; width: 1px; height: 13px; background: var(--line2); }
+.k-tide__label { position: absolute; top: 38px; transform: translateX(-50%); font: 0.62rem var(--f-data); color: var(--dim); white-space: nowrap; }
+.k-tide__now { position: absolute; top: 14px; width: 9px; height: 25px; margin-left: -4px; border-radius: 5px; border: 1px solid var(--amber); background: rgba(217, 160, 74, 0.18); }
+.k-tide__ev { position: absolute; top: 0; transform: translateX(-50%); display: grid; justify-items: center; gap: 2px; }
+.k-tide__ev i { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--deep); margin-top: 19px; }
+.k-tide__ev span { position: absolute; top: 0; font: 0.6rem var(--f-head); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; max-width: 9em; overflow: hidden; text-overflow: ellipsis; }
+.k-tide__ev--end span { right: -2px; }
+
+/* ---------- Deck über dem Stationsbild ---------- */
+.k-hero { position: relative; overflow: hidden; background: var(--deep2); }
+.k-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; will-change: transform; }
+.k-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 21, 25, 0.7) 0%, rgba(11, 21, 25, 0) 32%, rgba(11, 21, 25, 0) 62%, var(--deep) 100%); pointer-events: none; }
+.k-hero > :not(img) { position: relative; z-index: 1; }
+.k-deck {
+  position: relative;
+  z-index: 2;
+  background: var(--deep);
+  border-top: 1px solid var(--line);
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  padding: 18px var(--pad) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.k-deck::before { content: ''; align-self: center; width: 36px; height: 3px; border-radius: 2px; background: var(--line2); margin: -8px 0 2px; }
+
+/* ---------- Blatt von unten ---------- */
+.k-sheet-scrim { position: fixed; inset: 0; background: rgba(5, 10, 12, 0.55); z-index: 40; animation: k-fade 0.2s ease; }
+.k-sheet {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 41;
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--panel2);
+  border: 1px solid var(--line2);
+  border-bottom: 0;
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  padding: 10px var(--pad) calc(20px + env(safe-area-inset-bottom, 0px));
+  max-height: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: k-rise 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.k-sheet__grip { width: 36px; height: 3px; border-radius: 2px; background: var(--line2); margin: 0 auto 14px; }
+@keyframes k-rise { from { transform: translateY(40px); opacity: 0; } }
+@keyframes k-fade { from { opacity: 0; } }
+
+/* ---------- Navigationsleiste ---------- */
+.k-nav {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: rgba(11, 21, 25, 0.94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--line);
+}
+.k-nav__item {
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 7px 0 5px;
+  border-radius: 12px 12px 12px 4px;
+  font-family: var(--f-head);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.k-nav__item svg { width: 22px; height: 22px; }
+.k-nav__item[aria-current='page'] { color: var(--petrol); background: rgba(95, 168, 160, 0.1); }
+.k-nav__item:focus-visible { outline: 2px solid var(--amber); }
+.k-nav__badge { position: absolute; top: 5px; left: calc(50% + 8px); width: 7px; height: 7px; border-radius: 50%; background: var(--rust); }
+
+/* ---------- Icons ---------- */
+.k-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- Eingabefelder ---------- */
+.k-field { display: grid; gap: 6px; }
+.k-field > span { font-family: var(--f-head); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.k-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--deep);
+  color: var(--fg);
+  border: 1px solid var(--line2);
+  border-radius: var(--r-btn) var(--r-btn) var(--r-btn) var(--r-s);
+  font: 0.95rem var(--f-body);
+}
+.k-input:focus { outline: none; border-color: var(--petrol); box-shadow: 0 0 0 3px rgba(95, 168, 160, 0.18); }
+.k-error { color: var(--rust); font-size: 0.82rem; margin: 0; }
+.k-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: var(--pebble); }
+.k-tabs button { all: unset; cursor: pointer; text-align: center; padding: 8px 0; border-radius: 10px 10px 10px 3px; font-family: var(--f-head); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.k-tabs button[aria-pressed='true'] { background: rgba(95, 168, 160, 0.14); color: var(--petrol); }
+.k-tabs button:focus-visible { outline: 2px solid var(--amber); }
