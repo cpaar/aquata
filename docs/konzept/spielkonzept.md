@@ -1,6 +1,6 @@
 # Aquata – Spielkonzept
 
-Stand: 25.11.2026 · Zwischenstand aus dem Konzept-Interview mit Chris. Das lebende Dokument liegt als Claude Doc unter https://claude.ai/artifact/YU9B4yxU1pruvKgxadQ8rY; diese Datei ist ein Schnappschuss davon.
+Stand: 26.11.2026 · Stand aus dem Konzept-Interview mit Chris. Das lebende Dokument liegt als Claude Doc unter https://claude.ai/artifact/YU9B4yxU1pruvKgxadQ8rY; diese Datei ist ein Schnappschuss davon.
 
 ## Vision & Zielgruppe
 
@@ -113,7 +113,32 @@ Jeder Spieler hat genau eine Station, die er ausbaut. Rohstoffe kommen von Resso
 - Schiffe und Sammler sind nicht begrenzt: Man baut so viele, wie die Rohstoffe hergeben.
 - Bauzeiten als Startwert: am Anfang Minuten, mittelfristig Stunden, spät höchstens etwa 1 bis 2 Tage pro Stufe. Mit dem Rundenfortschritt werden sie schneller und günstiger. Feinabstimmung später.
 
-Offen: konkrete Kosten, Gebäudeliste und Freischaltreihenfolge.
+**Freischaltreihenfolge (Entwurf, Tempo bestätigt, Feinschliff in Testläufen):**
+
+| Zeitpunkt (bei Fokus) | Freischaltung |
+| --- | --- |
+| Start | Station mit Sammlern, Werft 1 (Piranha), Kommunikationszentrum 1 (globaler Chat, Direktnachrichten) |
+| Erste Stunden | Werft 2 (Squid), Sonar 1, Reaktor 1 |
+| Tag 1 bis 2 | Werft 3 (Mako und KS), Antriebslabor 1, Kommunikationszentrum 2 (Allianz beitreten) |
+| etwa Tag 3 | Werft 4 (Oktopus, Sammlerklau). Wer darauf fokussiert, hat ihn etwa zum Ende des Anfängerschutzes, andere etwas später. Sammlerraub ist ein essenzieller Teil des Spiels, daher nicht zu spät. |
+| Tag 3 bis 7 | Energiespeicher und gezielte Scans, Störsender 1, Kommunikationszentrum 3 (Allianz gründen, geteilte Scans) |
+| Woche 2 bis 3 | Fregatten (Barracuda, Manta, Marlin, Narwal) auf Werft 5 bis 8 |
+| Woche 3 bis 6 | Schwere (Orca, Volta, Kraken), Leviathan als Krönung gegen Woche 6 |
+
+- Nach etwa 6 Wochen hat man alle Schiffe. Danach geht es um Masse, Gebäudestufen und KS. Späteinsteiger erreichen so auch noch alles.
+- Kommunikationszentrum: Stufe 1 Chat, 2 Allianz beitreten, 3 Allianz gründen und geteilte Scans, 4 Allianz-Sonar und geteilte Beobachtungen.
+- Im alten Spiel endete der Anfängerschutz etwa 72 Stunden nach Rundenstart, und die Ersten hatten ungefähr dann ihre Hackboote.
+
+**Die Oberfläche entfaltet sich (entschieden):** Spiel und Oberfläche wachsen mit. Zu jedem freigeschalteten Feature kommen die passenden Elemente erst dann ins UI. Ein begleitendes Tutorial führt durch die ersten Tage und Wochen und erklärt jedes Feature genau dann, wenn es freigeschaltet wird.
+
+**Tutorial (entschieden):**
+
+- Erstmal einfach: eine Missionsliste (z. B. "Baue Werft 2", "Tritt einer Allianz bei", "Schicke deinen ersten Scan"), mit kleinen Belohnungen und kurzen Hinweisen am neuen UI-Element.
+- Kein Mentorensystem, das ergibt sich meist von selbst im Chat. Eventuell später.
+- Wer das Tutorial überspringt, verliert nur die Missionen. Freischaltungen laufen weiter über die Gebäude, denn sie sind Teil des Spiels, nicht des Tutorials.
+- Gesperrte Funktionen sind im UI nicht sichtbar (Vorschlag). Stattdessen zeigt jedes Gebäude, was die nächste Stufe freischaltet, als kleine Vorschau.
+
+Offen: konkrete Kosten.
 
 ## Flotten & Kampf
 
@@ -181,7 +206,7 @@ Dazu gab es pro Schiff eine Trefferchance und einen Schadensfaktor gegen jedes d
 **Balancing-Grundregeln:**
 
 - Ein Kampf erzeugt nie Rohstoffe. Angreifer und Verteidiger zusammen haben nach einem Kampf, inklusive Müll und Beute, immer weniger Rohstoffwert als vorher. Das gilt auch mit allen Müll-Boni.
-- Flottenbeschleunigung ist schnell zu stark. Wenn es sie gibt, dann begrenzt, z. B. nur eine Flotte oder nur auf dem Rückflug. Details später.
+- Flottenbeschleunigung nur auf dem Rückflug, als Logistiker-Talent (ein Tick schneller). Hinflüge werden nie beschleunigt, damit die Mindestwarnzeit von 3 Stunden hält.
 
 **Angriffsgrenzen und Schutz (altes System, Analyse):**
 
@@ -199,9 +224,9 @@ Dazu gab es pro Schiff eine Trefferchance und einen Schadensfaktor gegen jedes d
 **Angriffsgrenzen und Schutz (entschieden):**
 
 - Die alten Punktgrenzen (30 %, 40 %, 50 %) sind die Ausgangsbasis und werden neu gebalanct.
-- Anfängerschutz in den ersten 5 bis 7 Tagen oder bis zu einer Punktgrenze, je nachdem, was zuerst eintritt. Wer selbst angreift, verliert den Schutz sofort.
+- Anfängerschutz etwa 3 Tage ab dem eigenen Start (nicht ab Rundenstart, damit Späteinsteiger denselben Schutz bekommen) oder bis zu einer Punktgrenze, je nachdem, was zuerst eintritt. Wer selbst angreift, verliert den Schutz sofort. (Früher 5 bis 7 Tage geplant, angepasst an den Oktopus um Tag 3 und das alte Spiel mit etwa 72 Stunden.)
 - Die Weiße Flagge bleibt. Ein Angriff auf einen Spieler mit weißer Flagge wird spielweit öffentlich: Alle sehen die Angriffsflotte auf der Karte, aber nur mit wenigen Details. Wer mehr wissen will, muss scannen.
-- Offen: zusätzliche Pause nach einem verlorenen Kampf.
+- Keine zusätzliche Pause nach einem verlorenen Kampf, die bestehenden Schutzregeln reichen.
 
 ## Kommandoschiff (KS)
 
@@ -271,6 +296,36 @@ Das KS ist das zentrale Element, das man über die Runde entwickelt, ähnlich ei
 - Start mit 1 Waffenslot (Normal, EMP oder Hack) und 1 Systemslot (z. B. Scanner, Tarnfeld, Reparaturdrohnen, Panzerung). Mit dem Level kommen bis zu 2 weitere Systemslots dazu.
 - Umrüsten nur an der eigenen Station, aber ohne Umrüstzeit.
 - Talentbaum pro Rolle: etwa 3 Äste mit je 5 Stufen, auf einigen Stufen eine Wahl zwischen zwei Talenten. Zurücksetzen kostet Erfahrung. Größe hängt davon ab, ob wir genug gute Ideen finden.
+
+**Das KS in der Flotte (wie bisher, wichtig):**
+
+- Man fasst eigene Schiffe zu Flotten zusammen und schickt Flotten auf Missionen. Das KS kann nicht allein fliegen, es reist immer in einer Flotte mit.
+- Das KS wird im Kampf nicht direkt angegriffen. Es stirbt, wenn die Flotte, in der es sich befindet, zerstört wird, auch wenn andere eigene Flotten im selben Kampf noch überlegen sind.
+- Flottenbezogene Effekte des KS (z. B. Tarnfeld) gelten nur für die Flotte, in der es sich befindet.
+
+**Modulliste (erster Entwurf):** Alle Module stehen allen Rollen offen, Talente der Rolle verstärken passende Module. Rollenspezifische Module eventuell später.
+
+| Slot | Module |
+| --- | --- |
+| Waffe (1 Slot) | Geschütz (KS kämpft mit), EMP-Werfer (lähmt), Hack-Modul (übernimmt einige gegnerische Schiffe) |
+| System (1 Slot, mit Level bis zu 3) | Rettungskapsel (Chance, dass das KS die Zerstörung seiner Flotte überlebt; ersetzt die Idee "Panzerung"), Feuerleitsystem (Trefferchance der Flotte), Schildgenerator (weniger Schaden für die Flotte), Reparaturdrohnen (reparieren zwischen Kampfticks einen Teil der Verluste), Bergungsdrohnen (mehr Müll), Tarnfeld (nur die eigene Flotte, schwach, Mindestwarnzeit bleibt) |
+| Heimat (eigener Slot) | Sonarverstärker, Störfeld, Werftsteuerung. Wirken automatisch, solange das KS zu Hause ist. |
+
+- Gefechtsscanner (gegnerische Aufstellung vor jedem Kampftick) vorerst gestrichen, damit Scannen seinen Sinn behält.
+- Tarnfeld darf nicht zu stark werden, Werte vorsichtig ansetzen.
+
+**Talentbäume (Gerüst, entschieden):** Pro Rolle 3 Äste mit je 5 Stufen, auf Stufe 3 und 5 die Wahl zwischen zwei Talenten. Jede Rolle hat von Anfang an eine kleine Grundfähigkeit, damit sich die Rollenwahl sofort spürbar anfühlt (z. B. Späher etwas mehr Sonar, Logistiker etwas mehr Müll).
+
+| Rolle | Ast 1 | Ast 2 | Ast 3 |
+| --- | --- | --- | --- |
+| Flaggschiff | Feuerkraft (Geschütz, Verbandsfeuer) | Staffelführer (ein Schiffstyp wird stärker) | Überleben (Rettungskapsel, HP der eigenen Flotte) |
+| Kommandeur | Gefechtshaltung (offensiv/defensiv) | Taktik (Erstschlag-Abwehr, Stabsarbeit) | Verteidigung (Heimvorteil, Bergungsprotokoll) |
+| Späher | Aufklärung (Sonar, Frühwarnung) | Täuschung (falsche Werte in fremden Scans) | Gegenaufklärung (fremde Scans bemerken und blocken) |
+| Logistiker | Bergung (Müll) | Instandsetzung (Reparatur zwischen Ticks) | Wege (Heimkehrroute, Sabotage) |
+
+**Sabotage bleibt:** Man stiehlt anteilig Schiffe, die beim Gegner wirklich in der Bauschleife sind. Es entstehen keine neuen Rohstoffe, man nimmt sie dem Gegner effektiv weg.
+
+Offen: die einzelnen Talente pro Stufe und alle Zahlenwerte.
 
 **Ideen aus den alten Fertigkeiten für die Talentbäume:**
 
@@ -350,7 +405,7 @@ Siedlungen waren eine zweite Gruppenebene neben der Allianz: kleine Nachbarschaf
 | General verfügt über Flotten | Der General durfte Flotten anderer Mitglieder einsetzen | Offen: Flottenfreigabe an einen Angriffsleiter |
 | Siedlungskasse | 5 % des Einkommens flossen in ein Depot, der Finanzminister verteilte es | Entfällt |
 | Siedlungsforum, Nachrichten an alle | Eigenes Forum und Rundmail der Siedlung | Geht in Allianzchat und Allianzforum auf |
-| Siedlungsweite Boni | KS-Auren wirkten auf Nachbarn; Scans der Siedlung wurden gebündelt | Offen: Auren für andere evtl. nur noch im Kampf, außerhalb ganz weg |
+| Siedlungsweite Boni | KS-Auren wirkten auf Nachbarn; Scans der Siedlung wurden gebündelt | Auren nur im Kampf: Boni eines KS wirken auf alle Verbündeten im selben Kampf. Keine Umkreis- oder Produktions-Auren. Das Sonar aller Mitglieder bildet ein gemeinsames Netz. |
 | Nachbarschaft | Flüge in nahe Siedlungen waren schneller und billiger | Ergibt sich im Raster über die Entfernung |
 | Rauswurf per Abstimmung | Mehrheit konnte eine Station verschieben | Entfällt |
 | Most Wanted, Kopfgeld | Meistgesuchte Siedlung markiert, Scans geteilt | Entfällt vorerst, ebenso Kopfgeld |
@@ -387,9 +442,7 @@ Die Karte ist ein 2D-Raster. Sie ist die Grundlage der Wirtschaft, weil die Entf
 - Richtung: logarithmische Funktion der Entfernung mit einem Basiswert von 4 Ticks, der nur mit maximal ausgebauten Antrieben erreicht wird. Weite Ziele dauern länger, aber nicht linear länger.
 - Eine Flotte fliegt so schnell wie ihr langsamstes Schiff.
 - Verteidiger sind einen Tick schneller als Angreifer (wie bisher). Das passt zur Mindestwarnzeit von 3 Stunden.
-- Offen: ob große Schiffe langsamer bleiben als Jäger (Vorschlag: ja, z. B. Jäger ×1, Mittel ×1,1, Fregatten ×1,25, Schwere ×1,5).
-
-Schiffsklassen sind unterschiedlich schnell, große langsamer als Jäger. Weil Flugzeiten ganze Ticks sind, muss das gut verständlich sein. Vorschlag: statt Faktoren feste Zusatzticks pro Klasse (z. B. Jäger und Mittel +0, Fregatten +1, Schwere +2), und beim Losschicken zeigt das Spiel direkt die Ankunftszeit pro Ziel an.
+- Schiffsklassen sind unterschiedlich schnell, mit festen Zusatzticks pro Klasse: Jäger und Mittel +0, Fregatten +1, Schwere +2. Beim Losschicken zeigt das Spiel direkt die Ankunftszeit pro Ziel an.
 
 ## Rangliste
 
@@ -429,22 +482,9 @@ Bestenlisten sind nur ein kleiner Anreiz, das Spielen selbst ist das Ziel.
 
 ## Offene Fragen & nächste Themen
 
-Erste Interviewrunde und die Detailrunden sind weitgehend abgeschlossen (Stand 25.11.2026). Offen sind noch:
+Das Konzept-Interview ist abgeschlossen (Stand 26.11.2026). Alle großen Themen sind entschieden. Offen sind vor allem Zahlen, die sich am besten mit Prototyp, Kampfsimulator und Testläufen klären lassen:
 
-- [x] Kommandoschiff: Rollen, Module, Training, Talent-Ideen (grob)
-- [x] Schiffsraster: Struktur, Zielreihenfolge, Namen
-- [x] Intel: Energie, Sonar, gezielte Scans, Warnregeln
-- [x] Angriffsgrenzen und Anfängerschutz (Grundregeln)
-- [x] Stationsausbau: Gebäude, Bauschlange, Bauzeiten (grob)
-- [x] Müll-Mechanik: Grundwerte, Heimtransport, Schutz
-- [x] Karte: Wachstum, Nodes, Startplatz, Reisezeiten
-- [x] Angriffsplanung: Plan, manueller Start, Hilferuf und Rückzugsruf
-- [x] Rangliste: Wertungen, Allianzsumme
-- [x] Havoc und Rundenwechsel
-- [ ] Stationsausbau im Detail: Freischaltreihenfolge (inkl. Kommunikationszentrum), Kosten
-- [ ] Geschwindigkeit der Schiffsklassen (Zusatzticks?)
-- [ ] Allianz: Auren nur im Kampf oder ganz weg?
-- [ ] Pause nach einem verlorenen Kampf
-- [ ] Flottenbeschleunigung: ob und wie begrenzt
-- [ ] Talentbäume und Modulliste im Detail
-- [ ] Onboarding und Tutorial für neue Spieler
+- [ ] Konkrete Kosten und Bauzeiten
+- [ ] Einzelne Talente pro Stufe und Modulwerte
+- [ ] Balancing von Müll-Grundwerten, Angriffsgrenzen und Tarnfeld
+- [ ] Nächster Schritt: technische Planung (Architektur, Tech-Stack, erster Prototyp)
