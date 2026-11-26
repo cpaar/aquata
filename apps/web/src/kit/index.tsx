@@ -146,7 +146,7 @@ export function TideBar({ currentTick, progress, events, span = 8 }: { currentTi
         ))}
         <span className="k-tide__now" style={{ left: pos(currentTick + progress) }} title="jetzt" />
         {events.filter((e) => e.tick > currentTick && e.tick <= currentTick + span).map((e, i) => (
-          <span className="k-tide__ev" key={i} style={{ left: pos(e.tick) }}>
+          <span className={cx('k-tide__ev', (e.tick - currentTick) / span > 0.7 && 'k-tide__ev--end')} key={i} style={{ left: pos(e.tick) }}>
             <span style={{ color: `var(--${e.tone})`, top: i % 2 ? 40 : 0 }}>{e.label}</span>
             <i style={{ background: `var(--${e.tone})` }} />
           </span>

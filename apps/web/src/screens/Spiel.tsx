@@ -4,6 +4,8 @@ import { Button, Deck, Hero, NavBar, Panel, Progress, Resources, Row, Tag, TickC
 import { fallbackTick, useServer, type TickState } from '../server';
 import { fmtCost, fmtDuration, RES_NAMES, useStation, type StationData } from '../station';
 import type { Me } from '../api';
+import { useFleets } from '../fleets';
+import { Flotten, IncomingAlarm } from './Flotten';
 import './screens.css';
 
 /** Ein Regler ändert sich, die anderen teilen sich den Rest im alten Verhältnis (Summe bleibt 100) */
@@ -34,12 +36,15 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
   const st = useStation();
   const { tick } = useServer();
   const t = tick ?? fallbackTick();
+  const fl = useFleets(t.tick);
+  const underAttack = !!fl.fleets?.incoming.some((f) => f.mission === 'attack');
+  const newReports = fl.reports.some((r) => !r.seen);
   const toTick = (ms: number) => tickAt(me.round.startedAt, me.round.tickSeconds, ms) + 1;
 
   const nav: NavItem[] = [
     { id: 'bruecke', label: 'Brücke', icon: 'bruecke' },
     { id: 'karte', label: 'Karte', icon: 'karte' },
-    { id: 'flotten', label: 'Flotten', icon: 'flotten' },
+    { id: 'flotten', label: 'Flotten', icon: 'flotten', badge: underAttack || newReports },
     { id: 'station', label: 'Station', icon: 'station' },
   ];
 
@@ -60,9 +65,9 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
         <Hero stage={heroStage(st.data)} height={tab === 'bruecke' ? 330 : 190}>{hud}</Hero>
         <Deck overlap={tab === 'bruecke' ? 48 : 32}>
           {st.error && <p className="k-error" role="alert">{st.error}</p>}
-          {tab === 'bruecke' && <Bruecke st={st} t={t} toTick={toTick} go={setTab} />}
+          {tab === 'bruecke' && <Bruecke st={st} fl={fl} me={me} t={t} toTick={toTick} go={setTab} />}
           {tab === 'station' && <Station st={st} toTick={toTick} />}
-          {tab === 'flotten' && <Flotten st={st} toTick={toTick} />}
+          {tab === 'flotten' && <Flotten st={st} fl={fl} me={me} toTick={toTick} />}
           {tab === 'karte' && (
             <Panel title="Karte">
               <p className="k-muted" style={{ margin: 0, fontSize: '.88rem' }}>Die Tiefenlinien-Karte mit Sonar, Zielen und Flotten kommt in Schritt 7.</p>
@@ -79,8 +84,9 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
 }
 
 type St = ReturnType<typeof useStation>;
+type Fl = ReturnType<typeof useFleets>;
 
-function Bruecke({ st, t, toTick, go }: { st: St; t: TickState; toTick: (ms: number) => number; go: (t: Tab) => void }) {
+function Bruecke({ st, fl, me, t, toTick, go }: { st: St; fl: Fl; me: Me; t: TickState; toTick: (ms: number) => number; go: (t: Tab) => void }) {
   const d = st.data;
   const progress = Math.min(1, Math.max(0, 1 - (t.nextTickAt - st.now) / (t.tickSeconds * 1000)));
   const building = d?.jobs.find((j) => j.kind === 'building');
@@ -88,15 +94,20 @@ function Bruecke({ st, t, toTick, go }: { st: St; t: TickState; toTick: (ms: num
   const events: TideEvent[] = (d?.jobs ?? []).map((j) => ({
     tick: toTick(j.finishesAt),
     label: j.kind === 'building' ? `${d!.buildings.find((b) => b.id === j.item)?.name ?? ''} ${j.level}` : j.kind === 'ship' ? `+${j.amount} ${d!.shipTypes.find((x) => x.id === j.item)?.name ?? ''}` : `+${j.amount} Sammler`,
-    tone: 'amber',
+    tone: 'amber' as const,
   }));
+  for (const f of fl.fleets?.own ?? []) if (f.status !== 'engaged') events.push({ tick: f.arriveTick, label: f.status === 'returning' ? 'Heimkehr' : f.target.station, tone: 'petrol' });
+  for (const f of fl.fleets?.incoming ?? []) if (f.mission === 'attack' && f.status === 'outbound') events.push({ tick: f.arriveTick, label: `Angriff ${f.size}`, tone: 'rust' });
+  const unseen = fl.reports.filter((r) => !r.seen);
 
   const needs: React.ReactNode[] = [];
+  if (unseen.length) needs.push(<Row key="r" icon="bericht" tone="rust" title={unseen.length === 1 ? 'Neuer Kampfbericht' : `${unseen.length} neue Kampfberichte`} sub={unseen[0]!.target} trailing={<Button variant="outline" onClick={() => go('flotten')}>Lesen</Button>} />);
   if (d && !building) needs.push(<Row key="b" icon="station" title="Bauplatz frei" sub="Kein Gebäude im Ausbau" trailing={<Button variant="outline" onClick={() => go('station')}>Ausbauen</Button>} />);
   if (d && collecting.length === 0 && st.live && canAfford(st.live, d.collector.cost)) needs.push(<Row key="c" icon="sammler" title="Mehr Sammler möglich" sub={`${d.collectors} Sammler fördern gerade`} trailing={<Button variant="outline" onClick={() => go('station')}>Bauen</Button>} />);
 
   return (
     <>
+      {fl.fleets && <IncomingAlarm incoming={fl.fleets.incoming} round={me.round} now={st.now} />}
       <TideBar currentTick={t.tick} progress={progress} events={events} />
       <Panel title="Braucht dich" aside={<Tag tone={needs.length ? 'petrol' : undefined}>{needs.length}</Tag>}>
         {needs.length ? needs : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Alles läuft. Schau zum nächsten Tick wieder vorbei.</p>}
@@ -108,7 +119,10 @@ function Bruecke({ st, t, toTick, go }: { st: St; t: TickState; toTick: (ms: num
         </Panel>
       )}
       <Panel title="Logbuch">
-        <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Einträge. Hier landen fertige Ausbauten, Flotten und Kampfberichte.</p>
+        {fl.logbook.length ? fl.logbook.slice(0, 8).map((l) => (
+          <Row key={l.id} icon={l.kind === 'kampf' ? 'angriff' : l.kind === 'heimkehr' ? 'rueckkehr' : 'bericht'} title={l.text} sub={<span className="k-data">Tick {l.tick}</span>}
+            onClick={l.reportId ? () => go('flotten') : undefined} />
+        )) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Einträge. Hier landen Flotten und Kampfberichte.</p>}
       </Panel>
     </>
   );
@@ -172,66 +186,6 @@ function Station({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
         </div>
       </Panel>
       <p className="k-muted" style={{ margin: 0, fontSize: '.75rem' }}>Kommandoschiff und weitere Gebäude kommen mit späteren Schritten.</p>
-    </>
-  );
-}
-
-const ROLE: Record<string, string> = { normal: 'Normal', emp: 'EMP', erstschlag: 'Erstschlag' };
-const CLASS: Record<string, string> = { klein: 'klein', mittel: 'mittel', fregatte: 'Fregatte', schwer: 'schwer' };
-
-function Flotten({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
-  const d = st.data;
-  const [amount, setAmount] = useState<Record<string, number>>({});
-  if (!d || !st.live) return <p className="k-muted">Werft lädt …</p>;
-  const queue = d.jobs.filter((j) => j.kind === 'ship');
-  const home = Object.entries(d.ships).filter(([, n]) => n > 0);
-  const werft = d.buildings.find((b) => b.id === 'werft')!.level;
-
-  return (
-    <>
-      <Panel title="Zuhause" aside={<span className="k-data">{home.reduce((s, [, n]) => s + n, 0)} Schiffe</span>}>
-        {home.length ? home.map(([id, n]) => {
-          const t = d.shipTypes.find((x) => x.id === id);
-          return <Row key={id} icon="flotten" title={<><span className="k-data">{n.toLocaleString('de-DE')}×</span> {t?.name ?? id}</>} sub={t && `${CLASS[t.class]} · ${ROLE[t.role]}`} />;
-        }) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Schiffe. Gib unten welche in der Werft in Auftrag.</p>}
-        <p className="k-muted" style={{ margin: '10px 0 0', fontSize: '.75rem' }}>Flotten losschicken kommt mit Schritt 6 (Tick und Kampf).</p>
-      </Panel>
-
-      <Panel title={`Werft · Stufe ${werft}`}>
-        {d.shipTypes.filter((t) => t.unlocked).map((t) => {
-          const n = amount[t.id] ?? 1;
-          const cost = { alu: t.cost.alu * n, stahl: t.cost.stahl * n, pu: t.cost.pu * n };
-          const ok = canAfford(st.live!, cost);
-          return (
-            <div key={t.id} className="ship-row">
-              <div style={{ minWidth: 0 }}>
-                <div className="k-row__title">{t.name} <span className="k-muted" style={{ fontSize: '.75rem' }}>{CLASS[t.class]} · {ROLE[t.role]}</span></div>
-                <div className="k-row__sub k-data">{fmtCost(t.cost)} · {fmtDuration(t.seconds * 1000)} je Schiff</div>
-              </div>
-              <input className="k-input ship-row__n" type="number" min={1} max={1000} value={n} aria-label={`Anzahl ${t.name}`}
-                onChange={(e) => setAmount({ ...amount, [t.id]: Math.max(1, Math.min(1000, Math.floor(Number(e.target.value) || 1))) })} />
-              <Button disabled={!ok} title={ok ? undefined : 'zu wenig Rohstoffe'} onClick={() => st.act('/api/station/ships', { ship: t.id, amount: n })}>Bauen</Button>
-            </div>
-          );
-        })}
-        {d.shipTypes.filter((t) => !t.unlocked).slice(0, 1).map((t) => (
-          <p key={t.id} className="k-muted" style={{ margin: '10px 0 0', fontSize: '.78rem' }}>Nächster Schiffstyp: {t.name} mit Werft Stufe {t.werft}.</p>
-        ))}
-      </Panel>
-
-      {queue.length > 0 && (
-        <Panel title="In Bau">
-          {queue.map((j) => {
-            const t = d.shipTypes.find((x) => x.id === j.item);
-            const running = st.now >= j.startedAt;
-            return (
-              <Row key={j.id} icon="werft" tone="amber" title={<>{j.amount}× {t?.name}</>}
-                sub={running ? `fertig in ${fmtDuration(j.finishesAt - st.now)} · Tick ${toTick(j.finishesAt)}` : `wartet · startet in ${fmtDuration(j.startedAt - st.now)}`}
-                trailing={running ? <Tag tone="amber">{Math.round(((st.now - j.startedAt) / (j.finishesAt - j.startedAt)) * 100)} %</Tag> : <Tag>wartet</Tag>} />
-            );
-          })}
-        </Panel>
-      )}
     </>
   );
 }

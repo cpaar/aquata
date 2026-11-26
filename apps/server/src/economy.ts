@@ -33,18 +33,23 @@ async function save(q: Queryable, playerId: number, s: EconomyState, done: Job[]
   if (done.length) await q.query('delete from jobs where id = any($1::int[])', [done.map((j) => j.id)]);
 }
 
+type StationAct<T> = (s: EconomyState, open: Job[], now: number, q: Queryable, playerId: number) => Promise<{ state: EconomyState; result: T }>;
+
+/** Wie withStation, aber innerhalb einer schon laufenden Transaktion (z. B. im Tick) */
+export async function stationIn<T>(q: Queryable, playerId: number, act?: StationAct<T>) {
+  const now = Date.now();
+  const { state, jobs } = await load(q, playerId, true);
+  const settled = settle(state, jobs, now);
+  let s = settled.state;
+  let result: T | undefined;
+  if (act) ({ state: s, result } = await act(s, settled.open, now, q, playerId));
+  await save(q, playerId, s, settled.done);
+  return { state: s, result };
+}
+
 /** Lädt die Station, rechnet sie auf „jetzt“, speichert und führt optional eine Aktion aus – alles in einer Transaktion */
-export async function withStation<T>(db: Db, playerId: number, act?: (s: EconomyState, open: Job[], now: number, q: Queryable, playerId: number) => Promise<{ state: EconomyState; result: T }>) {
-  return db.tx(async (q) => {
-    const now = Date.now();
-    const { state, jobs } = await load(q, playerId, true);
-    const settled = settle(state, jobs, now);
-    let s = settled.state;
-    let result: T | undefined;
-    if (act) ({ state: s, result } = await act(s, settled.open, now, q, playerId));
-    await save(q, playerId, s, settled.done);
-    return { state: s, result };
-  });
+export function withStation<T>(db: Db, playerId: number, act?: StationAct<T>) {
+  return db.tx((q) => stationIn(q, playerId, act));
 }
 
 export async function insertJob(q: Queryable, playerId: number, job: NewJob) {

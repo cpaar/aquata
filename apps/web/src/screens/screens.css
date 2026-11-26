@@ -56,3 +56,26 @@
 .ship-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
 .ship-row:first-child { border-top: 0; }
 .ship-row__n { min-height: 40px; padding: 0 8px; text-align: right; font-family: var(--f-data); }
+
+/* Losschicken */
+.send { display: grid; gap: 14px; }
+.send__steps { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; counter-reset: s; }
+.send__steps li { flex: 1; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); padding-top: 8px; border-top: 2px solid var(--line); counter-increment: s; }
+.send__steps li::before { content: counter(s) ' '; font-family: var(--f-data); }
+.send__steps li.done { color: var(--muted); border-color: var(--petrol); }
+.send__steps li[aria-current] { color: var(--fg); border-color: var(--amber); }
+.send__list { display: grid; gap: 6px; max-height: 50vh; overflow-y: auto; }
+.send__lead { margin: 0; font-size: 0.88rem; }
+.send__nav { display: flex; justify-content: space-between; gap: 10px; }
+.send__stepper { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; text-align: center; }
+.send__stepper b { display: block; font-size: 1.2rem; }
+.send__stepper small { color: var(--muted); font-size: 0.75rem; }
+.send__sum { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; margin: 0; font-size: 0.85rem; }
+.send__sum dt { color: var(--muted); }
+.send__sum dd { margin: 0; }
+
+/* Kampfbericht */
+.report { display: grid; gap: 12px; }
+.report__phase { display: grid; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 0.8rem; }
+.report__side { display: grid; gap: 8px; }
+.report__p { font-size: 0.82rem; display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--pebble); }

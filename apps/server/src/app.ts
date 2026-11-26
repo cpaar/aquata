@@ -9,6 +9,7 @@ import { openDb, migrate, type Db } from './db/index.ts';
 import { currentRound, tickInfo, type Round } from './round.ts';
 import { startTicker } from './tick.ts';
 import { registerRoutes } from './routes.ts';
+import { catchUp } from './fleets.ts';
 
 export interface App { app: ReturnType<typeof Fastify>; db: Db; round: Round; stop: () => Promise<void> }
 
@@ -44,7 +45,12 @@ export async function buildApp(config: Config, opts: { ticker?: boolean; logger?
     app.setNotFoundHandler((req, reply) => (req.url.startsWith('/api') ? reply.code(404).send({ error: 'not found' }) : reply.sendFile('index.html')));
   }
 
-  const stopTicker = opts.ticker === false ? () => {} : startTicker(round, (tick) => broadcast({ type: 'tick', ...tickInfo(round), tick }));
+  // Ticks abarbeiten (auch verpasste nach einem Neustart), danach alle Clients benachrichtigen
+  const runTicks = async () => {
+    try { await catchUp(db, round); } catch (e) { app.log.error(e, 'Tick fehlgeschlagen'); }
+  };
+  if (opts.ticker !== false) await runTicks();
+  const stopTicker = opts.ticker === false ? () => {} : startTicker(round, async (tick) => { await runTicks(); broadcast({ type: 'tick', ...tickInfo(round), tick }); });
 
   return { app, db, round, stop: async () => { stopTicker(); await app.close(); await db.close(); } };
 }

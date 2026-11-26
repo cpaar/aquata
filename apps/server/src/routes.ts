@@ -4,6 +4,7 @@ import type { Db } from './db/index.ts';
 import type { Round } from './round.ts';
 import { insertJob, startBuilding, startCollectors, startShips, startValues, stationView, withStation } from './economy.ts';
 import type { BuildingId, Split } from '@aquata/rules';
+import { fleetsView, logbookGet, recallFleet, reportGet, reportsList, sendFleet } from './fleets.ts';
 import { accountFromRequest, createSession, hashPassword, requireAccount, SESSION_COOKIE, verifyPassword } from './auth.ts';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -104,6 +105,48 @@ export function registerRoutes(app: FastifyInstance, db: Db, round: Round, secur
       return { state: s, result: 'Ungültige Aufteilung.' };
     return { state: { ...s, split }, result: null };
   }));
+
+  app.get('/api/fleets', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    return fleetsView(db, round, pid);
+  });
+
+  app.post<{ Body: Record<string, unknown> }>('/api/fleets', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    const r = await sendFleet(db, round, pid, req.body ?? {});
+    if ('error' in r) return reply.code(400).send({ error: r.error });
+    return { id: r.id, ...(await fleetsView(db, round, pid)) };
+  });
+
+  app.post<{ Params: { id: string } }>('/api/fleets/:id/recall', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    const r = await recallFleet(db, round, pid, Number(req.params.id));
+    if ('error' in r) return reply.code(400).send({ error: r.error });
+    return fleetsView(db, round, pid);
+  });
+
+  app.get('/api/reports', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    return reportsList(db, pid);
+  });
+
+  app.get<{ Params: { id: string } }>('/api/reports/:id', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    const r = await reportGet(db, pid, Number(req.params.id));
+    if (!r) return reply.code(404).send({ error: 'Bericht nicht gefunden.' });
+    return r;
+  });
+
+  app.get('/api/logbook', async (req, reply) => {
+    const pid = await myPlayer(req, reply);
+    if (pid == null) return;
+    return logbookGet(db, pid);
+  });
 
   app.get('/api/me', async (req) => {
     const account = await accountFromRequest(db, req);
