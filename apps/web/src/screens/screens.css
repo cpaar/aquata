@@ -79,3 +79,32 @@
 .report__phase { display: grid; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 0.8rem; }
 .report__side { display: grid; gap: 8px; }
 .report__p { font-size: 0.82rem; display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--pebble); }
+
+/* Karte */
+.map-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 0.72rem; color: var(--muted); }
+.map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.map-legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.map-legend i.map-legend__ring { background: none; border: 1px dashed var(--petrol); width: 10px; height: 10px; }
+
+/* Kampf-Wiedergabe */
+.replay { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: var(--pebble); background: var(--panel); }
+.replay__steps { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+.replay__steps li { flex: 1; min-width: 0; overflow: hidden; border-top: 2px solid var(--line); }
+.replay__steps li.done { border-color: var(--petrol); }
+.replay__steps li[aria-current] { border-color: var(--amber); }
+.replay__steps button { all: unset; cursor: pointer; display: block; padding-top: 6px; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.replay__steps li[aria-current] button { color: var(--fg); }
+.replay__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 360px) { .replay__grid { grid-template-columns: 1fr; } }
+.replay__side { display: grid; gap: 8px; align-content: start; }
+.replay__row { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; font-size: 0.78rem; }
+.replay__name { grid-column: 1; }
+.replay__n { grid-column: 2; grid-row: 1; text-align: right; }
+.replay__n b { color: var(--rust); font-weight: 500; }
+.replay__bar { grid-column: 1 / -1; position: relative; height: 6px; border-radius: 3px; background: rgba(159, 208, 200, 0.08); overflow: hidden; }
+.replay__fill, .replay__par { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; transition: width 0.7s cubic-bezier(.3, .7, .2, 1); }
+.replay__fill--petrol { background: var(--petrol); }
+.replay__fill--rust { background: var(--rust); }
+.replay__par { background: repeating-linear-gradient(135deg, var(--amber) 0 3px, transparent 3px 6px); opacity: 0.9; }
+.replay__text { margin: 0; font-size: 0.82rem; min-height: 3.6em; }
+@media (prefers-reduced-motion: reduce) { .replay__fill, .replay__par { transition: none; } }

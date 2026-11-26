@@ -39,7 +39,7 @@ describe('Flotten, Tick und Kampf', () => {
     expect(after.ships.mako ?? 0).toBe(0);
     expect(after.resources.pu).toBeLessThan(before.resources.pu);
     const f = res.json().own[0];
-    expect(f).toMatchObject({ status: 'outbound', mission: 'attack', target: { id: ids[1] } });
+    expect(f).toMatchObject({ status: 'outbound', mission: 'attack', target: { id: ids[1] }, leg: { from: { x: 200, y: 200 }, to: { x: 300, y: 260 } } });
     expect((await post(0, '/api/fleets', { target: ids[0], ships: { piranha: 1 } })).statusCode).toBe(400);
     expect((await post(0, '/api/fleets', { target: ids[1], ships: { piranha: 99 } })).statusCode).toBe(400);
   });
@@ -96,6 +96,7 @@ describe('Flotten, Tick und Kampf', () => {
     const g = r.json().own.find((x: { id: number }) => x.id === f.id);
     expect(g.status).toBe('returning');
     expect(g.arriveTick).toBe(tick + 1);
+    expect(g.leg).toMatchObject({ to: { x: 200, y: 200 }, start: tick, end: tick + 1 });
     expect((await post(0, `/api/fleets/${f.id}/recall`, {})).statusCode).toBe(400);
   });
 });

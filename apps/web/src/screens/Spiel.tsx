@@ -5,7 +5,9 @@ import { fallbackTick, useServer, type TickState } from '../server';
 import { fmtCost, fmtDuration, RES_NAMES, useStation, type StationData } from '../station';
 import type { Me } from '../api';
 import { useFleets } from '../fleets';
-import { Flotten, IncomingAlarm } from './Flotten';
+import { Flotten, IncomingAlarm, SendSheet, type SendInit } from './Flotten';
+import { Karte } from './Karte';
+import { ReportSheet } from './Bericht';
 import './screens.css';
 
 /** Ein Regler ändert sich, die anderen teilen sich den Rest im alten Verhältnis (Summe bleibt 100) */
@@ -39,6 +41,8 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
   const fl = useFleets(t.tick);
   const underAttack = !!fl.fleets?.incoming.some((f) => f.mission === 'attack');
   const newReports = fl.reports.some((r) => !r.seen);
+  const [send, setSend] = useState<SendInit | null>(null);
+  const [reportId, setReportId] = useState<number | null>(null);
   const toTick = (ms: number) => tickAt(me.round.startedAt, me.round.tickSeconds, ms) + 1;
 
   const nav: NavItem[] = [
@@ -65,20 +69,18 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
         <Hero stage={heroStage(st.data)} height={tab === 'bruecke' ? 330 : 190}>{hud}</Hero>
         <Deck overlap={tab === 'bruecke' ? 48 : 32}>
           {st.error && <p className="k-error" role="alert">{st.error}</p>}
-          {tab === 'bruecke' && <Bruecke st={st} fl={fl} me={me} t={t} toTick={toTick} go={setTab} />}
+          {tab === 'bruecke' && <Bruecke st={st} fl={fl} me={me} t={t} toTick={toTick} go={setTab} onReport={setReportId} />}
           {tab === 'station' && <Station st={st} toTick={toTick} />}
-          {tab === 'flotten' && <Flotten st={st} fl={fl} me={me} toTick={toTick} />}
-          {tab === 'karte' && (
-            <Panel title="Karte">
-              <p className="k-muted" style={{ margin: 0, fontSize: '.88rem' }}>Die Tiefenlinien-Karte mit Sonar, Zielen und Flotten kommt in Schritt 7.</p>
-            </Panel>
-          )}
+          {tab === 'flotten' && <Flotten st={st} fl={fl} me={me} toTick={toTick} onSend={() => setSend({})} onReport={setReportId} />}
+          {tab === 'karte' && <Karte st={st} fl={fl} me={me} t={t} onSend={setSend} />}
           <p className="screen__foot k-muted">
             Angemeldet als {me.account?.name} · <a href="#baukasten">Baukasten</a> · <button className="linkish" onClick={onLogout}>Abmelden</button>
           </p>
         </Deck>
       </main>
       <NavBar items={nav} current={tab} onSelect={(id) => setTab(id as Tab)} />
+      {send && st.data && <SendSheet st={st} fl={fl} me={me} init={send} onClose={() => setSend(null)} />}
+      <ReportSheet id={reportId} onClose={() => setReportId(null)} onSeen={fl.markSeen} />
     </div>
   );
 }
@@ -86,7 +88,7 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
 type St = ReturnType<typeof useStation>;
 type Fl = ReturnType<typeof useFleets>;
 
-function Bruecke({ st, fl, me, t, toTick, go }: { st: St; fl: Fl; me: Me; t: TickState; toTick: (ms: number) => number; go: (t: Tab) => void }) {
+function Bruecke({ st, fl, me, t, toTick, go, onReport }: { st: St; fl: Fl; me: Me; t: TickState; toTick: (ms: number) => number; go: (t: Tab) => void; onReport: (id: number) => void }) {
   const d = st.data;
   const progress = Math.min(1, Math.max(0, 1 - (t.nextTickAt - st.now) / (t.tickSeconds * 1000)));
   const building = d?.jobs.find((j) => j.kind === 'building');
@@ -101,7 +103,7 @@ function Bruecke({ st, fl, me, t, toTick, go }: { st: St; fl: Fl; me: Me; t: Tic
   const unseen = fl.reports.filter((r) => !r.seen);
 
   const needs: React.ReactNode[] = [];
-  if (unseen.length) needs.push(<Row key="r" icon="bericht" tone="rust" title={unseen.length === 1 ? 'Neuer Kampfbericht' : `${unseen.length} neue Kampfberichte`} sub={unseen[0]!.target} trailing={<Button variant="outline" onClick={() => go('flotten')}>Lesen</Button>} />);
+  if (unseen.length) needs.push(<Row key="r" icon="bericht" tone="rust" title={unseen.length === 1 ? 'Neuer Kampfbericht' : `${unseen.length} neue Kampfberichte`} sub={unseen[0]!.target} trailing={<Button variant="outline" onClick={() => onReport(unseen[0]!.id)}>Lesen</Button>} />);
   if (d && !building) needs.push(<Row key="b" icon="station" title="Bauplatz frei" sub="Kein Gebäude im Ausbau" trailing={<Button variant="outline" onClick={() => go('station')}>Ausbauen</Button>} />);
   if (d && collecting.length === 0 && st.live && canAfford(st.live, d.collector.cost)) needs.push(<Row key="c" icon="sammler" title="Mehr Sammler möglich" sub={`${d.collectors} Sammler fördern gerade`} trailing={<Button variant="outline" onClick={() => go('station')}>Bauen</Button>} />);
 
@@ -121,7 +123,7 @@ function Bruecke({ st, fl, me, t, toTick, go }: { st: St; fl: Fl; me: Me; t: Tic
       <Panel title="Logbuch">
         {fl.logbook.length ? fl.logbook.slice(0, 8).map((l) => (
           <Row key={l.id} icon={l.kind === 'kampf' ? 'angriff' : l.kind === 'heimkehr' ? 'rueckkehr' : 'bericht'} title={l.text} sub={<span className="k-data">Tick {l.tick}</span>}
-            onClick={l.reportId ? () => go('flotten') : undefined} />
+            onClick={l.reportId ? () => onReport(l.reportId!) : undefined} />
         )) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Einträge. Hier landen Flotten und Kampfberichte.</p>}
       </Panel>
     </>

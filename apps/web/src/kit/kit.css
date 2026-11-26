@@ -231,6 +231,9 @@ button.k-row { all: unset; box-sizing: border-box; display: grid; grid-template-
   border-bottom: 0;
   border-radius: var(--r-sheet) var(--r-sheet) 0 0;
   padding: 10px var(--pad) calc(20px + env(safe-area-inset-bottom, 0px));
+  max-height: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   animation: k-rise 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .k-sheet__grip { width: 36px; height: 3px; border-radius: 2px; background: var(--line2); margin: 0 auto 14px; }

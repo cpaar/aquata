@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { Cost, PhaseLog, Ships } from '@aquata/rules';
 
+export interface Leg { from: { x: number; y: number }; to: { x: number; y: number }; start: number; end: number }
 export interface Place { id: number; station: string; owner: string; x: number; y: number }
 export interface OwnFleet {
   id: number; mission: 'attack' | 'defend'; status: 'outbound' | 'engaged' | 'returning'; ships: Ships;
-  departTick: number; arriveTick: number; fightTicks: number; fought: number; cargo: Cost; target: Place;
+  departTick: number; arriveTick: number; fightTicks: number; fought: number; cargo: Cost; leg: Leg | null; target: Place;
 }
-export interface IncomingFleet { id: number; mission: 'attack' | 'defend'; status: 'outbound' | 'engaged'; arriveTick: number; size: number; from: Place }
+export interface IncomingFleet { id: number; mission: 'attack' | 'defend'; status: 'outbound' | 'engaged'; arriveTick: number; size: number; leg: Leg | null; from: Place }
 export interface FleetsData { tick: number; own: OwnFleet[]; incoming: IncomingFleet[] }
 export interface ReportItem { id: number; tick: number; side: 'attacker' | 'defender'; seen: boolean; winner: 'attacker' | 'defender' | 'draw'; target: string }
 export interface ReportSide { playerId: number; station: string; owner: string; fleetId: number | null; fightNo: number | null; of: number | null; before: Ships; after: Ships; lost: Ships; debris: Cost; loot: Cost }

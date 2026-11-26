@@ -4,7 +4,7 @@ import { AlarmStrip, Button, Panel, Row, Sheet, Tabs, Tag } from '../kit';
 import { api, type Me } from '../api';
 import type { MapStation } from '../map/DepthMap';
 import { fmtCost, fmtDuration, type useStation } from '../station';
-import { getReport, type IncomingFleet, type OwnFleet, type Report, type useFleets } from '../fleets';
+import type { IncomingFleet, OwnFleet, useFleets } from '../fleets';
 
 type St = ReturnType<typeof useStation>;
 type Fl = ReturnType<typeof useFleets>;
@@ -12,8 +12,8 @@ type Round = Me['round'];
 
 const ROLE: Record<string, string> = { normal: 'Normal', emp: 'EMP', erstschlag: 'Erstschlag' };
 const CLASS: Record<string, string> = { klein: 'klein', mittel: 'mittel', fregatte: 'Fregatte', schwer: 'schwer' };
-const shipList = (s: Ships) => Object.entries(s).filter(([, n]) => n > 0).map(([id, n]) => `${n.toLocaleString('de-DE')} ${SHIPS[id]?.name ?? id}`).join(' · ') || 'keine Schiffe';
-const cargoText = (c: Cost) => (c.alu + c.stahl + c.pu > 0 ? fmtCost(c) : '');
+export const shipList = (s: Ships) => Object.entries(s).filter(([, n]) => n > 0).map(([id, n]) => `${n.toLocaleString('de-DE')} ${SHIPS[id]?.name ?? id}`).join(' · ') || 'keine Schiffe';
+export const cargoText = (c: Cost) => (c.alu + c.stahl + c.pu > 0 ? fmtCost(c) : '');
 
 /** „Tick 42 · in 13 min“ */
 export function TickWhen({ round, tick, now, short }: { round: Round; tick: number; now: number; short?: boolean }) {
@@ -38,16 +38,13 @@ export function IncomingAlarm({ incoming, round, now }: { incoming: IncomingFlee
 const statusText = (f: OwnFleet) =>
   f.status === 'outbound' ? `fliegt zu ${f.target.station}` : f.status === 'engaged' ? (f.mission === 'attack' ? `kämpft an ${f.target.station} (${f.fought}/${f.fightTicks})` : `verteidigt ${f.target.station} (${f.fought}/${f.fightTicks})`) : `kehrt heim von ${f.target.station}`;
 
-export function Flotten({ st, fl, me, toTick }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; toTick: (ms: number) => number }) {
+export function Flotten({ st, fl, me, toTick, onSend, onReport }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; toTick: (ms: number) => number; onSend: () => void; onReport: (id: number) => void }) {
   const d = st.data;
   const [amount, setAmount] = useState<Record<string, number>>({});
-  const [sending, setSending] = useState(false);
-  const [report, setReport] = useState<Report | null>(null);
   if (!d || !st.live) return <p className="k-muted">Flotten laden …</p>;
   const queue = d.jobs.filter((j) => j.kind === 'ship');
   const home = Object.entries(d.ships).filter(([, n]) => n > 0);
   const werft = d.buildings.find((b) => b.id === 'werft')!.level;
-  const openReport = async (id: number) => { setReport(await getReport(id)); fl.markSeen(id); };
 
   return (
     <>
@@ -59,7 +56,7 @@ export function Flotten({ st, fl, me, toTick }: { st: St; fl: Fl; me: Me & { pla
           const t = d.shipTypes.find((x) => x.id === id);
           return <Row key={id} icon="flotten" title={<><span className="k-data">{n.toLocaleString('de-DE')}×</span> {t?.name ?? id}</>} sub={t && `${CLASS[t.class]} · ${ROLE[t.role]}`} />;
         }) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Keine Schiffe zuhause. Gib unten welche in der Werft in Auftrag.</p>}
-        {home.length > 0 && <div style={{ marginTop: 12 }}><Button block icon="angriff" onClick={() => setSending(true)}>Flotte losschicken</Button></div>}
+        {home.length > 0 && <div style={{ marginTop: 12 }}><Button block icon="angriff" onClick={onSend}>Flotte losschicken</Button></div>}
       </Panel>
 
       {fl.fleets && fl.fleets.own.length > 0 && (
@@ -121,25 +118,24 @@ export function Flotten({ st, fl, me, toTick }: { st: St; fl: Fl; me: Me & { pla
 
       <Panel title="Kampfberichte" aside={<Tag tone={fl.reports.some((r) => !r.seen) ? 'rust' : undefined}>{fl.reports.filter((r) => !r.seen).length} neu</Tag>}>
         {fl.reports.length ? fl.reports.slice(0, 10).map((r) => (
-          <Row key={r.id} icon="bericht" tone={!r.seen ? 'rust' : undefined} onClick={() => openReport(r.id)}
+          <Row key={r.id} icon="bericht" tone={!r.seen ? 'rust' : undefined} onClick={() => onReport(r.id)}
             title={<>{r.target} · {r.winner === 'draw' ? 'unentschieden' : (r.side === r.winner) ? 'gewonnen' : 'verloren'}</>}
             sub={<span className="k-data">Tick {r.tick} · {r.side === 'attacker' ? 'Angriff' : 'Verteidigung'}</span>} />
         )) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Kämpfe.</p>}
       </Panel>
 
-      {sending && <SendSheet st={st} fl={fl} me={me} onClose={() => setSending(false)} />}
-      <ReportSheet report={report} onClose={() => setReport(null)} />
     </>
   );
 }
 
 /* ---------- Losschicken in vier Schritten: Ziel, Schiffe, Ankunft, Bestätigen ---------- */
-function SendSheet({ st, fl, me, onClose }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; onClose: () => void }) {
+export interface SendInit { target?: MapStation; mission?: 'attack' | 'defend' }
+export function SendSheet({ st, fl, me, init, onClose }: { st: St; fl: Fl; me: Me & { player: NonNullable<Me['player']> }; init: SendInit; onClose: () => void }) {
   const d = st.data!;
-  const [step, setStep] = useState(0);
-  const [mission, setMission] = useState<'attack' | 'defend'>('attack');
+  const [step, setStep] = useState(init.target ? 1 : 0);
+  const [mission, setMission] = useState<'attack' | 'defend'>(init.mission ?? 'attack');
   const [stations, setStations] = useState<MapStation[]>([]);
-  const [target, setTarget] = useState<MapStation | null>(null);
+  const [target, setTarget] = useState<MapStation | null>(init.target ?? null);
   const [ships, setShips] = useState<Ships>({});
   const [arrive, setArrive] = useState<number | null>(null);
   const [fightTicks, setFightTicks] = useState(1);
@@ -237,51 +233,6 @@ function SendSheet({ st, fl, me, onClose }: { st: St; fl: Fl; me: Me & { player:
             </div>
           </>
         )}
-      </div>
-    </Sheet>
-  );
-}
-
-/* ---------- Kampfbericht (einfach; die Wiedergabe Phase für Phase kommt mit Schritt 7) ---------- */
-const PHASE_NAME = { emp: 'EMP', erstschlag: 'Erstschlag', normal: 'Hauptkampf' } as const;
-function ReportSheet({ report, onClose }: { report: Report | null; onClose: () => void }) {
-  if (!report) return null;
-  const won = report.winner === 'draw' ? 'Unentschieden' : report.side === report.winner ? 'Gewonnen' : 'Verloren';
-  const side = (title: string, list: Report['attackers']) => (
-    <div className="report__side">
-      <h4 className="k-eyebrow">{title}</h4>
-      {list.map((p, i) => (
-        <div key={i} className="report__p">
-          <b>{p.station}</b> <span className="k-muted">{p.owner}{p.fleetId == null ? ' · zuhause' : p.fightNo ? ` · Kampftick ${p.fightNo}/${p.of}` : ''}</span>
-          <div className="k-data">{shipList(p.before)}</div>
-          {countShips(p.lost) > 0 && <div className="k-data" style={{ color: 'var(--rust)' }}>verloren: {shipList(p.lost)}</div>}
-          {cargoText(p.debris) && <div className="k-data k-muted">Müll: {cargoText(p.debris)}</div>}
-          {cargoText(p.loot) && <div className="k-data" style={{ color: 'var(--amber)' }}>Beute: {cargoText(p.loot)}</div>}
-        </div>
-      ))}
-    </div>
-  );
-  return (
-    <Sheet open onClose={onClose} label="Kampfbericht">
-      <div className="report">
-        <div className="k-eyebrow">Kampfbericht · Tick {report.tick}</div>
-        <h3 className="k-h2" style={{ margin: '4px 0 12px' }}>{report.target.station}: {won}</h3>
-        {report.phases.length === 0 && <p className="k-muted" style={{ fontSize: '.85rem' }}>Keine Verteidigung vor Ort, kein Kampf.</p>}
-        {report.phases.map((ph) => {
-          const what = ph.phase === 'emp' ? 'gelähmt' : 'zerstört';
-          const a = ph.phase === 'emp' ? ph.attacker.paralyzed : ph.attacker.lost;
-          const dd = ph.phase === 'emp' ? ph.defender.paralyzed : ph.defender.lost;
-          return (
-            <div key={ph.phase} className="report__phase">
-              <b>{PHASE_NAME[ph.phase]}</b>
-              <span className="k-data k-muted">Angreifer {what}: {countShips(a) ? shipList(a) : '–'}</span>
-              <span className="k-data k-muted">Verteidiger {what}: {countShips(dd) ? shipList(dd) : '–'}</span>
-            </div>
-          );
-        })}
-        {side('Angreifer', report.attackers)}
-        {side('Verteidiger', report.defenders)}
-        <Button block variant="outline" onClick={onClose}>Schließen</Button>
       </div>
     </Sheet>
   );

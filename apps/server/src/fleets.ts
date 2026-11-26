@@ -6,8 +6,11 @@ import { stationIn } from './economy.ts';
 export interface FleetRow {
   id: number; round_id: number; player_id: number; target_id: number; mission: 'attack' | 'defend';
   status: 'outbound' | 'engaged' | 'returning'; ships: Ships; depart_tick: number; arrive_tick: number;
-  warn_tick: number; fight_ticks: number; fought: number; cargo: Cost;
+  warn_tick: number; fight_ticks: number; fought: number; cargo: Cost; leg: Leg | null;
 }
+export interface Leg { from: { x: number; y: number }; to: { x: number; y: number }; start: number; end: number }
+const legJson = (from: { x: number; y: number }, to: { x: number; y: number }, start: number, end: number) =>
+  JSON.stringify({ from: { x: from.x, y: from.y }, to: { x: to.x, y: to.y }, start, end });
 interface StationRow { id: number; station_name: string; x: number; y: number; buildings: { werft: number; antrieb: number; sonar: number }; ships: Ships; owner: string | null }
 
 const ZERO: Cost = { alu: 0, stahl: 0, pu: 0 };
@@ -52,9 +55,9 @@ export async function sendFleet(db: Db, round: Round, playerId: number, body: { 
       if (!plan.ok) { error = plan.error; return { state: s, result: null }; }
       const warn = warnTick(me, target, nowTick, plan.arriveTick, target.buildings.sonar);
       const ins = await q.query<{ id: number }>(
-        `insert into fleets (round_id, player_id, target_id, mission, status, ships, depart_tick, arrive_tick, warn_tick, fight_ticks)
-         values ($1, $2, $3, $4, 'outbound', $5, $6, $7, $8, $9) returning id`,
-        [round.id, playerId, targetId, mission, JSON.stringify(ships), nowTick, plan.arriveTick, warn, Number(body.fightTicks ?? 1)]);
+        `insert into fleets (round_id, player_id, target_id, mission, status, ships, depart_tick, arrive_tick, warn_tick, fight_ticks, leg)
+         values ($1, $2, $3, $4, 'outbound', $5, $6, $7, $8, $9, $10) returning id`,
+        [round.id, playerId, targetId, mission, JSON.stringify(ships), nowTick, plan.arriveTick, warn, Number(body.fightTicks ?? 1), legJson(me, target, nowTick, plan.arriveTick)]);
       fleetId = ins.rows[0]!.id;
       return { state: { ...s, ships: addShips(s.ships, ships, -1), res: { ...s.res, pu: s.res.pu - plan.fuel } }, result: null };
     });
@@ -71,13 +74,15 @@ export async function recallFleet(db: Db, round: Round, playerId: number, fleetI
     if (!f) return { error: 'Flotte nicht gefunden.' };
     if (f.status === 'returning') return { error: 'Die Flotte ist schon auf dem Heimweg.' };
     const now = await processedTick(q, round.id);
-    let arrive: number;
-    if (f.status === 'outbound') arrive = now + Math.max(1, now - f.depart_tick);
-    else {
-      const home = await stationRow(q, f.player_id), target = await stationRow(q, f.target_id);
-      arrive = now + returnTicks(target, home, home.buildings.antrieb, f.ships);
-    }
-    await q.query(`update fleets set status = 'returning', arrive_tick = $2 where id = $1`, [f.id, arrive]);
+    const home = await stationRow(q, f.player_id), target = await stationRow(q, f.target_id);
+    let arrive: number, from: { x: number; y: number } = target;
+    if (f.status === 'outbound') {
+      arrive = now + Math.max(1, now - f.depart_tick);
+      // umkehren, wo die Flotte gerade ist
+      const l = f.leg;
+      if (l) { const k = Math.min(1, Math.max(0, (now - l.start) / Math.max(1, l.end - l.start))); from = { x: Math.round(l.from.x + (l.to.x - l.from.x) * k), y: Math.round(l.from.y + (l.to.y - l.from.y) * k) }; }
+    } else arrive = now + returnTicks(target, home, home.buildings.antrieb, f.ships);
+    await q.query(`update fleets set status = 'returning', arrive_tick = $2, leg = $3 where id = $1`, [f.id, arrive, legJson(from, home, now, arrive)]);
     return { ok: true, arriveTick: arrive };
   });
 }
@@ -101,7 +106,7 @@ export async function processTick(q: Queryable, round: Round, tick: number) {
   }
 
   // 2. Ankunft
-  await q.query(`update fleets set status = 'engaged' where round_id = $1 and status = 'outbound' and arrive_tick <= $2`, [round.id, tick]);
+  await q.query(`update fleets set status = 'engaged', leg = null where round_id = $1 and status = 'outbound' and arrive_tick <= $2`, [round.id, tick]);
 
   // 3. Kämpfe
   const engaged = (await q.query<FleetRow>(`select * from fleets where round_id = $1 and status = 'engaged' order by id`, [round.id])).rows;
@@ -125,7 +130,8 @@ export async function processTick(q: Queryable, round: Round, tick: number) {
   const done = (await q.query<FleetRow>(`select * from fleets where round_id = $1 and status = 'engaged' and (fought >= fight_ticks or ships = '{}'::jsonb)`, [round.id])).rows;
   for (const f of done) {
     const home = await stationRow(q, f.player_id), target = await stationRow(q, f.target_id);
-    await q.query(`update fleets set status = 'returning', arrive_tick = $2 where id = $1`, [f.id, tick + returnTicks(target, home, home.buildings.antrieb, f.ships)]);
+    const arrive = tick + returnTicks(target, home, home.buildings.antrieb, f.ships);
+    await q.query(`update fleets set status = 'returning', arrive_tick = $2, leg = $3 where id = $1`, [f.id, arrive, legJson(target, home, tick, arrive)]);
   }
 }
 
@@ -217,9 +223,9 @@ export async function fleetsView(db: Db, round: Round, playerId: number) {
   const n = await names([...new Set([...own.map((f) => f.target_id), ...incoming.map((f) => f.player_id)])]);
   return {
     tick,
-    own: own.map((f) => ({ id: f.id, mission: f.mission, status: f.status, ships: f.ships, departTick: f.depart_tick, arriveTick: f.arrive_tick, fightTicks: f.fight_ticks, fought: f.fought, cargo: f.cargo, target: { id: f.target_id, ...n.get(f.target_id)! } })),
+    own: own.map((f) => ({ id: f.id, mission: f.mission, status: f.status, ships: f.ships, departTick: f.depart_tick, arriveTick: f.arrive_tick, fightTicks: f.fight_ticks, fought: f.fought, cargo: f.cargo, leg: f.leg, target: { id: f.target_id, ...n.get(f.target_id)! } })),
     // Sonar zeigt nur die Größe, keine Zusammensetzung
-    incoming: incoming.map((f) => ({ id: f.id, mission: f.mission, status: f.status, arriveTick: f.arrive_tick, size: countShips(f.ships), from: { id: f.player_id, ...n.get(f.player_id)! } })),
+    incoming: incoming.map((f) => ({ id: f.id, mission: f.mission, status: f.status, arriveTick: f.arrive_tick, size: countShips(f.ships), leg: f.leg, from: { id: f.player_id, ...n.get(f.player_id)! } })),
   };
 }
 
