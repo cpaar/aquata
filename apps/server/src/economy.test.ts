@@ -42,4 +42,12 @@ describe('Station und Wirtschaft', () => {
     expect(sp.split.pu).toBeCloseTo(50);
     expect((await post('/api/station/split', { alu: -1, stahl: 0, pu: 0 })).statusCode).toBe(400);
   });
+
+  it('gibt Schiffe in Auftrag, gesperrte Typen nicht', async () => {
+    const ok = await post('/api/station/ships', { ship: 'piranha', amount: 2 });
+    expect(ok.statusCode).toBe(200);
+    expect(ok.json().jobs.some((j: { kind: string; item: string }) => j.kind === 'ship' && j.item === 'piranha')).toBe(true);
+    expect(ok.json().shipTypes.find((t: { id: string }) => t.id === 'mako').unlocked).toBe(false);
+    expect((await post('/api/station/ships', { ship: 'mako', amount: 1 })).statusCode).toBe(400);
+  });
 });

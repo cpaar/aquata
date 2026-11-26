@@ -62,11 +62,10 @@ export function Spiel({ me, onLogout }: { me: Me & { player: NonNullable<Me['pla
           {st.error && <p className="k-error" role="alert">{st.error}</p>}
           {tab === 'bruecke' && <Bruecke st={st} t={t} toTick={toTick} go={setTab} />}
           {tab === 'station' && <Station st={st} toTick={toTick} />}
-          {(tab === 'karte' || tab === 'flotten') && (
-            <Panel title={tab === 'karte' ? 'Karte' : 'Flotten'}>
-              <p className="k-muted" style={{ margin: 0, fontSize: '.88rem' }}>
-                {tab === 'karte' ? 'Die Tiefenlinien-Karte mit Sonar und Flotten kommt in Schritt 7.' : 'Schiffe bauen und Flotten losschicken kommt in Schritt 5.'}
-              </p>
+          {tab === 'flotten' && <Flotten st={st} toTick={toTick} />}
+          {tab === 'karte' && (
+            <Panel title="Karte">
+              <p className="k-muted" style={{ margin: 0, fontSize: '.88rem' }}>Die Tiefenlinien-Karte mit Sonar, Zielen und Flotten kommt in Schritt 7.</p>
             </Panel>
           )}
           <p className="screen__foot k-muted">
@@ -88,7 +87,7 @@ function Bruecke({ st, t, toTick, go }: { st: St; t: TickState; toTick: (ms: num
   const collecting = d?.jobs.filter((j) => j.kind === 'collector') ?? [];
   const events: TideEvent[] = (d?.jobs ?? []).map((j) => ({
     tick: toTick(j.finishesAt),
-    label: j.kind === 'building' ? `${d!.buildings.find((b) => b.id === j.item)?.name ?? ''} ${j.level}` : `+${j.amount} Sammler`,
+    label: j.kind === 'building' ? `${d!.buildings.find((b) => b.id === j.item)?.name ?? ''} ${j.level}` : j.kind === 'ship' ? `+${j.amount} ${d!.shipTypes.find((x) => x.id === j.item)?.name ?? ''}` : `+${j.amount} Sammler`,
     tone: 'amber',
   }));
 
@@ -173,6 +172,66 @@ function Station({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
         </div>
       </Panel>
       <p className="k-muted" style={{ margin: 0, fontSize: '.75rem' }}>Kommandoschiff und weitere Gebäude kommen mit späteren Schritten.</p>
+    </>
+  );
+}
+
+const ROLE: Record<string, string> = { normal: 'Normal', emp: 'EMP', erstschlag: 'Erstschlag' };
+const CLASS: Record<string, string> = { klein: 'klein', mittel: 'mittel', fregatte: 'Fregatte', schwer: 'schwer' };
+
+function Flotten({ st, toTick }: { st: St; toTick: (ms: number) => number }) {
+  const d = st.data;
+  const [amount, setAmount] = useState<Record<string, number>>({});
+  if (!d || !st.live) return <p className="k-muted">Werft lädt …</p>;
+  const queue = d.jobs.filter((j) => j.kind === 'ship');
+  const home = Object.entries(d.ships).filter(([, n]) => n > 0);
+  const werft = d.buildings.find((b) => b.id === 'werft')!.level;
+
+  return (
+    <>
+      <Panel title="Zuhause" aside={<span className="k-data">{home.reduce((s, [, n]) => s + n, 0)} Schiffe</span>}>
+        {home.length ? home.map(([id, n]) => {
+          const t = d.shipTypes.find((x) => x.id === id);
+          return <Row key={id} icon="flotten" title={<><span className="k-data">{n.toLocaleString('de-DE')}×</span> {t?.name ?? id}</>} sub={t && `${CLASS[t.class]} · ${ROLE[t.role]}`} />;
+        }) : <p className="k-muted" style={{ margin: 0, fontSize: '.85rem' }}>Noch keine Schiffe. Gib unten welche in der Werft in Auftrag.</p>}
+        <p className="k-muted" style={{ margin: '10px 0 0', fontSize: '.75rem' }}>Flotten losschicken kommt mit Schritt 6 (Tick und Kampf).</p>
+      </Panel>
+
+      <Panel title={`Werft · Stufe ${werft}`}>
+        {d.shipTypes.filter((t) => t.unlocked).map((t) => {
+          const n = amount[t.id] ?? 1;
+          const cost = { alu: t.cost.alu * n, stahl: t.cost.stahl * n, pu: t.cost.pu * n };
+          const ok = canAfford(st.live!, cost);
+          return (
+            <div key={t.id} className="ship-row">
+              <div style={{ minWidth: 0 }}>
+                <div className="k-row__title">{t.name} <span className="k-muted" style={{ fontSize: '.75rem' }}>{CLASS[t.class]} · {ROLE[t.role]}</span></div>
+                <div className="k-row__sub k-data">{fmtCost(t.cost)} · {fmtDuration(t.seconds * 1000)} je Schiff</div>
+              </div>
+              <input className="k-input ship-row__n" type="number" min={1} max={1000} value={n} aria-label={`Anzahl ${t.name}`}
+                onChange={(e) => setAmount({ ...amount, [t.id]: Math.max(1, Math.min(1000, Math.floor(Number(e.target.value) || 1))) })} />
+              <Button disabled={!ok} title={ok ? undefined : 'zu wenig Rohstoffe'} onClick={() => st.act('/api/station/ships', { ship: t.id, amount: n })}>Bauen</Button>
+            </div>
+          );
+        })}
+        {d.shipTypes.filter((t) => !t.unlocked).slice(0, 1).map((t) => (
+          <p key={t.id} className="k-muted" style={{ margin: '10px 0 0', fontSize: '.78rem' }}>Nächster Schiffstyp: {t.name} mit Werft Stufe {t.werft}.</p>
+        ))}
+      </Panel>
+
+      {queue.length > 0 && (
+        <Panel title="In Bau">
+          {queue.map((j) => {
+            const t = d.shipTypes.find((x) => x.id === j.item);
+            const running = st.now >= j.startedAt;
+            return (
+              <Row key={j.id} icon="werft" tone="amber" title={<>{j.amount}× {t?.name}</>}
+                sub={running ? `fertig in ${fmtDuration(j.finishesAt - st.now)} · Tick ${toTick(j.finishesAt)}` : `wartet · startet in ${fmtDuration(j.startedAt - st.now)}`}
+                trailing={running ? <Tag tone="amber">{Math.round(((st.now - j.startedAt) / (j.finishesAt - j.startedAt)) * 100)} %</Tag> : <Tag>wartet</Tag>} />
+            );
+          })}
+        </Panel>
+      )}
     </>
   );
 }

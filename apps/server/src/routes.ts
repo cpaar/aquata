@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { MAP, placementError, suggestSpots } from '@aquata/rules';
 import type { Db } from './db/index.ts';
 import type { Round } from './round.ts';
-import { insertJob, startBuilding, startCollectors, startValues, stationView, withStation } from './economy.ts';
+import { insertJob, startBuilding, startCollectors, startShips, startValues, stationView, withStation } from './economy.ts';
 import type { BuildingId, Split } from '@aquata/rules';
 import { accountFromRequest, createSession, hashPassword, requireAccount, SESSION_COOKIE, verifyPassword } from './auth.ts';
 
@@ -86,6 +86,13 @@ export function registerRoutes(app: FastifyInstance, db: Db, round: Round, secur
 
   app.post('/api/station/collectors', action((b) => async (s, open, now, q, pid) => {
     const r = startCollectors(s, open, Number(b.amount), now);
+    if ('error' in r) return { state: s, result: r.error };
+    await insertJob(q, pid, r.job);
+    return { state: r.state, result: null };
+  }));
+
+  app.post('/api/station/ships', action((b) => async (s, open, now, q, pid) => {
+    const r = startShips(s, open, String(b.ship), Number(b.amount), now);
     if ('error' in r) return { state: s, result: r.error };
     await insertJob(q, pid, r.job);
     return { state: r.state, result: null };

@@ -1,4 +1,4 @@
-import { BUILDINGS, COLLECTOR, MAX_LEVEL, RESOURCES, type BuildingId, type Cost } from './data.ts';
+import { BUILDINGS, COLLECTOR, MAX_LEVEL, RESOURCES, SHIPS, type BuildingId, type Cost } from './data.ts';
 import { buildingCost, canAfford, productionPerHour, type Split } from './economy.ts';
 
 export interface EconomyState {
@@ -8,11 +8,14 @@ export interface EconomyState {
   collectors: number;
   split: Split;
   buildings: Record<BuildingId, number>;
+  /** Schiffe zuhause (nicht unterwegs) */
+  ships: Record<string, number>;
 }
 
 export type Job =
   | { id: number; kind: 'building'; item: BuildingId; level: number; startedAt: number; finishesAt: number }
-  | { id: number; kind: 'collector'; amount: number; startedAt: number; finishesAt: number };
+  | { id: number; kind: 'collector'; amount: number; startedAt: number; finishesAt: number }
+  | { id: number; kind: 'ship'; item: string; amount: number; startedAt: number; finishesAt: number };
 
 /** Auftrag ohne Datenbank-ID (vor dem Speichern) */
 export type NewJob = { [K in Job['kind']]: Omit<Extract<Job, { kind: K }>, 'id'> }[Job['kind']];
@@ -36,7 +39,8 @@ export function settle(state: EconomyState, jobs: Job[], now: number): { state: 
   for (const j of due) {
     s = advance(s, j.finishesAt);
     if (j.kind === 'building') s = { ...s, buildings: { ...s.buildings, [j.item]: j.level } };
-    else s = { ...s, collectors: s.collectors + j.amount };
+    else if (j.kind === 'collector') s = { ...s, collectors: s.collectors + j.amount };
+    else s = { ...s, ships: { ...s.ships, [j.item]: (s.ships[j.item] ?? 0) + j.amount } };
   }
   s = advance(s, now);
   return { state: s, done: due, open: jobs.filter((j) => j.finishesAt > now) };
@@ -62,4 +66,22 @@ export function startCollectors(state: EconomyState, open: Job[], amount: number
   if (!canAfford(state.res, cost)) return { error: 'Nicht genug Rohstoffe.' };
   const start = Math.max(now, ...open.filter((j) => j.kind === 'collector').map((j) => j.finishesAt));
   return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'collector', amount, startedAt: start, finishesAt: start + amount * COLLECTOR.buildSeconds * 1000 } };
+}
+
+/** Bauzeit pro Schiff: jede Werftstufe über 1 macht 5 % schneller, höchstens 40 % */
+export function shipSeconds(shipId: string, werftLevel: number): number {
+  const base = SHIPS[shipId]?.buildSeconds ?? 0;
+  return Math.round(base * (1 - Math.min(0.4, 0.05 * (werftLevel - 1))));
+}
+
+/** Prüft und bucht Schiffe. Die Werft baut nacheinander: neue Aufträge kommen hinter laufende Schiffsaufträge. */
+export function startShips(state: EconomyState, open: Job[], shipId: string, amount: number, now: number): { state: EconomyState; job: NewJob & { kind: 'ship' } } | { error: string } {
+  const ship = SHIPS[shipId];
+  if (!ship) return { error: 'Unbekannter Schiffstyp.' };
+  if (state.buildings.werft < ship.werft) return { error: `${ship.name} braucht Werft Stufe ${ship.werft}.` };
+  if (!Number.isInteger(amount) || amount < 1 || amount > 1000) return { error: 'Bitte 1 bis 1000 Schiffe.' };
+  const cost = { alu: ship.cost.alu * amount, stahl: ship.cost.stahl * amount, pu: ship.cost.pu * amount };
+  if (!canAfford(state.res, cost)) return { error: 'Nicht genug Rohstoffe.' };
+  const start = Math.max(now, ...open.filter((j) => j.kind === 'ship').map((j) => j.finishesAt));
+  return { state: { ...state, res: pay(state.res, cost) }, job: { kind: 'ship', item: shipId, amount, startedAt: start, finishesAt: start + amount * shipSeconds(shipId, state.buildings.werft) * 1000 } };
 }

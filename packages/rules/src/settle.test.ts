@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { START, buildingCost, productionPerHour, settle, startBuilding, startCollectors, type EconomyState, type Job } from './index.ts';
+import { START, SHIPS, buildingCost, productionPerHour, settle, startBuilding, startCollectors, startShips, type EconomyState, type Job } from './index.ts';
 
-const fresh = (): EconomyState => ({ res: { ...START.resources }, resAt: 0, collectors: 10, split: { alu: 100, stahl: 0, pu: 0 }, buildings: { ...START.buildings } });
+const fresh = (): EconomyState => ({ res: { ...START.resources }, resAt: 0, collectors: 10, split: { alu: 100, stahl: 0, pu: 0 }, buildings: { ...START.buildings }, ships: {} });
 const H = 3_600_000;
 
 describe('Wirtschaft abrechnen', () => {
@@ -41,5 +41,20 @@ describe('Wirtschaft abrechnen', () => {
   it('lehnt zu teure Aufträge ab', () => {
     const poor = { ...fresh(), res: { alu: 10, stahl: 10, pu: 0 } };
     expect(startCollectors(poor, [], 5, 0)).toEqual({ error: 'Nicht genug Rohstoffe.' });
+  });
+});
+
+describe('Werft', () => {
+  it('baut nur freigeschaltete Schiffe', () => {
+    const s = fresh();
+    expect(startShips(s, [], 'mako', 1, 0)).toEqual({ error: `Mako braucht Werft Stufe ${SHIPS.mako!.werft}.` });
+    expect('job' in startShips(s, [], 'piranha', 2, 0)).toBe(true);
+  });
+
+  it('fertige Schiffe landen im Hangar', () => {
+    const r = startShips(fresh(), [], 'piranha', 3, 0);
+    if ('error' in r) throw new Error(r.error);
+    const { state } = settle(r.state, [{ id: 9, ...r.job }], r.job.finishesAt);
+    expect(state.ships.piranha).toBe(3);
   });
 });
