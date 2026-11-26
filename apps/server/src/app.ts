@@ -10,6 +10,7 @@ import { currentRound, tickInfo, type Round } from './round.ts';
 import { startTicker } from './tick.ts';
 import { registerRoutes } from './routes.ts';
 import { catchUp } from './fleets.ts';
+import { ensureBots, runBots } from './bots.ts';
 
 export interface App { app: ReturnType<typeof Fastify>; db: Db; round: Round; stop: () => Promise<void> }
 
@@ -46,8 +47,13 @@ export async function buildApp(config: Config, opts: { ticker?: boolean; logger?
   }
 
   // Ticks abarbeiten (auch verpasste nach einem Neustart), danach alle Clients benachrichtigen
+  await ensureBots(db, round, config.bots);
   const runTicks = async () => {
-    try { await catchUp(db, round); } catch (e) { app.log.error(e, 'Tick fehlgeschlagen'); }
+    try {
+      const done = await catchUp(db, round);
+      // Bots ziehen einmal pro neuem Tick (nicht für jeden nachgeholten)
+      if (done.length && config.bots > 0) await runBots(db, round, done[done.length - 1]!, config.botAttacks);
+    } catch (e) { app.log.error(e, 'Tick fehlgeschlagen'); }
   };
   if (opts.ticker !== false) await runTicks();
   const stopTicker = opts.ticker === false ? () => {} : startTicker(round, async (tick) => { await runTicks(); broadcast({ type: 'tick', ...tickInfo(round), tick }); });

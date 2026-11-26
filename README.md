@@ -43,4 +43,6 @@ npm run build && npm start   # http://localhost:3101
 | `TICK_SECONDS` | 3600 | Tick-Länge; zum Testen z. B. `120` |
 | `DATABASE_URL` | leer | Postgres-Verbindung; leer = PGlite in `data/pglite` |
 | `DATA_DIR` | `data/pglite` | Ordner für PGlite |
+| `BOTS` | 0 | Anzahl Bot-Stationen in der Runde (wirtschaften, bauen, verteidigen) |
+| `BOT_ATTACKS` | – | `1`: Bots greifen ab und zu den nächsten echten Spieler an |
 | `WEB_PORT` / `API_PORT` | 3102 / 3101 | Ports für den Vite-Entwicklungsserver |

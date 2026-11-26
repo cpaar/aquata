@@ -16,6 +16,10 @@ export interface Config {
   webDist: string;
   /** Cookies nur über HTTPS (auf Dokku hinter TLS: 1) */
   secureCookies: boolean;
+  /** Anzahl Bot-Stationen in der Runde (0 = keine) */
+  bots: number;
+  /** Bots greifen ab und zu den nächsten echten Spieler an */
+  botAttacks: boolean;
 }
 
 export function loadConfig(env = process.env): Config {
@@ -27,5 +31,7 @@ export function loadConfig(env = process.env): Config {
     tickSeconds: num(env.TICK_SECONDS, 3600),
     webDist: env.WEB_DIST ?? path.resolve(here, '../../web/dist'),
     secureCookies: env.SECURE_COOKIES === '1',
+    bots: num(env.BOTS, 0),
+    botAttacks: env.BOT_ATTACKS === '1',
   };
 }
