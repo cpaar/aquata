@@ -1,12 +1,14 @@
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyWebsocket from '@fastify/websocket';
+import fastifyCookie from '@fastify/cookie';
 import { existsSync } from 'node:fs';
 import { BUILDINGS, SHIPS } from '@aquata/rules';
 import type { Config } from './config.ts';
 import { openDb, migrate, type Db } from './db/index.ts';
 import { currentRound, tickInfo, type Round } from './round.ts';
 import { startTicker } from './tick.ts';
+import { registerRoutes } from './routes.ts';
 
 export interface App { app: ReturnType<typeof Fastify>; db: Db; round: Round; stop: () => Promise<void> }
 
@@ -17,6 +19,7 @@ export async function buildApp(config: Config, opts: { ticker?: boolean; logger?
 
   const app = Fastify({ logger: opts.logger ?? false });
   await app.register(fastifyWebsocket);
+  await app.register(fastifyCookie);
 
   const sockets = new Set<{ send: (s: string) => void }>();
   const broadcast = (msg: unknown) => { const s = JSON.stringify(msg); for (const ws of sockets) ws.send(s); };
@@ -25,6 +28,8 @@ export async function buildApp(config: Config, opts: { ticker?: boolean; logger?
     const { rows } = await db.query<{ ok: number }>('select 1 as ok');
     return { ok: rows[0]?.ok === 1, db: db.kind, round: { id: round.id, name: round.name }, ...tickInfo(round) };
   });
+
+  registerRoutes(app, db, round, config.secureCookies);
 
   app.get('/api/rules', async () => ({ ships: SHIPS, buildings: BUILDINGS }));
 

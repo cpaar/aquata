@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode, type ButtonHTMLAttributes } from 'react';
+import React, { useEffect, useState, type ReactNode, type ButtonHTMLAttributes } from 'react';
 import type { Resource } from '@aquata/rules';
 import { Icon, type IconName } from './icons';
 import './kit.css';
@@ -202,5 +202,24 @@ export function NavBar({ items, current, onSelect }: { items: NavItem[]; current
         </button>
       ))}
     </nav>
+  );
+}
+
+/* ---------- Eingabefeld ---------- */
+export function Field({ label, ...rest }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+  return (
+    <label className="k-field">
+      <span>{label}</span>
+      <input className="k-input" {...rest} />
+    </label>
+  );
+}
+
+/* ---------- Umschalter ---------- */
+export function Tabs<T extends string>({ value, options, onChange, label }: { value: T; options: { id: T; label: string }[]; onChange: (v: T) => void; label: string }) {
+  return (
+    <div className="k-tabs" role="group" aria-label={label}>
+      {options.map((o) => <button key={o.id} type="button" aria-pressed={o.id === value} onClick={() => onChange(o.id)}>{o.label}</button>)}
+    </div>
   );
 }

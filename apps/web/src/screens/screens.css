@@ -35,3 +35,13 @@
 .kit__swatch div { padding: 8px 10px; font-size: 0.75rem; }
 .kit__swatch b { display: block; font-family: var(--f-head); font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.7rem; }
 .kit__frame { border: 1px solid var(--line); border-radius: var(--pebble); overflow: hidden; }
+
+/* Anmelden */
+.entry { position: relative; }
+.entry__hero { position: absolute; inset: 0 0 auto; height: 62%; overflow: hidden; }
+.entry__hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+.entry__hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 21, 25, 0.35), rgba(11, 21, 25, 0) 30%, var(--deep) 100%); }
+.entry__form { position: relative; z-index: 1; margin-top: auto; padding: 24px var(--pad) calc(28px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+
+/* Platzwahl */
+.pick { padding: calc(20px + env(safe-area-inset-top, 0px)) var(--pad) 28px; display: grid; gap: 16px; }

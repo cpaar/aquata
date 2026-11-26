@@ -19,7 +19,7 @@ const loadedAt = Date.now();
 const STORED = { alu: 12480, stahl: 8215, pu: 2940 };
 const RATE = productionPerHour(48, { alu: 50, stahl: 30, pu: 20 });
 
-export function Bruecke() {
+export function Bruecke({ stationName = 'Nerea', coords = '32|−07', onLogout }: { stationName?: string; coords?: string; onLogout?: () => void }) {
   const { tick: live, online } = useServer();
   const t = live ?? fallbackTick();
   const now = useNow();
@@ -41,8 +41,8 @@ export function Bruecke() {
         <Hero stage={3} height={alarm ? 250 : 330}>
           <header className="hud">
             <div>
-              <div className="hud__name">Station Nerea</div>
-              <div className="hud__coords k-data">Sektor 14 · 32|−07</div>
+              <div className="hud__name">Station {stationName}</div>
+              <div className="hud__coords k-data">{coords}</div>
             </div>
             <TickClock nextTickAt={t.nextTickAt} tickSeconds={t.tickSeconds} tick={t.tick} />
             <div className="hud__res">
@@ -76,6 +76,7 @@ export function Bruecke() {
             <Eyebrow>Vorschau</Eyebrow> Beispieldaten · Server {online ? 'verbunden' : 'nicht erreichbar'} ·{' '}
             <button className="linkish" onClick={() => setAlarm((a) => !a)}>Alarm {alarm ? 'aus' : 'an'}</button> ·{' '}
             <a href="#baukasten">Baukasten</a>
+            {onLogout && <> · <button className="linkish" onClick={onLogout}>Abmelden</button></>}
           </p>
         </Deck>
       </main>

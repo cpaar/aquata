@@ -268,3 +268,23 @@ button.k-row { all: unset; box-sizing: border-box; display: grid; grid-template-
 
 /* ---------- Icons ---------- */
 .k-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- Eingabefelder ---------- */
+.k-field { display: grid; gap: 6px; }
+.k-field > span { font-family: var(--f-head); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.k-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  background: var(--deep);
+  color: var(--fg);
+  border: 1px solid var(--line2);
+  border-radius: var(--r-btn) var(--r-btn) var(--r-btn) var(--r-s);
+  font: 0.95rem var(--f-body);
+}
+.k-input:focus { outline: none; border-color: var(--petrol); box-shadow: 0 0 0 3px rgba(95, 168, 160, 0.18); }
+.k-error { color: var(--rust); font-size: 0.82rem; margin: 0; }
+.k-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: var(--pebble); }
+.k-tabs button { all: unset; cursor: pointer; text-align: center; padding: 8px 0; border-radius: 10px 10px 10px 3px; font-family: var(--f-head); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.k-tabs button[aria-pressed='true'] { background: rgba(95, 168, 160, 0.14); color: var(--petrol); }
+.k-tabs button:focus-visible { outline: 2px solid var(--amber); }

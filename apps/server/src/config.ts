@@ -14,6 +14,8 @@ export interface Config {
   /** Tick-Länge in Sekunden. 3600 = jede volle Stunde, im Test z. B. 120. */
   tickSeconds: number;
   webDist: string;
+  /** Cookies nur über HTTPS (auf Dokku hinter TLS: 1) */
+  secureCookies: boolean;
 }
 
 export function loadConfig(env = process.env): Config {
@@ -24,5 +26,6 @@ export function loadConfig(env = process.env): Config {
     dataDir: env.DATA_DIR ?? path.resolve(here, '../../../data/pglite'),
     tickSeconds: num(env.TICK_SECONDS, 3600),
     webDist: env.WEB_DIST ?? path.resolve(here, '../../web/dist'),
+    secureCookies: env.SECURE_COOKIES === '1',
   };
 }
